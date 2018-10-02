@@ -1,5 +1,7 @@
 package Search;
-
+/*
+ * 
+ */
 import java.io.File;
 import java.util.ArrayList;
 import java.util.Scanner;
@@ -8,57 +10,52 @@ public class Maze {
 	public String mazeType;
 	public char[][] maze = null;
 	
-	public Maze(String mazeType) {
+	public Maze(String mazeType) { //constructor for Maze
 		this.mazeType = mazeType;
 		create_maze(mazeType);
 	}
 	
-	public void create_maze(String mazeType) { //read in a maze into "maze".
+	public void create_maze(String mazeType) { //reads from different .txt files to create mazes.
 		Scanner mazeScanner = null;
-		String[] rows = null;
-		char[] columns = null;
-		if(mazeType == "medium_maze") {
-			maze = new char[23][62];//[rows][columns]
+		String[] rows = null;			//holds the initial lines from the .txt file
+		char[] columns = null;			//holds each index of a row.
+		if(mazeType == "medium_maze") {	//if the maze type is a medium maze cater to its specific dimensions.
+			maze = new char[23][62];		//[rows][columns]
 			rows = new String[23];
 			columns = new char[62];
-			
 		}
-		else if(mazeType == "large_maze") {
-			maze = new char[31][81];//[rows][columns]
+		else if(mazeType == "large_maze") {//else if it is a large maze...
+			maze = new char[31][81];		  //[rows][columns]
 			rows = new String[31];
 			columns = new char[81];
 		}
-		else if(mazeType == "open_maze") {
-			maze = new char[20][37];//[rows][columns]
+		else if(mazeType == "open_maze") {//else if it is an open maze...
+			maze = new char[20][37];		 //[rows][columns]
 			rows = new String[20];
 			columns = new char[37];
 		}
 		
-		//Opens file location
-        try{
+        try{	//Try to open file location
         		mazeScanner = new Scanner(new File("src/Search/" + mazeType + ".txt"));
         }
-        //throws error if the file can't be located.
-        catch(Exception e){
+        catch(Exception e){//throw error if the file can't be located.
             System.out.println("File not found.");
             System.exit(0);
         }
-        //add data to maze list.
-        System.out.println(maze.length + ":" + maze[0].length);
-        for(int i = 0; i < rows.length; i++) {
+        for(int i = 0; i < rows.length; i++) {//get the initial rows from the txt file
         		rows[i] = mazeScanner.nextLine();
         }
-        for(int i = 0; i < rows.length; i++) {//loop through each row and add each index as an index of a column
-        		columns = rows[i].toCharArray();
+        for(int i = 0; i < rows.length; i++) {//loop through each row
+        		columns = rows[i].toCharArray();  //convert row to a char array, this represents an index of each column in a row.
 			for(int y = 0; y < columns.length; y++) {
-				maze[i][y] = columns[y];
+				maze[i][y] = columns[y];		 //add each column index to its corresponding column in each row.
 			}
         }
        
       
    }
 	public void printMaze() {
-		 for(int i = 0; i < maze.length; i++) {
+		 for(int i = 0; i < maze.length; i++) {//loops through the maze and print out its contents. stdout
      		for(int y = 0; y < maze[0].length; y++) {
      			System.out.print(maze[i][y]);;
      		}

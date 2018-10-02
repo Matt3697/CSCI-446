@@ -1,5 +1,12 @@
 package Search;
-
+/*
+ * Authors: Hugh Jackovich, Carie Pointer, Matthew Sagen
+ * Date: 10/02/2018
+ * Assignment1: Search
+ * 
+ * This is the Main class for "Search". It creates the three different Maze objects...
+ * 
+ */
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.PrintWriter;
