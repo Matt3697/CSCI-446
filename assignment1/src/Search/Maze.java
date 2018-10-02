@@ -64,5 +64,7 @@ public class Maze {
 		System.out.println();
 		System.out.println();
 	}
-	
+	public char[][] getMatrix(){//returns the maze
+		return maze;
+	}
 }
