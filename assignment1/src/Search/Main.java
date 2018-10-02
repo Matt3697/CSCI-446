@@ -18,8 +18,8 @@ public class Main {
 		Maze largeMaze = new Maze("large_maze");
 		Maze openMaze = new Maze("open_maze");
 		mediumMaze.printMaze();
-		largeMaze.printMaze();
-		openMaze.printMaze();
+		//largeMaze.printMaze();
+		//openMaze.printMaze();
 		DFS depthFirstSearch = new DFS();
 		depthFirstSearch.solve(mediumMaze);
 		PrintWriter writer = new PrintWriter("Output.txt", "UTF-8"); //outputs to directory Assignment1
