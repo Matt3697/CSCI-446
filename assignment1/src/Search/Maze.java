@@ -3,7 +3,6 @@ package Search;
  * 
  */
 import java.io.File;
-import java.util.ArrayList;
 import java.util.Scanner;
 
 public class Maze {
@@ -15,9 +14,9 @@ public class Maze {
 		create_maze(mazeType);
 	}
 	
-	public void create_maze(String mazeType) { //reads from different .txt files to create mazes.
+	public void create_maze(String mazeType) { //reads from different text files to create mazes.
 		Scanner mazeScanner = null;
-		String[] rows = null;			//holds the initial lines from the .txt file
+		String[] rows = null;			//holds the initial lines from the text file
 		char[] columns = null;			//holds each index of a row.
 		if(mazeType == "medium_maze") {	//if the maze type is a medium maze cater to its specific dimensions.
 			maze = new char[23][62];		//[rows][columns]
@@ -42,7 +41,7 @@ public class Maze {
             System.out.println("File not found.");
             System.exit(0);
         }
-        for(int i = 0; i < rows.length; i++) {//get the initial rows from the txt file
+        for(int i = 0; i < rows.length; i++) {//get the initial rows from the text file
         		rows[i] = mazeScanner.nextLine();
         }
         for(int i = 0; i < rows.length; i++) {//loop through each row
@@ -55,13 +54,14 @@ public class Maze {
       
    }
 	public void printMaze() {
-		 for(int i = 0; i < maze.length; i++) {//loops through the maze and print out its contents. stdout
-     		for(int y = 0; y < maze[0].length; y++) {
+		System.out.println(mazeType);
+		for(int i = 0; i < maze.length; i++) {//loops through the maze and print out its contents. stdout
+			for(int y = 0; y < maze[0].length; y++) {
      			System.out.print(maze[i][y]);;
      		}
      		System.out.println();
-     }
-		 System.out.println();
-		 System.out.println();
+		}
+		System.out.println();
+		System.out.println();
 	}
 }
