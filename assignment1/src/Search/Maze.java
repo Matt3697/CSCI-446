@@ -64,4 +64,5 @@ public class Maze {
 		System.out.println();
 		System.out.println();
 	}
+	
 }

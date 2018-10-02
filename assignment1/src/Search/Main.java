@@ -7,12 +7,9 @@ package Search;
  * This is the Main class for "Search". It creates the three different Maze objects...
  * 
  */
-import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.PrintWriter;
 import java.io.UnsupportedEncodingException;
-import java.util.ArrayList;
-import java.util.Scanner;
 
 
 public class Main {
