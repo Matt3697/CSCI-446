@@ -28,7 +28,7 @@ public class Frontier {
 	}
 	public ArrayList<Integer> getStackY() {
 		ArrayList<Integer> y = new ArrayList<Integer>();
-		while(!xLoc.isEmpty()) {
+		while(!yLoc.isEmpty()) {
 			y.add(yLoc.pop());
 		}
 		return y;
