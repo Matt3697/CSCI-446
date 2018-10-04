@@ -24,10 +24,10 @@ public class DFS {
 		getInitialState(matrix); //step 1: get initial state.
 		int y = startingY; //swap x and y because of how the maze is created.
 		int x = startingX;
-		frontier.push(x,y); //push initial state onto frontier. path is empty.
-		path.put(x,y);      //add to output sequence
-		matrix[x][y] = '.';  //mark the node as visited
-		System.out.println(matrix[x][y]);
+		frontier.push(y,x); //push initial state onto frontier. path is empty.
+		path.put(y,x);      //add to output sequence
+		matrix[y][x] = '.';  //mark the node as visited
+		System.out.println(matrix[y][x]);
 		boolean goal = false;
 		int i = 0;
 		while(i < 1000) {
@@ -37,85 +37,84 @@ public class DFS {
 				System.out.println("FAIL.");
 				System.exit(0);
 			}
-			if(!visited(x+1,y)) { //if we have not expanded the node to the right.
-				if(matrix[x+1][y] == '%') { //if there are no children nodes, then pop the node from the stack.
+			if(!visited(y,x+1)) { //if we have not expanded the node to the right.
+				if(matrix[y][x+1] == '%') { //if there are no children nodes, then pop the node from the stack.
 					frontier.pop();
 					System.out.println("HI");
 					return;
 				}
 				//else{
-					frontier.push(x+1,y);
+					frontier.push(y,x+1);
 					x += 1;
 				//}
-				path.put(x+1,y);
+				path.put(y,x+1);
 			}
-			else if(!visited(x-1,y)) { //if we have not expanded the node to the left.
-				if(matrix[x-1][y] == '%') { //if there are no children nodes, then pop the node from the stack.
+			else if(!visited(y,x-1)) { //if we have not expanded the node to the left.
+				if(matrix[y][x-1] == '%') { //if there are no children nodes, then pop the node from the stack.
 					frontier.pop();
 				}
 				//else{
-					frontier.push(x-1,y);
+					frontier.push(y,x-1);
 					x -= 1;
 				//}
-				path.put(x-1, y);
+				path.put(y,x-1);
 			}
-			else if(!visited(x,y+1)) {//if we have not expanded the node below.
-				if(matrix[x][y+1] == '%') { //if there are no children nodes, then pop the node from the stack.
+			else if(!visited(y+1,x)) {//if we have not expanded the node below.
+				if(matrix[y+1][x] == '%') { //if there are no children nodes, then pop the node from the stack.
 					frontier.pop();
 				}
 				//else{
-					frontier.push(x,y+1);
+					frontier.push(y+1,x);
 					y += 1;
 				//}
-				path.put(x, y+1);
+				path.put(y+1,x);
 			}
-			else if(!visited(x,y-1)) {//if we have not expanded the node above.
-				if(matrix[x][y-1] == '%') { //if there are no children nodes, then pop the node from the stack.
+			else if(!visited(y-1,x)) {//if we have not expanded the node above.
+				if(matrix[y-1][x] == '%') { //if there are no children nodes, then pop the node from the stack.
 					frontier.pop();
 				}
 				//else{
-					frontier.push(x,y-1);
+					frontier.push(y-1,x);
 					y -= 1;
 				//}
-				path.put(x, y-1);
+				path.put(y-1,x);
 			}
-			matrix[x][y] = '.'; //mark the node as visited.
-			goal = checkForGoalState(x,y); //Step 4: Check for goal state
+			matrix[y][x] = '.'; //mark the node as visited.
+			goal = checkForGoalState(y,x); //Step 4: Check for goal state
 			i++;
 		}
 		printStack();
 	}
 	
-	public boolean visited(int x, int y) {
-		if(path.containsKey(x) && path.get(x) != y) { //return false if we have not visited a spot.
-			System.out.println("hi");
+	public boolean visited(int y, int x) {
+		if(path.containsKey(y) && path.get(y) != x) { //return false if we have not visited a spot.
 			return false;
 		}
 		else { //return true if we have visited the spot
 			return true;
 		}
 	}
-	public boolean checkForGoalState(int x, int y) {
+	public boolean checkForGoalState(int y, int x) {
 		boolean goal = false;
-		if(matrix[x-1][y] == '*'){//if the goal is to the left
+		if(matrix[y][x-1] == '*'){//if the goal is to the left
 			goal = true;
-			frontier.push(x-1, y);
+			frontier.push(y,x-1);
 			path.put(x-1, y); //add the x and y position to the path list
 		}
-		else if(matrix[x][y+1] == '*'){//if the goal is above
+		else if(matrix[y+1][x] == '*'){//if the goal is above
 			goal = true;
-			frontier.push(x, y+1);
+			frontier.push(y+1,x);
 			path.put(x, y+1); //add the x and y position to the path list
 		}
-		else if(matrix[x+1][y] == '*'){//if the goal is to the right
+		else if(matrix[y][x+1] == '*'){//if the goal is to the right
 			goal = true;
-			frontier.push(x+1, y);
-			path.put(x+1, y); //add the x and y position to the path list
+			frontier.push(y,x+1);
+			path.put(y,x+1); //add the x and y position to the path list
 		}
-		else if(matrix[x][y-1] == '*'){//if the goal is below
+		else if(matrix[y-1][x] == '*'){//if the goal is below
 			goal = true;
-			frontier.push(x, y-1);
-			path.put(x, y-1); //add the x and y position to the path list
+			frontier.push(y-1,x);
+			path.put(y-1,x); //add the x and y position to the path list
 		}
 		return goal;
 	}
@@ -136,8 +135,8 @@ public class DFS {
 		for(int i = 0; i < matrix.length; i++) { //looping through columns
 			for(int y = 0; y < matrix[0].length; y++) { //looping through rows
      			if(matrix[i][y] == 'P') {
-     				startingX = i;
-     				startingY = y;
+     				startingX = y;
+     				startingY = i;
      				break;
      			}
      		}
