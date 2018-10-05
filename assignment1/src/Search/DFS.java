@@ -22,17 +22,18 @@ public class DFS {
 		
 		matrix = maze.getMatrix();
 		getInitialState(matrix); //step 1: get initial state.
-		int y = startingY; //swap x and y because of how the maze is created.
+		int y = startingY; 
 		int x = startingX;
 		frontier.push(y,x); //push initial state onto frontier. path is empty.
 		path.put(y,x);      //add to output sequence
+		System.out.println(x+ ": " + y);
 		matrix[y][x] = '.';  //mark the node as visited
 		System.out.println(matrix[y][x]);
 		boolean goal = false;
+		Tree tree = new Tree(x, y, maze);
 		int i = 0;
 		while(i < 1000) {
-			System.out.println(x+ ": " + y);
-			System.out.println(matrix[y][x]);
+			//System.out.println(x+":"+y);
 			if(path.isEmpty()) { //Return fail if the frontier is null.
 				System.out.println("FAIL.");
 				System.exit(0);
@@ -40,46 +41,51 @@ public class DFS {
 			if(!visited(y,x+1)) { //if we have not expanded the node to the right.
 				if(matrix[y][x+1] == '%') { //if there are no children nodes, then pop the node from the stack.
 					frontier.pop();
-					System.out.println("HI");
-					return;
+					x-=1;
 				}
-				//else{
+				else{
 					frontier.push(y,x+1);
 					x += 1;
-				//}
-				path.put(y,x+1);
-			}
-			else if(!visited(y,x-1)) { //if we have not expanded the node to the left.
-				if(matrix[y][x-1] == '%') { //if there are no children nodes, then pop the node from the stack.
-					frontier.pop();
+					path.put(y,x);
 				}
-				//else{
-					frontier.push(y,x-1);
-					x -= 1;
-				//}
-				path.put(y,x-1);
-			}
-			else if(!visited(y+1,x)) {//if we have not expanded the node below.
-				if(matrix[y+1][x] == '%') { //if there are no children nodes, then pop the node from the stack.
-					frontier.pop();
-				}
-				//else{
-					frontier.push(y+1,x);
-					y += 1;
-				//}
-				path.put(y+1,x);
 			}
 			else if(!visited(y-1,x)) {//if we have not expanded the node above.
 				if(matrix[y-1][x] == '%') { //if there are no children nodes, then pop the node from the stack.
 					frontier.pop();
+					y+=1;
 				}
-				//else{
+				else{
 					frontier.push(y-1,x);
 					y -= 1;
-				//}
-				path.put(y-1,x);
+					path.put(y,x);
+				}
 			}
+			else if(!visited(y,x-1)) { //if we have not expanded the node to the left.
+				if(matrix[y][x-1] == '%') { //if there are no children nodes, then pop the node from the stack.
+					frontier.pop();
+					x+=1;
+				}
+				else{
+					frontier.push(y,x-1);
+					x -= 1;
+					path.put(y,x);
+				}
+			}
+			else if(!visited(y+1,x)) {//if we have not expanded the node below.
+				if(matrix[y+1][x] == '%') { //if there are no children nodes, then pop the node from the stack.
+					frontier.pop();
+					y-=1;
+				}
+				else{
+					frontier.push(y+1,x);
+					y += 1;
+					path.put(y,x);
+
+				}
+			}
+			
 			matrix[y][x] = '.'; //mark the node as visited.
+			//System.out.println(matrix[y][x]);
 			goal = checkForGoalState(y,x); //Step 4: Check for goal state
 			i++;
 		}
@@ -89,6 +95,7 @@ public class DFS {
 	public boolean visited(int y, int x) {
 		if(path.containsKey(y) && path.get(y) != x) { //return false if we have not visited a spot.
 			return false;
+			
 		}
 		else { //return true if we have visited the spot
 			return true;
