@@ -19,47 +19,45 @@ public class Tree {
 		root.last = null;
 		root.next = null;
 		int i = 0;
-		
 		while(!goal) {
-			
 			if(!visited(y, x+1)) { //if we have not visited the space to the right.
 				if(matrix[y][x] == '%') { //if there are no children nodes, then pop the node from the stack.
-					frontier.pop();
 					x-=1;
 				}
 				else{
 					x += 1;
 					Node node = new Node(x,y);
+					path.put(y,x);
 				}
 			}
 			else if(!visited(y -1, x)) {//if we have not expanded the node above.
 				if(matrix[y-1][x] == '%') { //if there are no children nodes, then pop the node from the stack.
-					frontier.pop();
 					y+=1;
 				}
 				else{
 					y -= 1;
 					Node node = new Node(x,y);
+					path.put(y,x);
 				}
 			}
 			else if(!visited(y, x-1)) { //if we have not expanded the node to the left.
 				if(matrix[y][x-1] == '%') { //if there are no children nodes, then pop the node from the stack.
-					frontier.pop();
 					x+=1;
 				}
 				else{
 					x -= 1;
 					Node node = new Node(x,y);
+					path.put(y,x);
 				}
 			}
 			else if(!visited(y+1,x)) {//if we have not expanded the node below.
 				if(matrix[y+1][x] == '%') { //if there are no children nodes, then pop the node from the stack.
-					frontier.pop();
 					y-=1;
 				}
 				else{
 					y += 1;
 					Node node = new Node(x,y);
+					path.put(y,x);
 				}
 			}
 			goal = checkForGoalState(y,x); //Step 4: Check for goal state
@@ -67,39 +65,33 @@ public class Tree {
 		}
 	}
 		
-		public boolean visited(int y, int x) {
-			if(path.containsKey(y) && path.get(y) != x) { //return false if we have not visited a spot.
-				return false;
-				
-			}
-			else { //return true if we have visited the spot
-				return true;
-			}
+	public boolean visited(int y, int x) {
+		if(path.containsKey(y) && path.get(y) != x) { //return false if we have not visited a spot.
+			return false;
+			
 		}
-		public boolean checkForGoalState(int y, int x) {
-			boolean goal = false;
-			if(matrix[y][x-1] == '*'){//if the goal is to the left
-				goal = true;
-				frontier.push(y,x-1);
-				path.put(x-1, y); //add the x and y position to the path list
-			}
-			else if(matrix[y+1][x] == '*'){//if the goal is above
-				goal = true;
-				frontier.push(y+1,x);
-				path.put(x, y+1); //add the x and y position to the path list
-			}
-			else if(matrix[y][x+1] == '*'){//if the goal is to the right
-				goal = true;
-				frontier.push(y,x+1);
-				path.put(y,x+1); //add the x and y position to the path list
-			}
-			else if(matrix[y-1][x] == '*'){//if the goal is below
-				goal = true;
-				frontier.push(y-1,x);
-				path.put(y-1,x); //add the x and y position to the path list
-			}
-			return goal;
+		else { //return true if we have visited the spot
+			return true;
 		}
-		
+	}
+	public boolean checkForGoalState(int y, int x) {
+		boolean goal = false;
+		if(matrix[y][x-1] == '*'){//if the goal is to the left
+			goal = true;
+			path.put(x-1, y); //add the x and y position to the path list
+		}
+		else if(matrix[y+1][x] == '*'){//if the goal is above
+			goal = true;
+			path.put(x, y+1); //add the x and y position to the path list
+		}
+		else if(matrix[y][x+1] == '*'){//if the goal is to the right
+			goal = true;
+			path.put(y,x+1); //add the x and y position to the path list
+		}
+		else if(matrix[y-1][x] == '*'){//if the goal is below
+			goal = true;
+			path.put(y-1,x); //add the x and y position to the path list
+		}
+		return goal;
 	}
 }
