@@ -15,9 +15,10 @@ public class Tree {
 	}
 	public void createTree() {
 		boolean goal = false;
-		Node root = new Node(x,y);
-		root.last = null;
+		Node parent = new Node(x,y);
+		parent.setParent(null);
 		Node node = null;
+		Node temp = null;
 		int i = 0;
 		while(!goal) {
 			if(!visited(y, x+1)) { //if we have not visited the space to the right.
@@ -60,12 +61,19 @@ public class Tree {
 				}
 				path.put(y,x);
 			}
-			if(i == 0) {
-				root.setLeftChild(node);
-				node.setLast(root);
+			temp = node;
+			if(i == 0) {//fill tree left to right
+				parent.setLeftChild(node);
+				node.setParent(parent);
 			}
 			else {
-				
+				if(temp.getParent().hasLeftChild() && temp.getParent().hasRightChild()) {//if the last node's parent has a right child, branch off of the last node
+					temp.setLeftChild(node);
+					node.setParent(temp);
+				}
+				else {//otherwise set the node as the right child of the last node's parent.
+					temp.getParent().setRightChild(node);
+				}
 			}
 			goal = checkForGoalState(y,x); //Step 4: Check for goal state
 			i++;

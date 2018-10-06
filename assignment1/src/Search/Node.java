@@ -3,7 +3,7 @@ package Search;
 public class Node {
 	Node right;
 	Node left;
-	Node last;
+	Node parent;
 	boolean leftChild,rightChild;
 	int x,y;
 	public Node(int x, int y) {
@@ -18,7 +18,7 @@ public class Node {
 	public void setLeftChild(Node node) {
 		left = node;
 	}
-	public boolean hasRightChild() {
+	public boolean hasRightChild() { //return true if the node has a right child
 		if(rightChild == true) {
 			return true;
 		}
@@ -26,7 +26,7 @@ public class Node {
 			return false;
 		}
 	}
-	public boolean hasLeftChild() {
+	public boolean hasLeftChild() { //return true if the node has a left child
 		if(leftChild == true) {
 			return true;
 		}
@@ -34,8 +34,17 @@ public class Node {
 			return false;
 		}
 	}
-	public void setLast(Node node) {
-		
+	public Node getRightChild() {
+		return right;
+	}
+	public Node getLeftChild() {
+		return left;
+	}
+	public Node getParent() {
+		return parent;
+	}
+	public void setParent(Node node) {
+		parent = node;
 	}
 	public int getX() {
 		return x;
