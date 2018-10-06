@@ -66,16 +66,23 @@ public class Tree {
 
 			if(i == 0) {//fill tree left to right
 				root.setLeftChild(node);
-				node.setParent(root);
-			}
+				node.setParent(root);			}
 			else {
-				System.out.println("x: "+lastnode.getParent().getX());
-				System.out.println("y: "+lastnode.getParent().getY());
-				if(lastnode.getParent().hasLeftChild() && lastnode.getParent().hasRightChild()) {//if the last node's parent has a left&right child, branch off of the last node
+				System.out.println(lastnode.getParent().getX() + ": " + lastnode.getParent().getY());
+				if(lastnode.getParent().hasLeftChild() && !lastnode.getParent().hasRightChild()) {
+					System.out.println("Hil");
+					lastnode.getParent().setRightChild(node);
+					node.setParent(lastnode.getParent());
+				}
+				else if(lastnode.getParent().hasLeftChild() && lastnode.getParent().hasRightChild()) {//if the last node's parent has a left&right child, branch off of the last node
+					System.out.println("hi");
+					lastnode.setLeftChild(node);
 					node.setParent(lastnode);
+					
 				}
 				else {//otherwise set the node as the right child of the last node's parent.
-					lastnode.getParent().setRightChild(node);
+					System.out.println(lastnode.getParent().getX() + ": " + lastnode.getParent().getY());
+					return;
 				}
 			}
 			goal = checkForGoalState(y,x); //Step 4: Check for goal state
