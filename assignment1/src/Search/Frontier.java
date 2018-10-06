@@ -6,18 +6,17 @@ import java.util.Stack;
 public class Frontier {
 	public Stack<Integer> xLoc = new Stack<Integer>();
 	public Stack<Integer> yLoc = new Stack<Integer>();
-	
+	public Stack<Node> nodes = new Stack<Node>();
+
 	public Frontier() {
 		
 	}
 	
-	public void push(int x, int y) {
-		xLoc.push(x);
-		yLoc.push(y);
+	public void push(Node node) {
+		nodes.push(node);
 	}
 	public void pop() {
-		xLoc.pop();
-		yLoc.pop();
+		nodes.pop();
 	}
 	public ArrayList<Integer> getStackX() {
 		ArrayList<Integer> x = new ArrayList<Integer>();

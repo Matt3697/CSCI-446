@@ -24,50 +24,55 @@ public class DFS {
 		getInitialState(matrix); //step 1: get initial state.
 		int y = startingY; 
 		int x = startingX;
-		frontier.push(y,x); //push initial state onto frontier. path is empty.
+		Node root = new Node(x,y);
+		frontier.push(root); //push initial state onto frontier. path is empty.
 		path.put(y,x);      //add to output sequence
 		System.out.println(x+ ": " + y);
 		matrix[y][x] = '.';  //mark the node as visited
 		System.out.println(matrix[y][x]);
 		boolean goal = false;
-		Tree tree = new Tree(x, y, matrix);
+		
 		int i = 0;
-		while(i < 1000) {
+		while(!goal) {
 			//System.out.println(x+":"+y);
 			if(path.isEmpty()) { //Return fail if the frontier is null.
 				System.out.println("FAIL.");
 				System.exit(0);
 			}
-			if(!visited(y,x+1)) { //if we have not expanded the node to the right.
-				if(matrix[y][x+1] == '%') { //if there are no children nodes, then pop the node from the stack.
+			
+			if(!visited(y, x+1)) { //if we have not expanded the node to the right.
+				if(matrix[y][x] == '%') { //if there are no children nodes, then pop the node from the stack.
 					frontier.pop();
 					x-=1;
 				}
 				else{
-					frontier.push(y,x+1);
 					x += 1;
+					Node node = new Node(x,y);
+					frontier.push(node);
 					path.put(y,x);
 				}
 			}
-			else if(!visited(y-1,x)) {//if we have not expanded the node above.
+			else if(!visited(y -1, x)) {//if we have not expanded the node above.
 				if(matrix[y-1][x] == '%') { //if there are no children nodes, then pop the node from the stack.
 					frontier.pop();
 					y+=1;
 				}
 				else{
-					frontier.push(y-1,x);
 					y -= 1;
+					Node node = new Node(x,y);
+					frontier.push(node);
 					path.put(y,x);
 				}
 			}
-			else if(!visited(y,x-1)) { //if we have not expanded the node to the left.
+			else if(!visited(y, x-1)) { //if we have not expanded the node to the left.
 				if(matrix[y][x-1] == '%') { //if there are no children nodes, then pop the node from the stack.
 					frontier.pop();
 					x+=1;
 				}
 				else{
-					frontier.push(y,x-1);
 					x -= 1;
+					Node node = new Node(x,y);
+					frontier.push(node);
 					path.put(y,x);
 				}
 			}
@@ -77,16 +82,15 @@ public class DFS {
 					y-=1;
 				}
 				else{
-					frontier.push(y+1,x);
 					y += 1;
+					Node node = new Node(x,y);
+					frontier.push(node);
 					path.put(y,x);
 
 				}
 			}
-			
-			matrix[y][x] = '.'; //mark the node as visited.
-			//System.out.println(matrix[y][x]);
 			goal = checkForGoalState(y,x); //Step 4: Check for goal state
+			matrix[y][x] = '.'; //mark the node as visited.
 			i++;
 		}
 		printStack();
