@@ -17,10 +17,12 @@ public class Tree {
 		boolean goal = false;
 		Node parent = new Node(x,y);
 		parent.setParent(null);
+		path.put(y, x);
 		Node node = null;
-		Node temp = null;
+		Node lastnode = null;
 		int i = 0;
 		while(!goal) {
+			System.out.println(i);
 			if(!visited(y, x+1)) { //if we have not visited the space to the right.
 				if(matrix[y][x] == '%') { 
 					x = node.getParent().getX();
@@ -61,18 +63,18 @@ public class Tree {
 				}
 				path.put(y,x);
 			}
-			temp = node;
+			lastnode = node;
 			if(i == 0) {//fill tree left to right
-				parent.setLeftChild(node);
-				node.setParent(parent);
+				parent.setLeftChild(lastnode);
+				lastnode.setParent(parent);
 			}
 			else {
-				if(temp.getParent().hasLeftChild() && temp.getParent().hasRightChild()) {//if the last node's parent has a right child, branch off of the last node
-					temp.setLeftChild(node);
-					node.setParent(temp);
+				if(lastnode.getParent().hasLeftChild() && lastnode.getParent().hasRightChild()) {//if the last node's parent has a right child, branch off of the last node
+					lastnode.setLeftChild(node);
+					node.setParent(lastnode);
 				}
 				else {//otherwise set the node as the right child of the last node's parent.
-					temp.getParent().setRightChild(node);
+					lastnode.getParent().setRightChild(node);
 				}
 			}
 			goal = checkForGoalState(y,x); //Step 4: Check for goal state
