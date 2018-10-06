@@ -17,9 +17,8 @@ public class Tree {
 		boolean goal = false;
 		Node root = new Node(x,y);
 		root.last = null;
-		root.next = null;
-		int i = 0;
 		Node node = null;
+		int i = 0;
 		while(!goal) {
 			if(!visited(y, x+1)) { //if we have not visited the space to the right.
 				if(matrix[y][x] == '%') { 
@@ -31,7 +30,7 @@ public class Tree {
 				}
 				path.put(y,x);
 			}
-			else if(!visited(y -1, x)) {//if we have not visited the space above.
+			else if(!visited(y-1, x)) {//if we have not visited the space above.
 				if(matrix[y-1][x] == '%') {
 					y+=1;
 				}
@@ -62,7 +61,11 @@ public class Tree {
 				path.put(y,x);
 			}
 			if(i == 0) {
-				root.next = node;
+				root.setLeftChild(node);
+				node.setLast(root);
+			}
+			else {
+				
 			}
 			goal = checkForGoalState(y,x); //Step 4: Check for goal state
 			i++;
