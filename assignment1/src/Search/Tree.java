@@ -19,46 +19,50 @@ public class Tree {
 		root.last = null;
 		root.next = null;
 		int i = 0;
+		Node node = null;
 		while(!goal) {
 			if(!visited(y, x+1)) { //if we have not visited the space to the right.
-				if(matrix[y][x] == '%') { //if there are no children nodes, then pop the node from the stack.
+				if(matrix[y][x] == '%') { 
 					x-=1;
 				}
 				else{
 					x += 1;
-					Node node = new Node(x,y);
-					path.put(y,x);
+					node = new Node(x,y);
 				}
+				path.put(y,x);
 			}
-			else if(!visited(y -1, x)) {//if we have not expanded the node above.
-				if(matrix[y-1][x] == '%') { //if there are no children nodes, then pop the node from the stack.
+			else if(!visited(y -1, x)) {//if we have not visited the space above.
+				if(matrix[y-1][x] == '%') {
 					y+=1;
 				}
 				else{
 					y -= 1;
-					Node node = new Node(x,y);
-					path.put(y,x);
+					node = new Node(x,y);
 				}
+				path.put(y,x);
 			}
-			else if(!visited(y, x-1)) { //if we have not expanded the node to the left.
-				if(matrix[y][x-1] == '%') { //if there are no children nodes, then pop the node from the stack.
+			else if(!visited(y, x-1)) { //if we have not visited the space to the left.
+				if(matrix[y][x-1] == '%') { 
 					x+=1;
 				}
 				else{
 					x -= 1;
-					Node node = new Node(x,y);
-					path.put(y,x);
+					node = new Node(x,y);
 				}
+				path.put(y,x);
 			}
-			else if(!visited(y+1,x)) {//if we have not expanded the node below.
-				if(matrix[y+1][x] == '%') { //if there are no children nodes, then pop the node from the stack.
+			else if(!visited(y+1,x)) {//if we have not visited the space below.
+				if(matrix[y+1][x] == '%') { 
 					y-=1;
 				}
 				else{
 					y += 1;
-					Node node = new Node(x,y);
-					path.put(y,x);
+					node = new Node(x,y);
 				}
+				path.put(y,x);
+			}
+			if(i == 0) {
+				root.next = node;
 			}
 			goal = checkForGoalState(y,x); //Step 4: Check for goal state
 			i++;
