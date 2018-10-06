@@ -15,8 +15,8 @@ public class Tree {
 	}
 	public void createTree() {
 		boolean goal = false;
-		Node parent = new Node(x,y);
-		parent.setParent(null);
+		Node root = new Node(x,y);
+		root.setParent(null);
 		path.put(y, x);
 		Node node = null;
 		Node lastnode = null;
@@ -63,15 +63,15 @@ public class Tree {
 				}
 				path.put(y,x);
 			}
-			lastnode = node;
+
 			if(i == 0) {//fill tree left to right
-				parent.setLeftChild(lastnode);
-				lastnode.setParent(parent);
+				root.setLeftChild(node);
+				node.setParent(root);
 			}
 			else {
-				
-				if(lastnode.getParent().hasLeftChild() && lastnode.getParent().hasRightChild()) {//if the last node's parent has a right child, branch off of the last node
-					lastnode.setLeftChild(node);
+				System.out.println("x: "+lastnode.getParent().getX());
+				System.out.println("y: "+lastnode.getParent().getY());
+				if(lastnode.getParent().hasLeftChild() && lastnode.getParent().hasRightChild()) {//if the last node's parent has a left&right child, branch off of the last node
 					node.setParent(lastnode);
 				}
 				else {//otherwise set the node as the right child of the last node's parent.
@@ -82,6 +82,7 @@ public class Tree {
 			if(goal) {
 				node.isGoal(true);
 			}
+			lastnode = node;
 			i++;
 		}
 	}
