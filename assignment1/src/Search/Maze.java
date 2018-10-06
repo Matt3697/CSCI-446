@@ -67,4 +67,6 @@ public class Maze {
 	public char[][] getMatrix(){//returns the maze
 		return maze;
 	}
+	
+	
 }

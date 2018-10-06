@@ -30,7 +30,7 @@ public class DFS {
 		matrix[y][x] = '.';  //mark the node as visited
 		System.out.println(matrix[y][x]);
 		boolean goal = false;
-		Tree tree = new Tree(x, y, maze);
+		Tree tree = new Tree(x, y, matrix);
 		int i = 0;
 		while(i < 1000) {
 			//System.out.println(x+":"+y);
