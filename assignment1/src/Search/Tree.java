@@ -23,7 +23,7 @@ public class Tree {
 		while(!goal) {
 			if(!visited(y, x+1)) { //if we have not visited the space to the right.
 				if(matrix[y][x] == '%') { 
-					x-=1;
+					x = node.getParent().getX();
 				}
 				else{
 					x += 1;
@@ -33,7 +33,7 @@ public class Tree {
 			}
 			else if(!visited(y-1, x)) {//if we have not visited the space above.
 				if(matrix[y-1][x] == '%') {
-					y+=1;
+					y = node.getParent().getY();
 				}
 				else{
 					y -= 1;
@@ -43,7 +43,7 @@ public class Tree {
 			}
 			else if(!visited(y, x-1)) { //if we have not visited the space to the left.
 				if(matrix[y][x-1] == '%') { 
-					x+=1;
+					x = node.getParent().getX();
 				}
 				else{
 					x -= 1;
@@ -53,7 +53,7 @@ public class Tree {
 			}
 			else if(!visited(y+1,x)) {//if we have not visited the space below.
 				if(matrix[y+1][x] == '%') { 
-					y-=1;
+					y = node.getParent().getY();
 				}
 				else{
 					y += 1;
@@ -83,7 +83,6 @@ public class Tree {
 	public boolean visited(int y, int x) {
 		if(path.containsKey(y) && path.get(y) != x) { //return false if we have not visited a spot.
 			return false;
-			
 		}
 		else { //return true if we have visited the spot
 			return true;
