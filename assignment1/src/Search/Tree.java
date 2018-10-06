@@ -24,41 +24,41 @@ public class Tree {
 		while(!goal) {
 			System.out.println(i);
 			if(!visited(y, x+1)) { //if we have not visited the space to the right.
+				x += 1;
 				if(matrix[y][x] == '%') { 
 					x = node.getParent().getX();
 				}
 				else{
-					x += 1;
 					node = new Node(x,y);
 				}
 				path.put(y,x);
 			}
 			else if(!visited(y-1, x)) {//if we have not visited the space above.
-				if(matrix[y-1][x] == '%') {
+				y -= 1;
+				if(matrix[y][x] == '%') {
 					y = node.getParent().getY();
 				}
 				else{
-					y -= 1;
 					node = new Node(x,y);
 				}
 				path.put(y,x);
 			}
 			else if(!visited(y, x-1)) { //if we have not visited the space to the left.
-				if(matrix[y][x-1] == '%') { 
+				x -= 1;
+				if(matrix[y][x] == '%') { 
 					x = node.getParent().getX();
 				}
 				else{
-					x -= 1;
 					node = new Node(x,y);
 				}
 				path.put(y,x);
 			}
 			else if(!visited(y+1,x)) {//if we have not visited the space below.
-				if(matrix[y+1][x] == '%') { 
+				y += 1;
+				if(matrix[y][x] == '%') { 
 					y = node.getParent().getY();
 				}
 				else{
-					y += 1;
 					node = new Node(x,y);
 				}
 				path.put(y,x);
@@ -69,6 +69,7 @@ public class Tree {
 				lastnode.setParent(parent);
 			}
 			else {
+				
 				if(lastnode.getParent().hasLeftChild() && lastnode.getParent().hasRightChild()) {//if the last node's parent has a right child, branch off of the last node
 					lastnode.setLeftChild(node);
 					node.setParent(lastnode);
