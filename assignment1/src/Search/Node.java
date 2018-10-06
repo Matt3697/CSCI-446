@@ -4,7 +4,7 @@ public class Node {
 	Node right;
 	Node left;
 	Node parent;
-	boolean leftChild,rightChild;
+	boolean leftChild,rightChild,goal;
 	int x,y;
 	public Node(int x, int y) {
 		this.x = x;
@@ -45,6 +45,9 @@ public class Node {
 	}
 	public void setParent(Node node) {
 		parent = node;
+	}
+	public void isGoal(boolean isGoal) {
+		goal = isGoal;
 	}
 	public int getX() {
 		return x;

@@ -76,6 +76,9 @@ public class Tree {
 				}
 			}
 			goal = checkForGoalState(y,x); //Step 4: Check for goal state
+			if(goal) {
+				node.isGoal(true);
+			}
 			i++;
 		}
 	}
@@ -90,21 +93,21 @@ public class Tree {
 	}
 	public boolean checkForGoalState(int y, int x) {
 		boolean goal = false;
-		if(matrix[y][x-1] == '*'){//if the goal is to the left
+		if(matrix[y][x] == '*'){//if the goal is to the left
 			goal = true;
-			path.put(x-1, y); //add the x and y position to the path list
+			path.put(x, y); //add the x and y position to the path list
 		}
-		else if(matrix[y+1][x] == '*'){//if the goal is above
+		else if(matrix[y][x] == '*'){//if the goal is above
 			goal = true;
-			path.put(x, y+1); //add the x and y position to the path list
+			path.put(x, y); //add the x and y position to the path list
 		}
-		else if(matrix[y][x+1] == '*'){//if the goal is to the right
+		else if(matrix[y][x] == '*'){//if the goal is to the right
 			goal = true;
-			path.put(y,x+1); //add the x and y position to the path list
+			path.put(y,x); //add the x and y position to the path list
 		}
-		else if(matrix[y-1][x] == '*'){//if the goal is below
+		else if(matrix[y][x] == '*'){//if the goal is below
 			goal = true;
-			path.put(y-1,x); //add the x and y position to the path list
+			path.put(y,x); //add the x and y position to the path list
 		}
 		return goal;
 	}
