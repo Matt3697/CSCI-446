@@ -70,17 +70,15 @@ public class Tree {
 			else {
 				System.out.println(lastnode.getParent().getX() + ": " + lastnode.getParent().getY());
 				if(lastnode.getParent().hasLeftChild() && !lastnode.getParent().hasRightChild()) {
-					System.out.println("Hil");
 					lastnode.getParent().setRightChild(node);
 					node.setParent(lastnode.getParent());
 				}
 				else if(lastnode.getParent().hasLeftChild() && lastnode.getParent().hasRightChild()) {//if the last node's parent has a left&right child, branch off of the last node
-					System.out.println("hi");
 					lastnode.setLeftChild(node);
 					node.setParent(lastnode);
 					
 				}
-				else {//otherwise set the node as the right child of the last node's parent.
+				else {
 					System.out.println(lastnode.getParent().getX() + ": " + lastnode.getParent().getY());
 					return;
 				}
