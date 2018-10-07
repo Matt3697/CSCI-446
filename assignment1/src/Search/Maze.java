@@ -8,6 +8,7 @@ import java.util.Scanner;
 public class Maze {
 	public String mazeType;
 	public char[][] maze = null;
+	private Node startNode, goalNode;
 	
 	public Maze(String mazeType) { //constructor for Maze
 		this.mazeType = mazeType;
@@ -48,6 +49,15 @@ public class Maze {
         		columns = rows[i].toCharArray();  //convert row to a char array, this represents an index of each column in a row.
 			for(int y = 0; y < columns.length; y++) {
 				maze[i][y] = columns[y];		 //add each column index to its corresponding column in each row.
+				if (maze[i][y] == 'P') {
+					Node n = new Node(i,y);
+					startNode = n;
+				}
+//				else if (maze[i][y] == '*') {
+//					Node n = new Node(i,y);
+//					n.isGoal(true);
+//					goalNode = n;
+//				}
 			}
         }
        
@@ -57,7 +67,7 @@ public class Maze {
 		System.out.println(mazeType);
 		for(int i = 0; i < maze.length; i++) {//loops through the maze and print out its contents. stdout
 			for(int y = 0; y < maze[0].length; y++) {
-     			System.out.print(maze[i][y]);;
+     			System.out.print(maze[i][y]);
      		}
      		System.out.println();
 		}
@@ -68,5 +78,14 @@ public class Maze {
 		return maze;
 	}
 	
+	public Node getStartingPoint() {
+		return startNode;
+	}
 	
+	public void updateValue(Node n, char c) {
+		maze[n.getX()][n.getY()] = c;
+	}
+	public char getCurrentChar(Node n) {
+		return maze[n.getX()][n.getY()];
+	}
 }

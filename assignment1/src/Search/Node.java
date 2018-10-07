@@ -1,11 +1,16 @@
 package Search;
 
+import java.util.ArrayList;
+
 public class Node {
 	Node right;
 	Node left;
 	Node parent;
+	ArrayList<Node> neighbors = new ArrayList<>();
 	boolean leftChild,rightChild,goal;
 	int x,y;
+	boolean isVisited;
+	
 	public Node(int x, int y) {
 		this.x = x;
 		this.y = y;
@@ -54,6 +59,21 @@ public class Node {
 	}
 	public int getY() {
 		return y;
+	}
+	public void addNeighbor(Node n) {
+		neighbors.add(n);
+	}
+	public void removeNeighbor(Node n) {
+		neighbors.remove(n);
+	}
+	public ArrayList<Node> getNeighbors() {
+		return neighbors;
+	}
+	public boolean isVisited() {
+		return isVisited;
+	}
+	public void setVisited() {
+		isVisited = true;
 	}
 }
 

@@ -20,8 +20,10 @@ public class Main {
 		mediumMaze.printMaze();
 		//largeMaze.printMaze();
 		//openMaze.printMaze();
-		DFS depthFirstSearch = new DFS();
-		depthFirstSearch.solve(mediumMaze);
+		//DFS depthFirstSearch = new DFS();
+		//depthFirstSearch.solve(mediumMaze);
+		BFS bfs = new BFS();
+		bfs.solve(mediumMaze);
 		PrintWriter writer = new PrintWriter("Output.txt", "UTF-8"); //outputs to directory Assignment1
 		printResults(writer);
 		writer.close();
