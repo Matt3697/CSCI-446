@@ -79,29 +79,38 @@ public class AStar {
 		expandFrontier(curPosition);
 	}
 	public void expandFrontier(int[] curPos) {
+		int x, y;
 		for(int i = 0; i < 4; i++)
 		{
 			switch (i) {
 			case 0:
-				if(checkVisited(curPos[0], curPos[1] - 1)) {
-					
+				x = curPos[0];
+				y = curPos[1] - 1;
+				if(checkVisited(x, y)) {
+					frontier.push(new Node(x, y));
 				}
 				break;
 
 			case 1:
-				if(checkVisited(curPos[0], curPos[1] + 1)) {
+				x = curPos[0];
+				y = curPos[1] + 1;
+				if(checkVisited(x, y)) {
 					
 				}
 				break;
 
 			case 2:
-				if(checkVisited(curPos[0] - 1, curPos[1])) {
+				x = curPos[0] - 1;
+				y = curPos[1];
+				if(checkVisited(x, y)) {
 					
 				}
 				break;
 
 			case 3:
-				if(checkVisited(curPos[0] + 1, curPos[1])) {
+				x = curPos[0] + 1;
+				y = curPos[1];
+				if(checkVisited(x, y)) {
 					
 				}
 				break;

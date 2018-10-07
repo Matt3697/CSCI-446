@@ -9,7 +9,7 @@ public class Node {
 	Node parent;
 	boolean leftChild,rightChild,goal;
 	boolean alternatePath = false;
-	int x,y;
+	int x,y, cost;
 	ArrayList<Integer> possiblePathX = new ArrayList<Integer>();
 	ArrayList<Integer> possiblePathY = new ArrayList<Integer>();
 
@@ -98,6 +98,14 @@ public class Node {
 	}
 	public int getY() {
 		return y;
+	}
+	
+	public void setCost(int cost) {
+		this.cost = cost;
+	}
+	
+	public int getCost() {
+		return cost;
 	}
 }
 
