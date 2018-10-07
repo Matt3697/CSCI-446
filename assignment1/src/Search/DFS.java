@@ -43,62 +43,90 @@ public class DFS {
 			if(!visited(y, x+1)) { //if we have not visited the space to the right.
 				x += 1;
 				node = new Node(x,y);
+				nodes.push(node);
 				path.put(y,x);
+				if(matrix[y][x] == ' ') {
+					lastnode.setLeftChild(node);	
+					matrix[y][x] = '.';
+				}
 				node.setParent(lastnode);
 				numberSurroundings = checkSurroundings(node);
-				System.out.println("num:" + numberSurroundings);
-				if(matrix[y][x+1] == '%'){
-						handleWall(node);
+				if(numberSurroundings == 0) { //if we've reached a dead end.
+					handleWall(node);
 				}
+				if(numberSurroundings > 1) { //if there are alternate paths at a node, set alternatePaths to true.
+					node.setAlternatePath(true);
+				}
+				System.out.println("num:" + numberSurroundings);
 			}
 			else if(!visited(y-1, x)) {//if we have not visited the space above.
 				y -= 1;
 				node = new Node(x,y);
+				nodes.push(node);
 				path.put(y,x);
+				if(matrix[y][x] == ' ') {
+					lastnode.setLeftChild(node);	
+					matrix[y][x] = '.';
+				}
 				node.setParent(lastnode);
 				numberSurroundings = checkSurroundings(node);
-				System.out.println("num:" + numberSurroundings);
-				if(matrix[y-1][x] == '%'){
+				if(numberSurroundings == 0) { //if we've reached a dead end.
 					handleWall(node);
 				}
+				if(numberSurroundings > 1) { //if there are alternate paths at a node, set alternatePaths to true.
+					node.setAlternatePath(true);
+				}
+				System.out.println("num:" + numberSurroundings);
+				
 			}
 			else if(!visited(y, x-1)) { //if we have not visited the space to the left.
 				x -= 1;
 				node = new Node(x,y);
+				nodes.push(node);
 				path.put(y,x);
+				if(matrix[y][x] == ' ') {
+					lastnode.setLeftChild(node);	
+					matrix[y][x] = '.';
+				}
 				node.setParent(lastnode);
 				numberSurroundings = checkSurroundings(node);
-				System.out.println("num:" + numberSurroundings);
-				if(matrix[y][x-1] == '%'){
+				if(numberSurroundings == 0) { //if we've reached a dead end.
 					handleWall(node);
 				}
+				if(numberSurroundings > 1) { //if there are alternate paths at a node, set alternatePaths to true.
+					node.setAlternatePath(true);
+				}
+				System.out.println("num:" + numberSurroundings);
 			}
 			else if(!visited(y+1,x)) {//if we have not visited the space below.
 				y += 1;
 				node = new Node(x,y);
+				nodes.push(node);
 				path.put(y,x);
+				if(matrix[y][x] == ' ') {
+					lastnode.setLeftChild(node);	
+					matrix[y][x] = '.';
+				}
 				node.setParent(lastnode);
 				numberSurroundings = checkSurroundings(node);
-				System.out.println("num:" + numberSurroundings);
-				if(matrix[y+1][x] == '%'){
+				if(numberSurroundings == 0) { //if we've reached a dead end.
 					handleWall(node);
 				}
-			}
-			if(numberSurroundings > 1) { //if there are alternate paths at a node, set alternatePaths to true.
-				node.setAlternatePath(true);
-			}
-			if(matrix[y][x] == ' ') {
-				lastnode.setLeftChild(node);	
-				matrix[y][x] = '.';
+				if(numberSurroundings > 1) { //if there are alternate paths at a node, set alternatePaths to true.
+					node.setAlternatePath(true);
+				}
+				System.out.println("num:" + numberSurroundings);
 			}
 			goal = checkForGoalState(y,x); //Check for goal state
 			lastnode = node;
 			i++;
+			System.out.println();
 		}
 	}
 	public Node getNextPath(Node node) {//find the closest parent node with another possible path.
 		while(!node.getParent().hasAlternatePath()) {
 			System.out.println(node.getX());
+			nodes.pop();
 			node = node.getParent();
 		}
 		return node;
@@ -125,15 +153,18 @@ public class DFS {
 		if(matrix[y][x-1] == ' ' && !visited(y,x-1)) {
 			counter++;
 			node.addPossiblePathX(x-1); 
-			node.addPossiblePathY(y);		}
+			node.addPossiblePathY(y);		
+		}
 		if(matrix[y+1][x] == ' ' && !visited(y+1,x)) {
 			counter++;
 			node.addPossiblePathX(x); 
-			node.addPossiblePathY(y+1);		}
+			node.addPossiblePathY(y+1);		
+		}
 		if(matrix[y-1][x] == ' ' && !visited(y-1,x)) {
 			counter++;
 			node.addPossiblePathX(x); 
-			node.addPossiblePathY(y-1);		}
+			node.addPossiblePathY(y-1);		
+		}
 		return counter;
 	}
 	public boolean checkForGoalState(int y, int x) {
