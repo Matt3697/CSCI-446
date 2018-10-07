@@ -77,7 +77,13 @@ public class AStar {
 		}
 		
 		expandFrontier(curPosition);
+		return findNextShortestCost();
 	}
+	
+	public int[] indNextShortestCost() {
+		
+	}
+	
 	public void expandFrontier(int[] curPos) {
 		int x, y;
 		for(int i = 0; i < 4; i++)
@@ -87,7 +93,9 @@ public class AStar {
 				x = curPos[0];
 				y = curPos[1] - 1;
 				if(checkVisited(x, y)) {
-					frontier.push(new Node(x, y));
+					Node newNode = new Node(x, y);
+					newNode.setCost(estimateNodeCost(curPos, x, y));
+					frontier.push(newNode);
 				}
 				break;
 
@@ -95,7 +103,9 @@ public class AStar {
 				x = curPos[0];
 				y = curPos[1] + 1;
 				if(checkVisited(x, y)) {
-					
+					Node newNode = new Node(x, y);
+					newNode.setCost(estimateNodeCost(curPos, x, y));
+					frontier.push(newNode);
 				}
 				break;
 
@@ -103,7 +113,9 @@ public class AStar {
 				x = curPos[0] - 1;
 				y = curPos[1];
 				if(checkVisited(x, y)) {
-					
+					Node newNode = new Node(x, y);
+					newNode.setCost(estimateNodeCost(curPos, x, y));
+					frontier.push(newNode);
 				}
 				break;
 
@@ -111,7 +123,9 @@ public class AStar {
 				x = curPos[0] + 1;
 				y = curPos[1];
 				if(checkVisited(x, y)) {
-					
+					Node newNode = new Node(x, y);
+					newNode.setCost(estimateNodeCost(curPos, x, y));
+					frontier.push(newNode);
 				}
 				break;
 
@@ -140,6 +154,14 @@ public class AStar {
 		return finished;
 	}
 	
+	public int estimateNodeCost(int[] curPosition, int newX, int newY) {
+		int cost, x, y;
+		x = Math.abs(curPosition[0] - newX);
+		y = Math.abs(curPosition[1] - newY);
+		cost = x + y;
+		return cost;
+	}
+	
 	
 	public int estimateCost(int[] curPosition) {
 		int cost, x, y;
@@ -151,8 +173,8 @@ public class AStar {
 	
 	public int estimateCost() {
 		int cost, x, y;
-		x = Math.abs(initialState[0] - goalState[0]);
-		y = Math.abs(initialState[1] - goalState[1]);
+		x = Math.abs(curPosition[0] - goalState[0]);
+		y = Math.abs(curPosition[1] - goalState[1]);
 		cost = x + y;
 		return cost;
 	}
