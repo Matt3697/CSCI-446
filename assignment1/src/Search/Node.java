@@ -3,6 +3,9 @@ package Search;
 import java.util.ArrayList;
 import java.util.LinkedList;
 
+import java.util.ArrayList;
+import java.util.HashMap;
+
 public class Node {
 	Node right;
 	Node left;
@@ -11,9 +14,14 @@ public class Node {
 	ArrayList<Node> neighbors = new ArrayList<>();
 	LinkedList<Node> path = new LinkedList<>();
 	boolean leftChild,rightChild,goal;
-	int x,y, cost;
 	boolean isVisited, hasPrev;
 	char value;
+	
+	boolean alternatePath = false;
+	int x,y, cost;
+	ArrayList<Integer> possiblePathX = new ArrayList<Integer>();
+	ArrayList<Integer> possiblePathY = new ArrayList<Integer>();
+
 	
 	public Node(int x, int y) {
 		this.x = x;
@@ -50,6 +58,42 @@ public class Node {
 			return false;
 		}
 	}
+	public void addPossiblePathX(int x) {
+		possiblePathX.add(x);
+	}
+	public void addPossiblePathY(int Y) {
+		possiblePathY.add(y);
+	}
+	public int getPossiblePathX(){
+		int x = -1;
+		//if(possiblePathX.size() > 0) {
+			x = possiblePathX.get(0);
+			possiblePathX.remove(0); //removes path from list so we don't use it twice.
+		//}
+		//else {
+			//System.out.println("Error");
+			//System.exit(0);
+		//}
+		return x;
+	}
+	public int getPossiblePathY(){
+		int y = -1;
+		if(possiblePathY.size() > 0) {
+			y = possiblePathY.get(0);
+			possiblePathY.remove(0);
+		}
+		else {
+			System.out.println("Error");
+			System.exit(0);
+		}
+		return y;	
+	}
+	public boolean hasAlternatePath() {
+		return alternatePath;
+	}
+	public void setAlternatePath(boolean flag) {
+		alternatePath = flag;
+	}
 	public Node getRightChild() {
 		return right;
 	}
@@ -70,6 +114,14 @@ public class Node {
 	}
 	public int getY() {
 		return y;
+	}
+	
+	public void setCost(int cost) {
+		this.cost = cost;
+	}
+	
+	public int getCost() {
+		return cost;
 	}
 	public void addNeighbor(Node n) {
 		neighbors.add(n);
