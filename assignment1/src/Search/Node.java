@@ -141,9 +141,6 @@ public class Node {
 	public char getValue() {
 		return value;
 	}
-	public int getCost() {
-		return cost;
-	}
 	public void updateCost(int c) {
 		cost = c;
 	}
