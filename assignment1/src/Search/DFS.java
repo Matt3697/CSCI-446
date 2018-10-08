@@ -10,11 +10,11 @@ import java.util.Stack;
 public class DFS {
 	public int x,y,cost;
 	public Stack<Node> nodes = new Stack<Node>();
-	public Maze maze;
+	public char[][] maze;
 	public ArrayList<Node> expanded;
 	public ArrayList<String> stats = new ArrayList<String>();
 	public void solve(Maze maze) {
-		this.maze = maze;
+		this.maze = maze.getMatrix();
 		cost = 0;
 		expanded = new ArrayList<>();
 		maze.printMaze();
@@ -65,15 +65,11 @@ public class DFS {
 		String totalExpanded = ("total expanded: " + expanded.size());
 		return totalExpanded;
 	}
-	public void printMaze(){
-		maze.printMaze();
-	}
+	
 	public void addStats() {
-		String name = (maze.getMazeType());
 		String start = ("start: " + "(" + x + ", " + y + ")");
 		String totalCost = ("total cost: " + cost);
 		String totalExpanded = ("total expanded: " + expanded.size());
-		stats.add(name);
 		stats.add(start);
 		stats.add(totalCost);
 		stats.add(totalExpanded);	
