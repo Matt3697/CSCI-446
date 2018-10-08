@@ -20,8 +20,6 @@ public class Node {
 	public ArrayList<Node> neighbors = new ArrayList<>();
 	public LinkedList<Node> path = new LinkedList<>();
 	public Node prev;
-
-
 	
 	public Node(int x, int y) {
 		this.x = x;

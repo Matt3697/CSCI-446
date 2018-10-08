@@ -8,6 +8,7 @@ import java.util.Scanner;
 public class Maze {
 	public String mazeType;
 	public char[][] maze = null;
+	public char[][] DFSmaze = null;
 	private Node[][] nodeMaze;
 	private Node startNode;
 	
@@ -24,18 +25,21 @@ public class Maze {
 		if(mazeType == "medium_maze") {	//if the maze type is a medium maze cater to its specific dimensions.
 			maze = new char[23][62];		//[rows][columns]
 			nodeMaze = new Node[23][62];
+			DFSmaze = new char[23][62];
 			rows = new String[23];
 			columns = new char[62];
 		}
 		else if(mazeType == "large_maze") {//else if it is a large maze...
 			maze = new char[31][81];		  //[rows][columns]
 			nodeMaze = new Node[31][81];
+			DFSmaze = new char[31][81];
 			rows = new String[31];
 			columns = new char[81];
 		}
 		else if(mazeType == "open_maze") {//else if it is an open maze...
 			maze = new char[20][37];		 //[rows][columns]
 			nodeMaze = new Node[20][37];
+			DFSmaze = new char[20][37];
 			rows = new String[20];
 			columns = new char[37];
 		}
@@ -54,6 +58,7 @@ public class Maze {
         		columns = rows[i].toCharArray();  //convert row to a char array, this represents an index of each column in a row.
 			for(int y = 0; y < columns.length; y++) {
 				maze[i][y] = columns[y];		 //add each column index to its corresponding column in each row.	
+				DFSmaze[i][y] = columns[y];
 			}
         }
         makeNodeMatrix();
@@ -71,7 +76,7 @@ public class Maze {
 	}
 
 	public char[][] getMatrix(){//returns the maze
-		return maze;
+		return DFSmaze;
 	}
 	
 	public Node getStartingPoint() {

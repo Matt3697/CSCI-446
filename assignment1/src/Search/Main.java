@@ -17,16 +17,14 @@ public class Main {
 		Maze mediumMaze = new Maze("medium_maze");
 		Maze largeMaze = new Maze("large_maze");
 		Maze openMaze = new Maze("open_maze");
-		//mediumMaze.printMaze();
-		//largeMaze.printMaze();
-		//openMaze.printMaze();
-		//DFS depthFirstSearch = new DFS();
-		//depthFirstSearch.solve(mediumMaze);
 		BFS bfs = new BFS();
 		bfs.solve(mediumMaze);
 		
 		DFS depthFirstSearch = new DFS();
 		depthFirstSearch.solve(mediumMaze);
+		depthFirstSearch.getPathCost();
+		//depthFirstSearch.solve(largeMaze);
+		//depthFirstSearch.getPathCost();
 		PrintWriter writer = new PrintWriter("Output.txt", "UTF-8"); //outputs to directory Assignment1
 		printResults(writer);
 		writer.close();
