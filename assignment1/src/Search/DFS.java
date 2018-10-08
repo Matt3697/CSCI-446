@@ -4,13 +4,16 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Stack;
 
+import javafx.scene.shape.Path;
+
 /*
  * DFS (Depth First Search)
  */
 public class DFS {
 	public int startingX;
 	public int startingY;
-	public HashMap<Integer, Integer> path = new HashMap<Integer,Integer>();
+	public ArrayList<Integer> pathX = new ArrayList<Integer>();
+	public ArrayList<Integer> pathY = new ArrayList<Integer>();
 	public Stack<Node> nodes = new Stack<Node>();
 	public Frontier frontier = new Frontier();
 	public char[][] matrix = null;
@@ -26,22 +29,24 @@ public class DFS {
 		Node root = new Node(x,y);
 		root.setParent(null);
 		nodes.push(root);
-		path.put(y, x);
+		pathX.add(x);
+		pathY.add(y);
 		Node node = null;
 		Node lastnode = root;
 		matrix[y][x] = '.';
 		int i = 0;
 		//Step Two: while node has left child, and the goal is not met, follow left branch.
 		//Once there is no left child,find closest parent with a right child. follow its right branch.
-		while(!goal) {
+		while(i < 365) {
 			System.out.println(i);
 			
 			int numberSurroundings = 0;
-			if(!visited(y, x+1)) { //if we have not visited the space to the right.
+			if(!visited(y, x+1) && matrix[y][x+1] != '%') { //if we have not visited the space to the right.
 				x += 1;
 				node = new Node(x,y);
 				nodes.push(node);
-				path.put(y,x);
+				pathX.add(x);
+				pathY.add(y);
 				if(matrix[y][x] == ' ') {
 					lastnode.setLeftChild(node);	
 					matrix[y][x] = '.';
@@ -60,11 +65,12 @@ public class DFS {
 				}
 				System.out.println("num:" + numberSurroundings);
 			}
-			else if(!visited(y-1, x)) {//if we have not visited the space above.
+			else if(!visited(y-1, x)&& matrix[y-1][x] != '%') {//if we have not visited the space above.
 				y -= 1;
 				node = new Node(x,y);
 				nodes.push(node);
-				path.put(y,x);
+				pathX.add(x);
+				pathY.add(y);
 				if(matrix[y][x] == ' ') {
 					lastnode.setLeftChild(node);	
 					matrix[y][x] = '.';
@@ -84,11 +90,12 @@ public class DFS {
 				System.out.println("num:" + numberSurroundings);
 				
 			}
-			else if(!visited(y, x-1)) { //if we have not visited the space to the left.
+			else if(!visited(y, x-1)&& matrix[y][x-1] != '%') { //if we have not visited the space to the left.
 				x -= 1;
 				node = new Node(x,y);
 				nodes.push(node);
-				path.put(y,x);
+				pathX.add(x);
+				pathY.add(y);
 				if(matrix[y][x] == ' ') {
 					lastnode.setLeftChild(node);	
 					matrix[y][x] = '.';
@@ -107,11 +114,12 @@ public class DFS {
 				}
 				System.out.println("num:" + numberSurroundings);
 			}
-			else if(!visited(y+1,x)) {//if we have not visited the space below.
+			else if(!visited(y+1,x)&& matrix[y+1][x] != '%') {//if we have not visited the space below.
 				y += 1;
 				node = new Node(x,y);
 				nodes.push(node);
-				path.put(y,x);
+				pathX.add(x);
+				pathY.add(y);
 				if(matrix[y][x] == ' ') {
 					lastnode.setLeftChild(node);	
 					matrix[y][x] = '.';
@@ -130,6 +138,7 @@ public class DFS {
 				}
 				System.out.println("num:" + numberSurroundings);
 			}
+			System.out.println(y + ":" + x);
 			goal = checkForGoalState(y,x); //Check for goal state
 			lastnode = node;
 			i++;
@@ -138,21 +147,20 @@ public class DFS {
 		}
 	}
 	public Node getNextPath(Node node) {//find the closest parent node with another possible path.
-		while(!node.getParent().hasAlternatePath()) {
-			System.out.println(node.getParent().getX());
-			nodes.pop();
-			node = node.getParent();
+		while(!node.hasAlternatePath()) {
+			node = nodes.pop();
 		}
-		node = node.getParent();
 		return node;
 	}
 	public int[] handleWall(Node node) {
 		int[] xy = new int[2];
 		Node ancestorNode = getNextPath(node);
-		int lastX = ancestorNode.getX();
-		int lastY = ancestorNode.getY();
 		int x = ancestorNode.getPossiblePathX();
 		int y = ancestorNode.getPossiblePathY();
+		while(visited(y,x)) {
+			x = ancestorNode.getPossiblePathX();
+			y = ancestorNode.getPossiblePathY();
+		}
 		xy[0] = x;
 		xy[1] = y;
 		node = new Node(x,y);
@@ -188,32 +196,39 @@ public class DFS {
 	}
 	public boolean checkForGoalState(int y, int x) {
 		boolean goal = false;
-		if(matrix[y][x] == '*'){//if the goal is to the left
+		if(matrix[y][x+1] == '*'){//if we are at the goal
 			goal = true;
-			path.put(x, y); //add the x and y position to the path list
+			pathX.add(x);
+			pathY.add(y);
+			System.out.println("hi");
+			System.exit(0);
 		}
-		else if(matrix[y][x] == '*'){//if the goal is above
+		else if(matrix[y][x-1] == '*') {
 			goal = true;
-			path.put(x, y); //add the x and y position to the path list
+			pathX.add(x);
+			pathY.add(y);
 		}
-		else if(matrix[y][x] == '*'){//if the goal is to the right
+		else if(matrix[y-1][x] == '*') {
 			goal = true;
-			path.put(y,x); //add the x and y position to the path list
+			pathX.add(x);
+			pathY.add(y);
 		}
-		else if(matrix[y][x] == '*'){//if the goal is below
+		else if(matrix[y+1][x] == '*') {
 			goal = true;
-			path.put(y,x); //add the x and y position to the path list
+			pathX.add(x);
+			pathY.add(y);
 		}
 		return goal;
 	}
 	public boolean visited(int y, int x) {
-		if(path.containsKey(y) && path.get(y) != x || !path.containsKey(y)) { //return false if we have not visited a spot.
-			return false;
+		for(int i = 0; i < pathX.size(); i++) {
+			if(pathX.get(i) == x && pathY.get(i) == y) { //return true if we have visited a spot.
+				return true;
+			}
 		}
-		else { //return true if we have visited the spot
-			return true;
-		}
+		return false;
 	}
+		
 	public void printStack() {
 		for(int i = 0; i < matrix.length; i++) { //looping through columns
 			for(int y = 0; y < matrix[0].length; y++) { //looping through rows

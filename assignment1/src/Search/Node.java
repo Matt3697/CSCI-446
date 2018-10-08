@@ -4,14 +4,14 @@ import java.util.ArrayList;
 import java.util.HashMap;
 
 public class Node {
-	Node right;
-	Node left;
-	Node parent;
-	boolean leftChild,rightChild,goal;
-	boolean alternatePath = false;
-	int x,y, cost;
-	ArrayList<Integer> possiblePathX = new ArrayList<Integer>();
-	ArrayList<Integer> possiblePathY = new ArrayList<Integer>();
+	public Node right;
+	public Node left;
+	public Node parent;
+	public boolean leftChild,rightChild,goal;
+	public boolean alternatePath = false;
+	public int x,y, cost;
+	public ArrayList<Integer> possiblePathX;
+	public ArrayList<Integer> possiblePathY;
 
 	
 	public Node(int x, int y) {
@@ -19,6 +19,8 @@ public class Node {
 		this.y = y;
 		leftChild = false;
 		rightChild = false;
+		possiblePathX = new ArrayList<Integer>();
+		possiblePathY = new ArrayList<Integer>();
 	}
 	public void setRightChild(Node node) {
 		right = node;
@@ -45,31 +47,17 @@ public class Node {
 	public void addPossiblePathX(int x) {
 		possiblePathX.add(x);
 	}
-	public void addPossiblePathY(int Y) {
+	public void addPossiblePathY(int y) {
 		possiblePathY.add(y);
 	}
 	public int getPossiblePathX(){
-		int x = -1;
-		//if(possiblePathX.size() > 0) {
-			x = possiblePathX.get(0);
-			possiblePathX.remove(0); //removes path from list so we don't use it twice.
-		//}
-		//else {
-			//System.out.println("Error");
-			//System.exit(0);
-		//}
+		x = possiblePathX.get(0);
+		possiblePathX.remove(0); //removes path from list so we don't use it twice.
 		return x;
 	}
 	public int getPossiblePathY(){
-		int y = -1;
-		if(possiblePathY.size() > 0) {
-			y = possiblePathY.get(0);
-			possiblePathY.remove(0);
-		}
-		else {
-			System.out.println("Error");
-			System.exit(0);
-		}
+		y = possiblePathY.get(0);
+		possiblePathY.remove(0);
 		return y;	
 	}
 	public boolean hasAlternatePath() {
