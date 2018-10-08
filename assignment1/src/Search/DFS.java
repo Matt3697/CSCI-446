@@ -64,9 +64,6 @@ public class DFS {
 	public void printMaze(){
 		maze.printMaze();
 	}
-	public String getMazeType() {
-		return maze;
-	}
 }
 
 			
