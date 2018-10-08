@@ -7,10 +7,10 @@ public class Frontier {
 	public Stack<Integer> xLoc = new Stack<Integer>();
 	public Stack<Integer> yLoc = new Stack<Integer>();
 	public Stack<Node> nodes = new Stack<Node>();
-	public ArrayList<Node> nodeList = new ArrayList<Node>();
+	public ArrayList<Node> nodeList;
 
 	public Frontier() {
-		
+		nodeList = new ArrayList<Node>();
 	}
 	
 	public void push(Node node) {

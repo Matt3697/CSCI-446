@@ -108,7 +108,7 @@ public class AStar {
 						if(puzzle[x][y] != '%') {
 							Node newNode = new Node(x, y);
 							newNode.setCost(estimateNodeCost(curPos, x, y));
-							frontier.push(newNode);
+							frontier.addNode(newNode);
 						}
 					}
 					catch(Exception e){
@@ -125,7 +125,7 @@ public class AStar {
 						if(puzzle[x][y] != '%') {
 							Node newNode = new Node(x, y);
 							newNode.setCost(estimateNodeCost(curPos, x, y));
-							frontier.push(newNode);
+							frontier.addNode(newNode);
 						}
 					}
 					catch(Exception e){
@@ -142,7 +142,7 @@ public class AStar {
 						if(puzzle[x][y] != '%') {
 							Node newNode = new Node(x, y);
 							newNode.setCost(estimateNodeCost(curPos, x, y));
-							frontier.push(newNode);
+							frontier.addNode(newNode);
 						}
 					}
 					catch(Exception e){
@@ -154,12 +154,16 @@ public class AStar {
 			case 3:
 				x = curPos[0] + 1;
 				y = curPos[1];
+				System.out.println("MARCO");
 				if(checkVisited(x, y)) {
+					System.out.println(puzzle[x][y]);
 					try{
+						System.out.println(puzzle[x][y]);
 						if(puzzle[x][y] != '%') {
+							System.out.println("POLO");
 							Node newNode = new Node(x, y);
 							newNode.setCost(estimateNodeCost(curPos, x, y));
-							frontier.push(newNode);
+							frontier.addNode(newNode);
 						}
 					}
 					catch(Exception e){
@@ -172,6 +176,7 @@ public class AStar {
 				break;
 			}
 		}
+		System.out.println("YO");
 	}
 	
 	public boolean checkVisited(int x, int y) {
