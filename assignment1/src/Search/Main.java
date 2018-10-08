@@ -31,11 +31,19 @@ public class Main {
 		depthFirstSearch.solve(mediumMaze1);
 		depthFirstSearch.solve(largeMaze1);
 		depthFirstSearch.solve(openMaze1);
+		
+		Maze mediumMaze2 = new Maze("medium_maze");
+		Maze largeMaze2 = new Maze("large_maze");
+		Maze openMaze2 = new Maze("open_maze");
 		AStar AStarSearch = new AStar();
-		AStarSearch.initPuzzle(mediumMaze);
+		AStarSearch.initPuzzle(mediumMaze2);
+		
+		Maze mediumMaze3 = new Maze("medium_maze");
+		Maze largeMaze3 = new Maze("large_maze");
+		Maze openMaze3 = new Maze("open_maze");
 		GBFS gbfs = new GBFS();
-		gbfs.initPuzzle(mediumMaze);
-		printResults(writer, depthFirstSearch.getStats());
+		gbfs.initPuzzle(mediumMaze3);
+		//printResults(writer, depthFirstSearch.getStats());
 		writer.close();
 	}
 	public static void printResults(PrintWriter writer, ArrayList<String> dfsStats) {
