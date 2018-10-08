@@ -58,7 +58,6 @@ public class Maze {
         		columns = rows[i].toCharArray();  //convert row to a char array, this represents an index of each column in a row.
 			for(int y = 0; y < columns.length; y++) {
 				maze[i][y] = columns[y];		 //add each column index to its corresponding column in each row.	
-				DFSmaze[i][y] = columns[y];
 			}
         }
         makeNodeMatrix();
@@ -76,7 +75,11 @@ public class Maze {
 	}
 
 	public char[][] getMatrix(){//returns the maze
-		return DFSmaze;
+		return maze;
+	}
+	
+	public Node[][] getNodeMatrix() {
+		return nodeMaze;
 	}
 	
 	public Node getStartingPoint() {
@@ -116,9 +119,6 @@ public class Maze {
 				n.addNeighbor(nodeMaze[i][j-1]); // West  neighbor
 			}
 		}
-	}
-	public Node[][] getNodeMatrix() {
-		return nodeMaze;
 	}
 }
 
