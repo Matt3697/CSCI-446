@@ -20,18 +20,21 @@ public class AStar {
 
 	public AStar() {
 		frontier = new Frontier();
+		visited = new ArrayList<Integer[]>();
 	}
 	
-	public void solve(Maze puzzle) {
+	public void initPuzzle(Maze puzzle) {
 		this.puzzle = puzzle.getMatrix();
 		goalState = findGoalState();
 		curPosition = findInitialState();
-		
-		
 		estimation = estimateCost();
-		while(isFinished()) {
+		
+		System.out.println("okay");
+		
+		while(!isFinished()) {
 			curPosition = findGoalStateAStar(curPosition);
 		}
+		System.out.println("okay");
 	}
 
 	public int[] findGoalState() {
@@ -77,11 +80,19 @@ public class AStar {
 		}
 		
 		expandFrontier(curPosition);
-		return findNextShortestCost();
+		updatePuzzle(curPosition);
+		printMaze();
+		return findNextSmallestCost();
 	}
 	
-	public int[] indNextShortestCost() {
+	public int[] findNextSmallestCost() {
+		int[] newPos = new int[2];
+		Node nextMove = frontier.findSmallestCost();
 		
+		newPos[0] = nextMove.getX();
+		newPos[1] = nextMove.getY();
+		
+		return newPos;
 	}
 	
 	public void expandFrontier(int[] curPos) {
@@ -93,9 +104,16 @@ public class AStar {
 				x = curPos[0];
 				y = curPos[1] - 1;
 				if(checkVisited(x, y)) {
-					Node newNode = new Node(x, y);
-					newNode.setCost(estimateNodeCost(curPos, x, y));
-					frontier.push(newNode);
+					try{
+						if(puzzle[x][y] != '%') {
+							Node newNode = new Node(x, y);
+							newNode.setCost(estimateNodeCost(curPos, x, y));
+							frontier.push(newNode);
+						}
+					}
+					catch(Exception e){
+						//Wall
+					}
 				}
 				break;
 
@@ -103,9 +121,16 @@ public class AStar {
 				x = curPos[0];
 				y = curPos[1] + 1;
 				if(checkVisited(x, y)) {
-					Node newNode = new Node(x, y);
-					newNode.setCost(estimateNodeCost(curPos, x, y));
-					frontier.push(newNode);
+					try{
+						if(puzzle[x][y] != '%') {
+							Node newNode = new Node(x, y);
+							newNode.setCost(estimateNodeCost(curPos, x, y));
+							frontier.push(newNode);
+						}
+					}
+					catch(Exception e){
+						//Wall
+					}
 				}
 				break;
 
@@ -113,9 +138,16 @@ public class AStar {
 				x = curPos[0] - 1;
 				y = curPos[1];
 				if(checkVisited(x, y)) {
-					Node newNode = new Node(x, y);
-					newNode.setCost(estimateNodeCost(curPos, x, y));
-					frontier.push(newNode);
+					try{
+						if(puzzle[x][y] != '%') {
+							Node newNode = new Node(x, y);
+							newNode.setCost(estimateNodeCost(curPos, x, y));
+							frontier.push(newNode);
+						}
+					}
+					catch(Exception e){
+						//Wall
+					}
 				}
 				break;
 
@@ -123,9 +155,16 @@ public class AStar {
 				x = curPos[0] + 1;
 				y = curPos[1];
 				if(checkVisited(x, y)) {
-					Node newNode = new Node(x, y);
-					newNode.setCost(estimateNodeCost(curPos, x, y));
-					frontier.push(newNode);
+					try{
+						if(puzzle[x][y] != '%') {
+							Node newNode = new Node(x, y);
+							newNode.setCost(estimateNodeCost(curPos, x, y));
+							frontier.push(newNode);
+						}
+					}
+					catch(Exception e){
+						//Wall
+					}
 				}
 				break;
 
@@ -138,16 +177,19 @@ public class AStar {
 	public boolean checkVisited(int x, int y) {
 		Integer[] pos = {x, y};
 		
-		for(int i = visited.size() - 1; i >= 0; i--) {
-			if(Arrays.equals(pos, visited.get(i))) {
-				return true;
+//		if(visited.size() != 0) {
+			for(int i = visited.size() - 1; i >= 0; i--) {
+				if(Arrays.equals(pos, visited.get(i))) {
+					return true;
+				}
 			}
-		}
+//		}
 		return false;
 	}
 	
 	public void setCompleted() {
 		finished = true;
+		System.out.println("Finished");
 	}
 	
 	public boolean isFinished() {
@@ -177,5 +219,18 @@ public class AStar {
 		y = Math.abs(curPosition[1] - goalState[1]);
 		cost = x + y;
 		return cost;
+	}
+	
+	public void updatePuzzle(int[] curPos) {
+		puzzle[curPos[0]][curPos[1]] = '.';
+	}
+	
+	public void printMaze() {
+		for(int i = 0; i < puzzle.length; i++) { //looping through columns
+			for(int y = 0; y < puzzle[0].length; y++) { //looping through rows
+     			System.out.print(puzzle[i][y]);
+     		}
+			System.out.println();
+		}
 	}
 }
