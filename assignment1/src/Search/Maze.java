@@ -120,5 +120,8 @@ public class Maze {
 	public Node[][] getNodeMatrix() {
 		return nodeMaze;
 	}
+	public String getMazeType() {
+		return mazeType;
+	}
 }
 

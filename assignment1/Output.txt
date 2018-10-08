@@ -1,15 +1,24 @@
-Depth First Search:
+medium_maze
+
 start: (21, 1)
+
 total cost: 170
-total expanded: 684
 
-Depth First Search:
+total expanded: 390
+
+large_maze
+
 start: (1, 1)
-total cost: 500
-total expanded: 1301
 
-Depth First Search:
+total cost: 500
+
+total expanded: 942
+
+open_maze
+
 start: (1, 23)
+
 total cost: 124
-total expanded: 596
+
+total expanded: 334
 

@@ -10,10 +10,14 @@ package Search;
 import java.io.FileNotFoundException;
 import java.io.PrintWriter;
 import java.io.UnsupportedEncodingException;
+import java.util.ArrayList;
 
 
 public class Main {
+	
 	public static void main(String[] args) throws FileNotFoundException, UnsupportedEncodingException {
+		PrintWriter writer = new PrintWriter("Output.txt", "UTF-8"); //outputs to directory Assignment1
+		
 		Maze mediumMaze = new Maze("medium_maze");
 		Maze largeMaze = new Maze("large_maze");
 		Maze openMaze = new Maze("open_maze");
@@ -27,12 +31,14 @@ public class Main {
 		depthFirstSearch.solve(mediumMaze1);
 		depthFirstSearch.solve(largeMaze1);
 		depthFirstSearch.solve(openMaze1);
-		PrintWriter writer = new PrintWriter("Output.txt", "UTF-8"); //outputs to directory Assignment1
-		printResults(writer);
+		printResults(writer, depthFirstSearch.getStats());
 		writer.close();
 	}
-	public static void printResults(PrintWriter writer) {
-		
+	public static void printResults(PrintWriter writer, ArrayList<String> dfsStats) {
+		for(int i = 0; i < dfsStats.size();i++) {
+			writer.println(dfsStats.get(i));
+			writer.println();
+		}
 		
 	}
 	
