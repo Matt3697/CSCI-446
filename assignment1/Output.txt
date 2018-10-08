@@ -1,1 +1,15 @@
-Some results...
+Depth First Search:
+start: (21, 1)
+total cost: 170
+total expanded: 684
+
+Depth First Search:
+start: (1, 1)
+total cost: 500
+total expanded: 1301
+
+Depth First Search:
+start: (1, 23)
+total cost: 124
+total expanded: 596
+

@@ -27,13 +27,13 @@ public class Main {
 		depthFirstSearch.solve(mediumMaze1);
 		depthFirstSearch.solve(largeMaze1);
 		depthFirstSearch.solve(openMaze1);
-		
 		PrintWriter writer = new PrintWriter("Output.txt", "UTF-8"); //outputs to directory Assignment1
 		printResults(writer);
 		writer.close();
 	}
 	public static void printResults(PrintWriter writer) {
-		writer.print("Some results...");
+		
+		
 	}
 	
 }
