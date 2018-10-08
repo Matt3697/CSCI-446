@@ -25,6 +25,9 @@ public class Main {
 		depthFirstSearch.getPathCost();
 		//depthFirstSearch.solve(largeMaze);
 		//depthFirstSearch.getPathCost();
+		//depthFirstSearch.solve(openMaze);
+		//depthFirstSearch.getPathCost();
+		//depthFirstSearch.printMaze();
 		PrintWriter writer = new PrintWriter("Output.txt", "UTF-8"); //outputs to directory Assignment1
 		printResults(writer);
 		writer.close();

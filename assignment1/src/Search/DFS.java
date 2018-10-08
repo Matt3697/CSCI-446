@@ -21,7 +21,7 @@ public class DFS {
 	
 	public void solve(Maze maze) {
 		matrix = maze.getMatrix();
-		getInitialState(matrix); //step 1: get initial state.
+		getInitialState(matrix);
 		int y = startingY; 
 		int x = startingX;
 		//Step One: push starting node to the stack,update the path, and mark it as visited.
