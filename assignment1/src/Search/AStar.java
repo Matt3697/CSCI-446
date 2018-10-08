@@ -20,18 +20,28 @@ public class AStar {
 
 	public AStar() {
 		frontier = new Frontier();
+		visited = new ArrayList<Integer[]>();
 	}
 	
-	public void solve(Maze puzzle) {
+	public void initPuzzle(Maze puzzle) {
 		this.puzzle = puzzle.getMatrix();
 		goalState = findGoalState();
 		curPosition = findInitialState();
+		estimation = estimateCost();
 		
+		System.out.println("okay");
 		
+<<<<<<< HEAD
 		/*estimation = estimateCost();
 		while(isFinished()) {
 			curPosition = findGoalStateAStar(curPosition);
 		}*/
+=======
+		while(!isFinished()) {
+			curPosition = findGoalStateAStar(curPosition);
+		}
+		System.out.println("okay");
+>>>>>>> 774195d367cc5b2fd720d9eae11304eddb260c98
 	}
 
 	public int[] findGoalState() {
@@ -77,32 +87,95 @@ public class AStar {
 		}
 		
 		expandFrontier(curPosition);
+<<<<<<< HEAD
 	}*/
+=======
+		updatePuzzle(curPosition);
+		printMaze();
+		return findNextSmallestCost();
+	}
+	
+	public int[] findNextSmallestCost() {
+		int[] newPos = new int[2];
+		Node nextMove = frontier.findSmallestCost();
+		
+		newPos[0] = nextMove.getX();
+		newPos[1] = nextMove.getY();
+		
+		return newPos;
+	}
+	
+>>>>>>> 774195d367cc5b2fd720d9eae11304eddb260c98
 	public void expandFrontier(int[] curPos) {
+		int x, y;
 		for(int i = 0; i < 4; i++)
 		{
 			switch (i) {
 			case 0:
-				if(checkVisited(curPos[0], curPos[1] - 1)) {
-					
+				x = curPos[0];
+				y = curPos[1] - 1;
+				if(checkVisited(x, y)) {
+					try{
+						if(puzzle[x][y] != '%') {
+							Node newNode = new Node(x, y);
+							newNode.setCost(estimateNodeCost(curPos, x, y));
+							frontier.push(newNode);
+						}
+					}
+					catch(Exception e){
+						//Wall
+					}
 				}
 				break;
 
 			case 1:
-				if(checkVisited(curPos[0], curPos[1] + 1)) {
-					
+				x = curPos[0];
+				y = curPos[1] + 1;
+				if(checkVisited(x, y)) {
+					try{
+						if(puzzle[x][y] != '%') {
+							Node newNode = new Node(x, y);
+							newNode.setCost(estimateNodeCost(curPos, x, y));
+							frontier.push(newNode);
+						}
+					}
+					catch(Exception e){
+						//Wall
+					}
 				}
 				break;
 
 			case 2:
-				if(checkVisited(curPos[0] - 1, curPos[1])) {
-					
+				x = curPos[0] - 1;
+				y = curPos[1];
+				if(checkVisited(x, y)) {
+					try{
+						if(puzzle[x][y] != '%') {
+							Node newNode = new Node(x, y);
+							newNode.setCost(estimateNodeCost(curPos, x, y));
+							frontier.push(newNode);
+						}
+					}
+					catch(Exception e){
+						//Wall
+					}
 				}
 				break;
 
 			case 3:
-				if(checkVisited(curPos[0] + 1, curPos[1])) {
-					
+				x = curPos[0] + 1;
+				y = curPos[1];
+				if(checkVisited(x, y)) {
+					try{
+						if(puzzle[x][y] != '%') {
+							Node newNode = new Node(x, y);
+							newNode.setCost(estimateNodeCost(curPos, x, y));
+							frontier.push(newNode);
+						}
+					}
+					catch(Exception e){
+						//Wall
+					}
 				}
 				break;
 
@@ -115,20 +188,31 @@ public class AStar {
 	public boolean checkVisited(int x, int y) {
 		Integer[] pos = {x, y};
 		
-		for(int i = visited.size() - 1; i >= 0; i--) {
-			if(Arrays.equals(pos, visited.get(i))) {
-				return true;
+//		if(visited.size() != 0) {
+			for(int i = visited.size() - 1; i >= 0; i--) {
+				if(Arrays.equals(pos, visited.get(i))) {
+					return true;
+				}
 			}
-		}
+//		}
 		return false;
 	}
 	
 	public void setCompleted() {
 		finished = true;
+		System.out.println("Finished");
 	}
 	
 	public boolean isFinished() {
 		return finished;
+	}
+	
+	public int estimateNodeCost(int[] curPosition, int newX, int newY) {
+		int cost, x, y;
+		x = Math.abs(curPosition[0] - newX);
+		y = Math.abs(curPosition[1] - newY);
+		cost = x + y;
+		return cost;
 	}
 	
 	
@@ -142,9 +226,26 @@ public class AStar {
 	
 	/*public int estimateCost() {
 		int cost, x, y;
-		x = Math.abs(initialState[0] - goalState[0]);
-		y = Math.abs(initialState[1] - goalState[1]);
+		x = Math.abs(curPosition[0] - goalState[0]);
+		y = Math.abs(curPosition[1] - goalState[1]);
 		cost = x + y;
 		return cost;
+<<<<<<< HEAD
 	}*/
+=======
+	}
+	
+	public void updatePuzzle(int[] curPos) {
+		puzzle[curPos[0]][curPos[1]] = '.';
+	}
+	
+	public void printMaze() {
+		for(int i = 0; i < puzzle.length; i++) { //looping through columns
+			for(int y = 0; y < puzzle[0].length; y++) { //looping through rows
+     			System.out.print(puzzle[i][y]);
+     		}
+			System.out.println();
+		}
+	}
+>>>>>>> 774195d367cc5b2fd720d9eae11304eddb260c98
 }
