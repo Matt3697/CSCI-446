@@ -10,7 +10,7 @@ public class Maze {
 	public char[][] maze = null;
 	public char[][] DFSmaze = null;
 	private Node[][] nodeMaze;
-	private Node startNode;
+	private Node startNode, goalNode;
 	
 	public Maze(String mazeType) { //constructor for Maze
 		this.mazeType = mazeType;
@@ -44,21 +44,20 @@ public class Maze {
 			columns = new char[37];
 		}
 		
-        try{	//Try to open file location
-        		mazeScanner = new Scanner(new File("src/Search/" + mazeType + ".txt"));
+        try{ //Try to open file location
+        	mazeScanner = new Scanner(new File("src/Search/" + mazeType + ".txt"));
         }
         catch(Exception e){//throw error if the file can't be located.
             System.out.println("File not found.");
             System.exit(0);
         }
         for(int i = 0; i < rows.length; i++) {//get the initial rows from the text file
-        		rows[i] = mazeScanner.nextLine();
+        	rows[i] = mazeScanner.nextLine();
         }
         for(int i = 0; i < rows.length; i++) {//loop through each row
-        		columns = rows[i].toCharArray();  //convert row to a char array, this represents an index of each column in a row.
+        	columns = rows[i].toCharArray();  //convert row to a char array, this represents an index of each column in a row.
 			for(int y = 0; y < columns.length; y++) {
 				maze[i][y] = columns[y];		 //add each column index to its corresponding column in each row.	
-				DFSmaze[i][y] = columns[y];
 			}
         }
         makeNodeMatrix();
@@ -76,11 +75,19 @@ public class Maze {
 	}
 
 	public char[][] getMatrix(){//returns the maze
-		return DFSmaze;
+		return maze;
+	}
+	
+	public Node[][] getNodeMatrix() {
+		return nodeMaze;
 	}
 	
 	public Node getStartingPoint() {
 		return startNode;
+	}
+	
+	public Node getGoalNode() {
+		return goalNode;
 	}
 	
 	// Method for updating matrix values to track visited nodes
@@ -94,9 +101,10 @@ public class Maze {
 			for (int j = 0; j < maze[0].length; j++) {
 				Node n = new Node(i, j, maze[i][j]);
 				nodeMaze[i][j] = n;	
-				if (n.getValue() == 'P') { //set starting point
+				if (n.getValue() == 'P') //set starting point
 					startNode = n;
-				}
+				if (n.getValue() == '*')
+					goalNode = n;
 				if (n.getValue() == '%') //ignore walls
 					n.setVisited();		
 			}
@@ -116,9 +124,6 @@ public class Maze {
 				n.addNeighbor(nodeMaze[i][j-1]); // West  neighbor
 			}
 		}
-	}
-	public Node[][] getNodeMatrix() {
-		return nodeMaze;
 	}
 	public String getMazeType() {
 		return mazeType;
