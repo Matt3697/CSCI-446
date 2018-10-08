@@ -185,11 +185,11 @@ public class AStar {
 //		if(visited.size() != 0) {
 			for(int i = visited.size() - 1; i >= 0; i--) {
 				if(Arrays.equals(pos, visited.get(i))) {
-					return true;
+					return false;
 				}
 			}
 //		}
-		return false;
+		return true;
 	}
 	
 	public void setCompleted() {
