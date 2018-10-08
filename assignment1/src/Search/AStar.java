@@ -217,8 +217,8 @@ public class AStar {
 		int cost, x, y;
 //		x = Math.abs(curPosition[0] - newX);
 //		y = Math.abs(curPosition[1] - newY);
-		x = Math.abs(curPosition[0] - goalState[0]);
-		y = Math.abs(curPosition[1] - goalState[1]);
+		x = Math.abs(newX - goalState[0]);
+		y = Math.abs(newY - goalState[1]);
 		cost = x + y;
 		return cost;
 	}
