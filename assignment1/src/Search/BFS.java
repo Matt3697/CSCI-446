@@ -38,7 +38,7 @@ public class BFS {
 				for (Node n : currNode.getNeighbors()) {
 					if (!n.isVisited()) { // If neighbor has not been visited, add it to queue and update cost
 						n.setVisited();
-						n.updateCost(currNode.getCost() + 1); // Cost is current node cost + 1 for the neighbor
+						n.setCost(currNode.getCost() + 1); // Cost is current node cost + 1 for the neighbor
 						n.setPrev(currNode); // Previous node of neighbor is current node
 						m.updateValue(n.getX(), n.getY(), '.'); // (optional) Update char maze to represent nodes that have been visited
 						q.add(n); 

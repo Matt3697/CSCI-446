@@ -141,9 +141,6 @@ public class Node {
 	public char getValue() {
 		return value;
 	}
-	public void updateCost(int c) {
-		cost = c;
-	}
 	public void setPrev(Node n) {
 		prev = n;
 		hasPrev = true;
