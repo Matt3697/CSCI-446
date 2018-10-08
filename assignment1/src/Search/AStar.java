@@ -1,18 +1,17 @@
-
 package Search;
 
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.HashMap;
 /*
  * Astar (A* Search)
  */
 public class AStar {
 	
-	int curCost, estimation;
+	int totalCost, estimation, expanded, smallestCost;
 	boolean finished = false;
 	int[] goalState;
 	int[] curPosition;
+	int[] initialPosition;
 	char[][] puzzle = null;
 	ArrayList<Node> path;
 	ArrayList<Integer[]> visited;
@@ -30,12 +29,13 @@ public class AStar {
 		curPosition = findInitialState();
 		estimation = estimateCost();
 		
-		System.out.println("okay");
-		
 		while(!isFinished()) {
 			curPosition = findGoalStateAStar(curPosition);
 		}
-		System.out.println("okay");
+		
+		System.out.println("Cost: " + totalCost);
+		System.out.println("Nodes Expanded: " + expanded);
+		System.out.println("Smallest Cost: " + smallestCost);
 	}
 
 	public int[] findGoalState() {
@@ -73,7 +73,7 @@ public class AStar {
 	}
 	
 	public int[] findGoalStateAStar(int[] curPosition) {
-		curCost ++;
+		totalCost ++;
 		
 		if(puzzle[curPosition[0]][curPosition[1]] == '*') {
 			setCompleted();
@@ -89,6 +89,7 @@ public class AStar {
 	public int[] findNextSmallestCost() {
 		int[] newPos = new int[2];
 		Node nextMove = frontier.findSmallestCost();
+		smallestCost = nextMove.getSmallestCost() + 1;
 		
 		newPos[0] = nextMove.getX();
 		newPos[1] = nextMove.getY();
@@ -98,6 +99,10 @@ public class AStar {
 	
 	public void expandFrontier(int[] curPos) {
 		int x, y;
+		char WALL = '%';
+		Node curNode = frontier.getCurNode();
+		
+		
 		for(int i = 0; i < 4; i++)
 		{
 			switch (i) {
@@ -106,10 +111,13 @@ public class AStar {
 				y = curPos[1] - 1;
 				if(!checkVisited(x, y)) {
 					try{
-						if(puzzle[x][y] != '%') {
+						if(puzzle[x][y] != WALL) {
 							Node newNode = new Node(x, y);
-							newNode.setCost(estimateNodeCost(curPos, x, y));
+							newNode.setCost(estimateNodeCost(x, y));
+							newNode.setPrev(curNode);
 							frontier.addNode(newNode);
+							newNode.setSmallestCost(curNode.getSmallestCost() + 1);
+							expanded++;
 						}
 					}
 					catch(Exception e){
@@ -123,10 +131,13 @@ public class AStar {
 				y = curPos[1] + 1;
 				if(!checkVisited(x, y)) {
 					try{
-						if(puzzle[x][y] != '%') {
+						if(puzzle[x][y] != WALL) {
 							Node newNode = new Node(x, y);
-							newNode.setCost(estimateNodeCost(curPos, x, y));
+							newNode.setCost(estimateNodeCost(x, y));
+							newNode.setPrev(curNode);
 							frontier.addNode(newNode);
+							newNode.setSmallestCost(curNode.getSmallestCost() + 1);
+							expanded++;
 						}
 					}
 					catch(Exception e){
@@ -140,10 +151,13 @@ public class AStar {
 				y = curPos[1];
 				if(!checkVisited(x, y)) {
 					try{
-						if(puzzle[x][y] != '%') {
+						if(puzzle[x][y] != WALL) {
 							Node newNode = new Node(x, y);
-							newNode.setCost(estimateNodeCost(curPos, x, y));
+							newNode.setCost(estimateNodeCost(x, y));
+							newNode.setPrev(curNode);
 							frontier.addNode(newNode);
+							newNode.setSmallestCost(curNode.getSmallestCost() + 1);
+							expanded++;
 						}
 					}
 					catch(Exception e){
@@ -159,8 +173,11 @@ public class AStar {
 					try{
 						if(puzzle[x][y] != '%') {
 							Node newNode = new Node(x, y);
-							newNode.setCost(estimateNodeCost(curPos, x, y));
+							newNode.setCost(estimateNodeCost(x, y));
+							newNode.setPrev(curNode);
 							frontier.addNode(newNode);
+							newNode.setSmallestCost(curNode.getSmallestCost() + 1);
+							expanded++;
 						}
 					}
 					catch(Exception e){
@@ -177,39 +194,35 @@ public class AStar {
 	
 	public boolean checkVisited(int x, int y) {
 		Integer[] pos = {x, y};
-		
-//		if(visited.size() != 0) {
 			for(int i = visited.size() - 1; i >= 0; i--) {
 				if(Arrays.equals(pos, visited.get(i))) {
 					return true;
 				}
 			}
-//		}
+		visited.add(pos);
 		return false;
+	}
+	
+	public void addToVisited(int[] curPos) {
+		Integer[] toAdd = new Integer[2];
+		toAdd[0] = curPos[0];
+		toAdd[1] = curPos[1];
+		visited.add(toAdd);
 	}
 	
 	public void setCompleted() {
 		finished = true;
-		System.out.println("Finished");
+//		System.out.println("Finished");
 	}
 	
 	public boolean isFinished() {
 		return finished;
 	}
 	
-	public int estimateNodeCost(int[] curPosition, int newX, int newY) {
+	public int estimateNodeCost(int newX, int newY) {
 		int cost, x, y;
-		x = Math.abs(curPosition[0] - newX);
-		y = Math.abs(curPosition[1] - newY);
-		cost = x + y;
-		return cost;
-	}
-	
-	
-	public int estimateCost(int[] curPosition) {
-		int cost, x, y;
-		x = Math.abs(curPosition[0] - goalState[0]);
-		y = Math.abs(curPosition[1] - goalState[1]);
+		x = Math.abs(newX - goalState[0]);
+		y = Math.abs(newY - goalState[1]);
 		cost = x + y;
 		return cost;
 	}
