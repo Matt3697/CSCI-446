@@ -48,7 +48,6 @@ public class DFS {
 			
 			currNode = nodes.pop();
 			if (currNode.getValue() == '*') { // End has been found
-				explored++;
 				System.out.println("total cost: " + currNode.getCost());
 				System.out.println("total explored: " + explored);
 				while (currNode.getValue() != 'P') { // Update visual path of least cost in the maze, represented with 'o' char
