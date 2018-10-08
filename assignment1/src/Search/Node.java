@@ -12,7 +12,7 @@ public class Node {
 	public Node parent;
 	public boolean leftChild,rightChild,goal;
 	public boolean alternatePath = false;
-	public int x,y, cost;
+	public int x,y, cost, smallestCost;
 	public ArrayList<Integer> possiblePathX;
 	public ArrayList<Integer> possiblePathY;
 	public char value;
@@ -104,6 +104,14 @@ public class Node {
 	
 	public void setCost(int cost) {
 		this.cost = cost;
+	}
+	
+	public void setSmallestCost(int cost) {
+		smallestCost = cost;
+	}
+	
+	public int getSmallestCost() {
+		return smallestCost;
 	}
 	
 	public int getCost() {

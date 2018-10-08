@@ -8,6 +8,7 @@ public class Frontier {
 	public Stack<Integer> yLoc = new Stack<Integer>();
 	public Stack<Node> nodes = new Stack<Node>();
 	public ArrayList<Node> nodeList;
+	public Node curNode;
 
 	public Frontier() {
 		nodeList = new ArrayList<Node>();
@@ -16,6 +17,7 @@ public class Frontier {
 	public void push(Node node) {
 		nodes.push(node);
 	}
+	
 	public void pop() {
 		nodes.pop();
 	}
@@ -24,11 +26,14 @@ public class Frontier {
 		nodeList.add(node);
 	}
 	
+	public Node getCurNode() {
+		return curNode;
+	}
+	
 	public Node findSmallestCost() {
 		int pos = 0;
-		System.out.println(nodeList.size());
 		int cost = nodeList.get(0).getCost();
-		Node curNode = nodeList.get(0);
+		curNode = nodeList.get(0);
 		
 		for(int i = 1; i < nodeList.size(); i++) {
 			if(nodeList.get(i).getCost() < cost) {
