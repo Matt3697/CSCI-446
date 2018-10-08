@@ -113,10 +113,10 @@ public class AStar {
 					try{
 						if(puzzle[x][y] != WALL) {
 							Node newNode = new Node(x, y);
-							newNode.setCost(estimateNodeCost(x, y));
 							newNode.setPrev(curNode);
-							frontier.addNode(newNode);
 							newNode.setSmallestCost(curNode.getSmallestCost() + 1);
+							newNode.setCost(estimateNodeCost(newNode, x, y));
+							frontier.addNode(newNode);
 							expanded++;
 						}
 					}
@@ -133,10 +133,10 @@ public class AStar {
 					try{
 						if(puzzle[x][y] != WALL) {
 							Node newNode = new Node(x, y);
-							newNode.setCost(estimateNodeCost(x, y));
 							newNode.setPrev(curNode);
-							frontier.addNode(newNode);
 							newNode.setSmallestCost(curNode.getSmallestCost() + 1);
+							newNode.setCost(estimateNodeCost(newNode, x, y));
+							frontier.addNode(newNode);
 							expanded++;
 						}
 					}
@@ -153,10 +153,10 @@ public class AStar {
 					try{
 						if(puzzle[x][y] != WALL) {
 							Node newNode = new Node(x, y);
-							newNode.setCost(estimateNodeCost(x, y));
 							newNode.setPrev(curNode);
-							frontier.addNode(newNode);
 							newNode.setSmallestCost(curNode.getSmallestCost() + 1);
+							newNode.setCost(estimateNodeCost(newNode, x, y));
+							frontier.addNode(newNode);
 							expanded++;
 						}
 					}
@@ -173,10 +173,10 @@ public class AStar {
 					try{
 						if(puzzle[x][y] != '%') {
 							Node newNode = new Node(x, y);
-							newNode.setCost(estimateNodeCost(x, y));
 							newNode.setPrev(curNode);
-							frontier.addNode(newNode);
 							newNode.setSmallestCost(curNode.getSmallestCost() + 1);
+							newNode.setCost(estimateNodeCost(newNode, x, y));
+							frontier.addNode(newNode);
 							expanded++;
 						}
 					}
@@ -219,11 +219,13 @@ public class AStar {
 		return finished;
 	}
 	
-	public int estimateNodeCost(int newX, int newY) {
-		int cost, x, y;
+	public int estimateNodeCost(Node n, int newX, int newY) {
+		int cost, gn, hn, x, y;
 		x = Math.abs(newX - goalState[0]);
 		y = Math.abs(newY - goalState[1]);
-		cost = x + y;
+		hn = x + y;
+		gn = n.getSmallestCost();
+		cost = gn + hn;
 		return cost;
 	}
 	
