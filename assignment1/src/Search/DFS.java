@@ -37,15 +37,50 @@ public class DFS {
 		int i = 0;
 		//Step Two: while node has left child, and the goal is not met, follow left branch.
 		//Once there is no left child,find closest parent with a right child. follow its right branch.
-		while(!goal) {
-			int numberSurroundings = 0;
+		maze.printMaze();
+		Node[][] nodeMaze;
+		Node currNode = maze.getStartingPoint();
+		nodeMaze = maze.getNodeMatrix(); // Get maze as a 2D array of Nodes
+		//System.out.println("start: (" + currNode.getX() + ", " + currNode.getY() + ")");  
+		int explored = 0;
+		nodes.push(currNode);
+		while(!nodes.isEmpty()) {
+			
+			currNode = nodes.pop();
+			if (currNode.getValue() == '*') { // End has been found
+				explored++;
+				System.out.println("total cost: " + currNode.getCost());
+				System.out.println("total explored: " + explored);
+				while (currNode.getValue() != 'P') { // Update visual path of least cost in the maze, represented with 'o' char
+					maze.updateValue(currNode.getX(), currNode.getY(), 'o');
+					currNode = currNode.getPrev();
+				}
+				maze.updateValue(currNode.getX(), currNode.getY(), 'o'); 
+				maze.printMaze();
+			}
+			
+			else {
+				for (Node n : currNode.getNeighbors()) {
+					if (!n.isVisited()) { // If neighbor has not been visited, add it to queue and update cost
+						n.setVisited();
+						n.setCost(currNode.getCost() + 1); // Cost is current node cost + 1 for the neighbor
+						n.setPrev(currNode); // Previous node of neighbor is current node
+						maze.updateValue(n.getX(), n.getY(), '.'); // (optional) Update char maze to represent nodes that have been visited
+						nodes.push(n);
+						explored++;
+					}
+				}
+				
+			}
+			/*int numberSurroundings = 0;
+			System.out.println(x + ":" + y);
 			if(!visited(y, x+1) && matrix[y][x+1] != '%') { //if we have not visited the space to the right.
 				x += 1;
 				node = new Node(x,y);
 				nodes.push(node);
 				pathX.add(x);
 				pathY.add(y);
-				if(matrix[y][x] == ' ' || matrix[y][x] == '*') {
+				if(matrix[y][x] == ' ') {
 					lastnode.setLeftChild(node);	
 					matrix[y][x] = '.';
 				}
@@ -53,21 +88,21 @@ public class DFS {
 				if(matrix[y][x] != '%') {
 					numberSurroundings = checkSurroundings(node);
 				}
-				if(numberSurroundings == 0) { //if we've reached a dead end.
+				if(numberSurroundings >= 1) { //if there are alternate paths at a node, set alternatePaths to true.
+					node.setAlternatePath(true);
+				}
+				if(numberSurroundings <= 1 && matrix[y][x+1] == '%') { //if we've reached a wall
 					if(checkForGoalState(y,x)) {
 						goal = (checkForGoalState(y,x)); //check to make sure its not the goal
 						printMaze();
 						return;
 					}
 					else {
-						int[] xy = handleWall(node);
-						x = xy[0];
-						y = xy[1];
+						node = handleWall(node);
+						x = node.getX();
+						y = node.getY();
 					}
-				}
-				if(numberSurroundings > 1) { //if there are alternate paths at a node, set alternatePaths to true.
-					node.setAlternatePath(true);
-				}
+				}	
 			}
 			else if(!visited(y-1, x)&& matrix[y-1][x] != '%') {//if we have not visited the space above.
 				y -= 1;
@@ -75,7 +110,7 @@ public class DFS {
 				nodes.push(node);
 				pathX.add(x);
 				pathY.add(y);
-				if(matrix[y][x] == ' ' || matrix[y][x] == '*') {
+				if(matrix[y][x] == ' ') {
 					lastnode.setLeftChild(node);	
 					matrix[y][x] = '.';
 				}
@@ -83,20 +118,21 @@ public class DFS {
 				if(matrix[y][x] != '%') {
 					numberSurroundings = checkSurroundings(node);
 				}
-				if(numberSurroundings == 0) { //if we've reached a dead end.
+				if(numberSurroundings >= 1) { //if there are alternate paths at a node, set alternatePaths to true.
+					node.setAlternatePath(true);
+				}
+				if(numberSurroundings <= 1 && matrix[y-1][x] == '%') { //if we've reached a wall
 					if(checkForGoalState(y,x)) {
 						goal = (checkForGoalState(y,x)); //check to make sure its not the goal
-						matrix[y][x] = '.';
+						printMaze();
+						return;
 					}
 					else {
-						int[] xy = handleWall(node);
-						x = xy[0];
-						y = xy[1];
+						node = handleWall(node);
+						x = node.getX();
+						y = node.getY();
 					}
-				}
-				if(numberSurroundings > 1) { //if there are alternate paths at a node, set alternatePaths to true.
-					node.setAlternatePath(true);
-				}				
+				}			
 			}
 			else if(!visited(y, x-1)&& matrix[y][x-1] != '%') { //if we have not visited the space to the left.
 				x -= 1;
@@ -104,7 +140,7 @@ public class DFS {
 				nodes.push(node);
 				pathX.add(x);
 				pathY.add(y);
-				if(matrix[y][x] == ' ' || matrix[y][x] == '*') {
+				if(matrix[y][x] == ' ') {
 					lastnode.setLeftChild(node);	
 					matrix[y][x] = '.';
 				}
@@ -112,20 +148,21 @@ public class DFS {
 				if(matrix[y][x] != '%') {
 					numberSurroundings = checkSurroundings(node);
 				}
-				if(numberSurroundings == 0) { //if we've reached a dead end.
-					if(checkForGoalState(y,x)) {
-						goal = (checkForGoalState(y,x)); //check to make sure its not the goal
-						matrix[y][x] = '.';
-					}
-					else {
-						int[] xy = handleWall(node);
-						x = xy[0];
-						y = xy[1];
-					}
-				}
-				if(numberSurroundings > 1) { //if there are alternate paths at a node, set alternatePaths to true.
+				if(numberSurroundings >= 1) { //if there are alternate paths at a node, set alternatePaths to true.
 					node.setAlternatePath(true);
 				}
+				if(numberSurroundings <= 1 && matrix[y][x-1] == '%') { //if we've reached a wall
+					if(checkForGoalState(y,x)) {
+						goal = (checkForGoalState(y,x)); //check to make sure its not the goal
+						printMaze();
+						return;
+					}
+					else {
+						node = handleWall(node);
+						x = node.getX();
+						y = node.getY();
+					}
+				}	
 			}
 			else if(!visited(y+1,x)&& matrix[y+1][x] != '%') {//if we have not visited the space below.
 				y += 1;
@@ -133,7 +170,7 @@ public class DFS {
 				nodes.push(node);
 				pathX.add(x);
 				pathY.add(y);
-				if(matrix[y][x] == ' ' || matrix[y][x] == '*') {
+				if(matrix[y][x] == ' ') {
 					lastnode.setLeftChild(node);	
 					matrix[y][x] = '.';
 				}
@@ -141,28 +178,32 @@ public class DFS {
 				if(matrix[y][x] != '%') {
 					numberSurroundings = checkSurroundings(node);
 				}
-				if(numberSurroundings == 0) { //if we've reached a dead end.
+				if(numberSurroundings >= 1) { //if there are alternate paths at a node, set alternatePaths to true.
+					node.setAlternatePath(true);
+				}
+				if(numberSurroundings <= 1 && matrix[y+1][x] == '%') { //if we've reached a wall
 					if(checkForGoalState(y,x)) {
-						goal = (checkForGoalState(y,x)); //check to make see if its the goal.
-						matrix[y][x] = '.';
+						goal = (checkForGoalState(y,x)); //check to make sure its not the goal
+						printMaze();
 						return;
 					}
 					else {
-						int[] xy = handleWall(node);
-						x = xy[0];
-						y = xy[1];
+						node = handleWall(node);
+						x = node.getX();
+						y = node.getY();
 					}
-				}
-				if(numberSurroundings > 1) { //if there are alternate paths at a node, set alternatePaths to true.
-					node.setAlternatePath(true);
-				}
+				}	
 			}
 			else {
-				x = ancestorNode.getX();
-				y = ancestorNode.getY();
+				node = handleWall(node);
+				x = node.getX();
+				y = node.getY();
+				//x = ancestorNode.getX();
+				//y = ancestorNode.getY();
 			}
 			lastnode = node;
 			i++;
+			printMaze();*/
 		}
 	}
 	public Node getNextPath(Node node) {//find the closest parent node with another possible path.
@@ -171,7 +212,7 @@ public class DFS {
 		}
 		return node;
 	}
-	public int[] handleWall(Node node) {
+	public Node handleWall(Node node) {
 		int[] xy = new int[2];
 		ancestorNode = getNextPath(node);
 		int x = ancestorNode.getX();
@@ -181,31 +222,61 @@ public class DFS {
 		node = new Node(x,y);
 		node.setParent(ancestorNode);
 		ancestorNode.setRightChild(node);
-		return xy;
+		return node;
 	}
 	public int checkSurroundings(Node node) {//checks to see if there are any alternate paths at this node.
 		int counter = 0;
 		int y = node.getY();
 		int x = node.getX();
 		if(matrix[y][x+1] == ' ' && !visited(y,x+1)) {
-			counter++;
+			Node childnode = new Node(y,x+1);
+			if(counter == 0) {
+				node.setLeftChild(childnode);
+			}
+			else {
+				node.setRightChild(childnode);
+			}
 			node.addPossiblePathX(x+1); 
 			node.addPossiblePathY(y);
+			counter++;
 		}
 		if(matrix[y][x-1] == ' ' && !visited(y,x-1)) {
-			counter++;
+			
+			Node childnode = new Node(y,x-1);
+			if(counter == 0) {
+				node.setLeftChild(childnode);
+			}
+			else {
+				node.setRightChild(childnode);
+			}
 			node.addPossiblePathX(x-1); 
-			node.addPossiblePathY(y);		
+			node.addPossiblePathY(y);	
+			counter++;
 		}
 		if(matrix[y+1][x] == ' ' && !visited(y+1,x)) {
-			counter++;
+			
+			Node childnode = new Node(y+1,x);
+			if(counter == 0) {
+				node.setLeftChild(childnode);
+			}
+			else {
+				node.setRightChild(childnode);
+			}
 			node.addPossiblePathX(x); 
-			node.addPossiblePathY(y+1);		
+			node.addPossiblePathY(y+1);	
+			counter++;
 		}
 		if(matrix[y-1][x] == ' ' && !visited(y-1,x)) {
-			counter++;
+			Node childnode = new Node(y-1,x);
+			if(counter == 0) {
+				node.setLeftChild(childnode);
+			}
+			else {
+				node.setRightChild(childnode);
+			}		
 			node.addPossiblePathX(x); 
-			node.addPossiblePathY(y-1);		
+			node.addPossiblePathY(y-1);
+			counter++;
 		}
 		return counter;
 	}

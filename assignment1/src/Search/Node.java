@@ -38,9 +38,11 @@ public class Node {
 	}
 	public void setRightChild(Node node) {
 		right = node;
+		rightChild = true;
 	}
 	public void setLeftChild(Node node) {
 		left = node;
+		leftChild = true;
 	}
 	public boolean hasRightChild() { //return true if the node has a right child
 		if(rightChild == true) {

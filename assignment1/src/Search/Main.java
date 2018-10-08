@@ -19,14 +19,11 @@ public class Main {
 		Maze openMaze = new Maze("open_maze");
 		BFS bfs = new BFS();
 		bfs.solve(mediumMaze);
-		
+		Maze mediumMaze1 = new Maze("medium_maze");
 		DFS depthFirstSearch = new DFS();
-		depthFirstSearch.solve(mediumMaze);
-		depthFirstSearch.getPathCost();
+		depthFirstSearch.solve(mediumMaze1);
 		//depthFirstSearch.solve(largeMaze);
-		//depthFirstSearch.getPathCost();
 		//depthFirstSearch.solve(openMaze);
-		//depthFirstSearch.getPathCost();
 		//depthFirstSearch.printMaze();
 		PrintWriter writer = new PrintWriter("Output.txt", "UTF-8"); //outputs to directory Assignment1
 		printResults(writer);

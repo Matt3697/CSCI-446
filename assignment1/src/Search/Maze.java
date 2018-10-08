@@ -117,7 +117,6 @@ public class Maze {
 			}
 		}
 	}
-
 	public Node[][] getNodeMatrix() {
 		return nodeMaze;
 	}
