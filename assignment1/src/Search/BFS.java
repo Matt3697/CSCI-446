@@ -9,53 +9,43 @@ import java.util.LinkedList;
 public class BFS {
 	
 	Queue<Node> q;
-	char[][] maze;
+	Node[][] nodeMaze;
 	
 	public BFS() {
-		q = new LinkedList<>();
+		q = new LinkedList<>(); //Frontier queue
 	}
 	
 	public void solve(Maze m) {
-		maze = m.getMatrix();
+		m.printMaze();
 		Node currNode = m.getStartingPoint();
+		nodeMaze = m.getNodeMatrix(); // Get maze as a 2D array of Nodes
+		System.out.println("start: (" + currNode.getX() + ", " + currNode.getY() + ")");  
+		q.add(currNode); 
 		
-		System.out.println("start x=" + currNode.getX() + " start y=" + currNode.getY());
-		q.add(currNode);
-		
-		while (q.peek() != null) {
+		while (!q.isEmpty()) {
 			currNode = q.remove();
-			if (m.getCurrentChar(currNode) == '*') {
-				System.out.println("FINISH");
-				//done;
+			if (currNode.getValue() == '*') { // End has been found
+				System.out.println("total cost: " + currNode.getCost());
+				while (currNode.getValue() != 'P') { // Update visual path of least cost in the maze, represented with 'o' char
+					m.updateValue(currNode.getX(), currNode.getY(), 'o');
+					currNode = currNode.getPrev();
+				}
+				m.updateValue(currNode.getX(), currNode.getY(), 'o'); 
+				m.printMaze();
 			}
+			
 			else {
-				setNeighbors(currNode, m);
 				for (Node n : currNode.getNeighbors()) {
-					if (!n.isVisited && (m.getCurrentChar(n) != '*') && (m.getCurrentChar(n) != '%') ) {
-						m.updateValue(n, '.');
+					if (!n.isVisited()) { // If neighbor has not been visited, add it to queue and update cost
 						n.setVisited();
-						q.add(n);
-					}
-					else if (!n.isVisited && m.getCurrentChar(n) == '*') {
-						n.setVisited();
-						q.add(n);
+						n.updateCost(currNode.getCost() + 1); // Cost is current node cost + 1 for the neighbor
+						n.setPrev(currNode); // Previous node of neighbor is current node
+						m.updateValue(n.getX(), n.getY(), '.'); // (optional) Update char maze to represent nodes that have been visited
+						q.add(n); 
 					}
 				}
-				currNode.setVisited();
-				m.updateValue(currNode, '.');
+				
 			}
-			m.printMaze();
 		}
-	}
-	
-	public void setNeighbors(Node n, Maze m) {
-		//if (m.getMatrix()[n.getX()+1][n.getY()] != '%')
-			n.addNeighbor(new Node(n.getX()+1, n.getY()));
-		//if (m.getMatrix()[n.getX()-1][n.getY()] != '%')
-			n.addNeighbor(new Node(n.getX()-1, n.getY()));
-		//if (m.getMatrix()[n.getX()][n.getY()-1] != '%')
-			n.addNeighbor(new Node(n.getX(), n.getY()-1));
-		//if (m.getMatrix()[n.getX()][n.getY()+1] != '%')
-			n.addNeighbor(new Node(n.getX(), n.getY()+1));
 	}
 }

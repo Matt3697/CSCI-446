@@ -8,7 +8,8 @@ import java.util.Scanner;
 public class Maze {
 	public String mazeType;
 	public char[][] maze = null;
-	private Node startNode, goalNode;
+	private Node[][] nodeMaze;
+	private Node startNode;
 	
 	public Maze(String mazeType) { //constructor for Maze
 		this.mazeType = mazeType;
@@ -19,18 +20,22 @@ public class Maze {
 		Scanner mazeScanner = null;
 		String[] rows = null;			//holds the initial lines from the text file
 		char[] columns = null;			//holds each index of a row.
+		
 		if(mazeType == "medium_maze") {	//if the maze type is a medium maze cater to its specific dimensions.
 			maze = new char[23][62];		//[rows][columns]
+			nodeMaze = new Node[23][62];
 			rows = new String[23];
 			columns = new char[62];
 		}
 		else if(mazeType == "large_maze") {//else if it is a large maze...
 			maze = new char[31][81];		  //[rows][columns]
+			nodeMaze = new Node[31][81];
 			rows = new String[31];
 			columns = new char[81];
 		}
 		else if(mazeType == "open_maze") {//else if it is an open maze...
 			maze = new char[20][37];		 //[rows][columns]
+			nodeMaze = new Node[20][37];
 			rows = new String[20];
 			columns = new char[37];
 		}
@@ -48,20 +53,10 @@ public class Maze {
         for(int i = 0; i < rows.length; i++) {//loop through each row
         		columns = rows[i].toCharArray();  //convert row to a char array, this represents an index of each column in a row.
 			for(int y = 0; y < columns.length; y++) {
-				maze[i][y] = columns[y];		 //add each column index to its corresponding column in each row.
-				if (maze[i][y] == 'P') {
-					Node n = new Node(i,y);
-					startNode = n;
-				}
-//				else if (maze[i][y] == '*') {
-//					Node n = new Node(i,y);
-//					n.isGoal(true);
-//					goalNode = n;
-//				}
+				maze[i][y] = columns[y];		 //add each column index to its corresponding column in each row.	
 			}
         }
-       
-      
+        makeNodeMatrix();
    }
 	public void printMaze() {
 		System.out.println(mazeType);
@@ -74,6 +69,7 @@ public class Maze {
 		System.out.println();
 		System.out.println();
 	}
+
 	public char[][] getMatrix(){//returns the maze
 		return maze;
 	}
@@ -82,10 +78,43 @@ public class Maze {
 		return startNode;
 	}
 	
-	public void updateValue(Node n, char c) {
-		maze[n.getX()][n.getY()] = c;
+	// Method for updating matrix values to track visited nodes
+	public void updateValue(int x, int y, char c) {
+		maze[x][y] = c;
 	}
-	public char getCurrentChar(Node n) {
-		return maze[n.getX()][n.getY()];
+	
+	// Create a matrix where each item is a Node
+	public void makeNodeMatrix() {
+		for (int i = 0; i < maze.length; i++) {
+			for (int j = 0; j < maze[0].length; j++) {
+				Node n = new Node(i, j, maze[i][j]);
+				nodeMaze[i][j] = n;	
+				if (n.getValue() == 'P') { //set starting point
+					startNode = n;
+				}
+				if (n.getValue() == '%') //ignore walls
+					n.setVisited();		
+			}
+		}
+		setNeighbors();
+	}
+	
+	// Set all neighbors of all nodes
+	public void setNeighbors() {
+		Node n;
+		for(int i = 1; i < nodeMaze.length -1; i++) {
+			for(int j = 1; j < nodeMaze[0].length -1; j++) {	
+				n = nodeMaze[i][j];
+				n.addNeighbor(nodeMaze[i+1][j]); // South neighbor
+				n.addNeighbor(nodeMaze[i-1][j]); // North neighbor
+				n.addNeighbor(nodeMaze[i][j+1]); // East  neighbor
+				n.addNeighbor(nodeMaze[i][j-1]); // West  neighbor
+			}
+		}
+	}
+
+	public Node[][] getNodeMatrix() {
+		return nodeMaze;
 	}
 }
+
