@@ -31,6 +31,10 @@ public class Main {
 		depthFirstSearch.solve(mediumMaze1);
 		depthFirstSearch.solve(largeMaze1);
 		depthFirstSearch.solve(openMaze1);
+		AStar AStarSearch = new AStar();
+		AStarSearch.initPuzzle(mediumMaze);
+		GBFS gbfs = new GBFS();
+		gbfs.initPuzzle(mediumMaze);
 		printResults(writer, depthFirstSearch.getStats());
 		writer.close();
 	}

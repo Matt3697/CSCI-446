@@ -28,6 +28,10 @@ public class AStar {
 		goalState = findGoalState();
 		curPosition = findInitialState();
 		estimation = estimateCost();
+		Node firstNode = new Node(curPosition[0], curPosition[1]);
+		firstNode.setCost(estimateCost());
+		firstNode.setSmallestCost(-1);
+		frontier.setNode(firstNode);
 		
 		while(!isFinished()) {
 			curPosition = findGoalStateAStar(curPosition);
@@ -141,7 +145,7 @@ public class AStar {
 						}
 					}
 					catch(Exception e){
-						//Out of Bounds
+						System.out.println(e);
 					}
 				}
 				break;

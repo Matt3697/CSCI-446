@@ -30,6 +30,10 @@ public class Frontier {
 		return curNode;
 	}
 	
+	public void setNode(Node n) {
+		curNode = n;
+	}
+	
 	public Node findSmallestCost() {
 		int pos = 0;
 		int cost = nodeList.get(0).getCost();
