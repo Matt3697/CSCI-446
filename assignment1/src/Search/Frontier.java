@@ -26,7 +26,7 @@ public class Frontier {
 	
 	public Node findSmallestCost() {
 		int pos = 0;
-		System.out.println(nodes.size());
+		System.out.println(nodeList.size());
 		int cost = nodeList.get(0).getCost();
 		Node curNode = nodeList.get(0);
 		

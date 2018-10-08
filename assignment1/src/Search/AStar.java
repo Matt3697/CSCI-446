@@ -1,4 +1,3 @@
-
 package Search;
 
 import java.util.ArrayList;
@@ -30,12 +29,9 @@ public class AStar {
 		curPosition = findInitialState();
 		estimation = estimateCost();
 		
-		System.out.println("okay");
-		
 		while(!isFinished()) {
 			curPosition = findGoalStateAStar(curPosition);
 		}
-		System.out.println("okay");
 	}
 
 	public int[] findGoalState() {
