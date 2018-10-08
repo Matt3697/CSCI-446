@@ -7,7 +7,6 @@ import java.util.ArrayList;
 import java.util.HashMap;
 
 public class Node {
-
 	public Node right;
 	public Node left;
 	public Node parent;
