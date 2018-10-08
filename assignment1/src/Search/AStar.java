@@ -28,10 +28,10 @@ public class AStar {
 		curPosition = findInitialState();
 		
 		
-		estimation = estimateCost();
+		/*estimation = estimateCost();
 		while(isFinished()) {
 			curPosition = findGoalStateAStar(curPosition);
-		}
+		}*/
 	}
 
 	public int[] findGoalState() {
@@ -68,7 +68,7 @@ public class AStar {
 		return initialLocation;
 	}
 	
-	public int[] findGoalStateAStar(int[] curPosition) {
+	/*public int[] findGoalStateAStar(int[] curPosition) {
 		curCost ++;
 		
 		if(puzzle[curPosition[0]][curPosition[1]] == '*') {
@@ -77,7 +77,7 @@ public class AStar {
 		}
 		
 		expandFrontier(curPosition);
-	}
+	}*/
 	public void expandFrontier(int[] curPos) {
 		for(int i = 0; i < 4; i++)
 		{
@@ -140,11 +140,11 @@ public class AStar {
 		return cost;
 	}
 	
-	public int estimateCost() {
+	/*public int estimateCost() {
 		int cost, x, y;
 		x = Math.abs(initialState[0] - goalState[0]);
 		y = Math.abs(initialState[1] - goalState[1]);
 		cost = x + y;
 		return cost;
-	}
+	}*/
 }

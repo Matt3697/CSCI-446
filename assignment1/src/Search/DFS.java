@@ -15,9 +15,6 @@ public class DFS {
 	public Frontier frontier = new Frontier();
 	public char[][] matrix = null;
 	
-	public DFS() {
-		
-	}
 	
 	public void solve(Maze maze) {
 		matrix = maze.getMatrix();
@@ -38,7 +35,7 @@ public class DFS {
 		//Once there is no left child,find closest parent with a right child. follow its right branch.
 		while(!goal) {
 			System.out.println(i);
-			printMaze();
+			
 			int numberSurroundings = 0;
 			if(!visited(y, x+1)) { //if we have not visited the space to the right.
 				x += 1;
@@ -50,9 +47,13 @@ public class DFS {
 					matrix[y][x] = '.';
 				}
 				node.setParent(lastnode);
-				numberSurroundings = checkSurroundings(node);
+				if(matrix[y][x] != '%') {
+					numberSurroundings = checkSurroundings(node);
+				}
 				if(numberSurroundings == 0) { //if we've reached a dead end.
-					handleWall(node);
+					int[] xy = handleWall(node);
+					x = xy[0];
+					y = xy[1];
 				}
 				if(numberSurroundings > 1) { //if there are alternate paths at a node, set alternatePaths to true.
 					node.setAlternatePath(true);
@@ -69,9 +70,13 @@ public class DFS {
 					matrix[y][x] = '.';
 				}
 				node.setParent(lastnode);
-				numberSurroundings = checkSurroundings(node);
+				if(matrix[y][x] != '%') {
+					numberSurroundings = checkSurroundings(node);
+				}
 				if(numberSurroundings == 0) { //if we've reached a dead end.
-					handleWall(node);
+					int[] xy = handleWall(node);
+					x = xy[0];
+					y = xy[1];
 				}
 				if(numberSurroundings > 1) { //if there are alternate paths at a node, set alternatePaths to true.
 					node.setAlternatePath(true);
@@ -89,9 +94,13 @@ public class DFS {
 					matrix[y][x] = '.';
 				}
 				node.setParent(lastnode);
-				numberSurroundings = checkSurroundings(node);
+				if(matrix[y][x] != '%') {
+					numberSurroundings = checkSurroundings(node);
+				}
 				if(numberSurroundings == 0) { //if we've reached a dead end.
-					handleWall(node);
+					int[] xy = handleWall(node);
+					x = xy[0];
+					y = xy[1];
 				}
 				if(numberSurroundings > 1) { //if there are alternate paths at a node, set alternatePaths to true.
 					node.setAlternatePath(true);
@@ -108,9 +117,13 @@ public class DFS {
 					matrix[y][x] = '.';
 				}
 				node.setParent(lastnode);
-				numberSurroundings = checkSurroundings(node);
+				if(matrix[y][x] != '%') {
+					numberSurroundings = checkSurroundings(node);
+				}
 				if(numberSurroundings == 0) { //if we've reached a dead end.
-					handleWall(node);
+					int[] xy = handleWall(node);
+					x = xy[0];
+					y = xy[1];
 				}
 				if(numberSurroundings > 1) { //if there are alternate paths at a node, set alternatePaths to true.
 					node.setAlternatePath(true);
@@ -120,26 +133,32 @@ public class DFS {
 			goal = checkForGoalState(y,x); //Check for goal state
 			lastnode = node;
 			i++;
+			printMaze();
 			System.out.println();
 		}
 	}
 	public Node getNextPath(Node node) {//find the closest parent node with another possible path.
 		while(!node.getParent().hasAlternatePath()) {
-			System.out.println(node.getX());
+			System.out.println(node.getParent().getX());
 			nodes.pop();
 			node = node.getParent();
 		}
+		node = node.getParent();
 		return node;
 	}
-	public void handleWall(Node node) {
+	public int[] handleWall(Node node) {
+		int[] xy = new int[2];
 		Node ancestorNode = getNextPath(node);
 		int lastX = ancestorNode.getX();
 		int lastY = ancestorNode.getY();
 		int x = ancestorNode.getPossiblePathX();
 		int y = ancestorNode.getPossiblePathY();
+		xy[0] = x;
+		xy[1] = y;
 		node = new Node(x,y);
 		node.setParent(ancestorNode);
 		ancestorNode.setRightChild(node);
+		return xy;
 	}
 	public int checkSurroundings(Node node) {//checks to see if there are any alternate paths at this node.
 		int counter = 0;
@@ -188,7 +207,7 @@ public class DFS {
 		return goal;
 	}
 	public boolean visited(int y, int x) {
-		if(path.containsKey(y) && path.get(y) != x) { //return false if we have not visited a spot.
+		if(path.containsKey(y) && path.get(y) != x || !path.containsKey(y)) { //return false if we have not visited a spot.
 			return false;
 		}
 		else { //return true if we have visited the spot
