@@ -1,9 +1,13 @@
 package Search;
 
 import java.util.ArrayList;
+import java.util.LinkedList;
+
+import java.util.ArrayList;
 import java.util.HashMap;
 
 public class Node {
+
 	public Node right;
 	public Node left;
 	public Node parent;
@@ -12,6 +16,12 @@ public class Node {
 	public int x,y, cost;
 	public ArrayList<Integer> possiblePathX;
 	public ArrayList<Integer> possiblePathY;
+	public char value;
+	public boolean isVisited, hasPrev;
+	public ArrayList<Node> neighbors = new ArrayList<>();
+	public LinkedList<Node> path = new LinkedList<>();
+	public Node prev;
+
 
 	
 	public Node(int x, int y) {
@@ -21,6 +31,13 @@ public class Node {
 		rightChild = false;
 		possiblePathX = new ArrayList<Integer>();
 		possiblePathY = new ArrayList<Integer>();
+	}
+	public Node(int x, int y, char c) {
+		this.x = x;
+		this.y = y;
+		value = c;
+		cost = 0;
+		prev = null;
 	}
 	public void setRightChild(Node node) {
 		right = node;
@@ -95,5 +112,34 @@ public class Node {
 	public int getCost() {
 		return cost;
 	}
+	public void addNeighbor(Node n) {
+		neighbors.add(n);
+	}
+	public ArrayList<Node> getNeighbors() {
+		return neighbors;
+	}
+	public boolean isVisited() {
+		return isVisited;
+	}
+	public void setVisited() {
+		isVisited = true;
+	}
+	public void setValue(char c) {
+		value = c;
+	}
+	public char getValue() {
+		return value;
+	}
+	public void setPrev(Node n) {
+		prev = n;
+		hasPrev = true;
+	}
+	public Node getPrev() {
+		return prev;
+	}
+	public boolean hasPrev() {
+		return hasPrev;
+	}
 }
+
 
