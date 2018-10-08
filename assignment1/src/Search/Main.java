@@ -22,9 +22,8 @@ public class Main {
 		Maze mediumMaze1 = new Maze("medium_maze");
 		DFS depthFirstSearch = new DFS();
 		depthFirstSearch.solve(mediumMaze1);
-		//depthFirstSearch.solve(largeMaze);
-		//depthFirstSearch.solve(openMaze);
-		//depthFirstSearch.printMaze();
+		depthFirstSearch.solve(largeMaze);
+		depthFirstSearch.solve(openMaze);
 		PrintWriter writer = new PrintWriter("Output.txt", "UTF-8"); //outputs to directory Assignment1
 		printResults(writer);
 		writer.close();

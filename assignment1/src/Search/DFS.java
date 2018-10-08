@@ -14,11 +14,11 @@ public class DFS {
 	public Stack<Node> nodes = new Stack<Node>();
 	
 	public void solve(Maze maze) {
-		
 		maze.printMaze();
 		Node[][] nodeMaze;
 		Node currNode = maze.getStartingPoint();
 		nodeMaze = maze.getNodeMatrix(); // Get maze as a 2D array of Nodes
+		System.out.println("Depth First Search:");
 		System.out.println("start: (" + currNode.getX() + ", " + currNode.getY() + ")");  
 		int expanded = 0;
 		nodes.push(currNode);
@@ -34,7 +34,6 @@ public class DFS {
 				maze.updateValue(currNode.getX(), currNode.getY(), 'o'); 
 				maze.printMaze();
 			}
-			
 			else {
 				for (Node n : currNode.getNeighbors()) {
 					if (!n.isVisited()) { // If neighbor has not been visited, add it to the stack and update cost
@@ -46,7 +45,6 @@ public class DFS {
 						nodes.push(n);
 					}
 				}
-				
 			}
 		}
 	}
