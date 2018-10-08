@@ -103,7 +103,7 @@ public class AStar {
 			case 0:
 				x = curPos[0];
 				y = curPos[1] - 1;
-				if(checkVisited(x, y)) {
+				if(!checkVisited(x, y)) {
 					try{
 						if(puzzle[x][y] != '%') {
 							Node newNode = new Node(x, y);
@@ -112,7 +112,7 @@ public class AStar {
 						}
 					}
 					catch(Exception e){
-						//Wall
+						//Out of Bounds
 					}
 				}
 				break;
@@ -120,7 +120,7 @@ public class AStar {
 			case 1:
 				x = curPos[0];
 				y = curPos[1] + 1;
-				if(checkVisited(x, y)) {
+				if(!checkVisited(x, y)) {
 					try{
 						if(puzzle[x][y] != '%') {
 							Node newNode = new Node(x, y);
@@ -129,7 +129,7 @@ public class AStar {
 						}
 					}
 					catch(Exception e){
-						//Wall
+						//Out of Bounds
 					}
 				}
 				break;
@@ -137,7 +137,7 @@ public class AStar {
 			case 2:
 				x = curPos[0] - 1;
 				y = curPos[1];
-				if(checkVisited(x, y)) {
+				if(!checkVisited(x, y)) {
 					try{
 						if(puzzle[x][y] != '%') {
 							Node newNode = new Node(x, y);
@@ -146,7 +146,7 @@ public class AStar {
 						}
 					}
 					catch(Exception e){
-						//Wall
+						//Out of Bounds
 					}
 				}
 				break;
@@ -154,20 +154,16 @@ public class AStar {
 			case 3:
 				x = curPos[0] + 1;
 				y = curPos[1];
-				System.out.println("MARCO");
-				if(checkVisited(x, y)) {
-					System.out.println(puzzle[x][y]);
+				if(!checkVisited(x, y)) {
 					try{
-						System.out.println(puzzle[x][y]);
 						if(puzzle[x][y] != '%') {
-							System.out.println("POLO");
 							Node newNode = new Node(x, y);
 							newNode.setCost(estimateNodeCost(curPos, x, y));
 							frontier.addNode(newNode);
 						}
 					}
 					catch(Exception e){
-						//Wall
+						//Out of Bounds
 					}
 				}
 				break;
@@ -176,7 +172,6 @@ public class AStar {
 				break;
 			}
 		}
-		System.out.println("YO");
 	}
 	
 	public boolean checkVisited(int x, int y) {
@@ -185,11 +180,11 @@ public class AStar {
 //		if(visited.size() != 0) {
 			for(int i = visited.size() - 1; i >= 0; i--) {
 				if(Arrays.equals(pos, visited.get(i))) {
-					return false;
+					return true;
 				}
 			}
 //		}
-		return true;
+		return false;
 	}
 	
 	public void setCompleted() {
