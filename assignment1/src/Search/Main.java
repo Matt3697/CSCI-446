@@ -37,9 +37,7 @@ public class Main {
 	public static void printResults(PrintWriter writer, ArrayList<String> dfsStats) {
 		for(int i = 0; i < dfsStats.size();i++) {
 			writer.println(dfsStats.get(i));
-			writer.println();
 		}
-		
 	}
 	
 }
