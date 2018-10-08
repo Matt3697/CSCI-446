@@ -8,7 +8,7 @@ import java.util.HashMap;
  */
 public class AStar {
 	
-	int curCost, estimation;
+	int curCost, estimation, expanded;
 	boolean finished = false;
 	int[] goalState;
 	int[] curPosition;
@@ -32,6 +32,9 @@ public class AStar {
 		while(!isFinished()) {
 			curPosition = findGoalStateAStar(curPosition);
 		}
+		
+		System.out.println("Cost: " + curCost);
+		System.out.println("Nodes Expanded: " + expanded);
 	}
 
 	public int[] findGoalState() {
@@ -70,6 +73,7 @@ public class AStar {
 	
 	public int[] findGoalStateAStar(int[] curPosition) {
 		curCost ++;
+		addToVisited(curPosition);
 		
 		if(puzzle[curPosition[0]][curPosition[1]] == '*') {
 			setCompleted();
@@ -106,6 +110,7 @@ public class AStar {
 							Node newNode = new Node(x, y);
 							newNode.setCost(estimateNodeCost(curPos, x, y));
 							frontier.addNode(newNode);
+							expanded++;
 						}
 					}
 					catch(Exception e){
@@ -123,6 +128,7 @@ public class AStar {
 							Node newNode = new Node(x, y);
 							newNode.setCost(estimateNodeCost(curPos, x, y));
 							frontier.addNode(newNode);
+							expanded++;
 						}
 					}
 					catch(Exception e){
@@ -140,6 +146,7 @@ public class AStar {
 							Node newNode = new Node(x, y);
 							newNode.setCost(estimateNodeCost(curPos, x, y));
 							frontier.addNode(newNode);
+							expanded++;
 						}
 					}
 					catch(Exception e){
@@ -157,6 +164,7 @@ public class AStar {
 							Node newNode = new Node(x, y);
 							newNode.setCost(estimateNodeCost(curPos, x, y));
 							frontier.addNode(newNode);
+							expanded++;
 						}
 					}
 					catch(Exception e){
@@ -173,15 +181,27 @@ public class AStar {
 	
 	public boolean checkVisited(int x, int y) {
 		Integer[] pos = {x, y};
-		
+//		System.out.println("WTF: " + visited.size());
 //		if(visited.size() != 0) {
 			for(int i = visited.size() - 1; i >= 0; i--) {
+//				int xcomp = visited.get(i)[0];
+//				int ycomp = visited.get(i)[1];
+//				System.out.println("TEST: " + x + " " + y + " " + xcomp + " " + ycomp);
 				if(Arrays.equals(pos, visited.get(i))) {
+//				if(xcomp == x && ycomp == y) {
+//					System.out.println("MAYBEWORKING?");
 					return true;
 				}
 			}
 //		}
 		return false;
+	}
+	
+	public void addToVisited(int[] curPos) {
+		Integer[] toAdd = new Integer[2];
+		toAdd[0] = curPos[0];
+		toAdd[1] = curPos[1];
+		visited.add(toAdd);
 	}
 	
 	public void setCompleted() {
@@ -195,8 +215,10 @@ public class AStar {
 	
 	public int estimateNodeCost(int[] curPosition, int newX, int newY) {
 		int cost, x, y;
-		x = Math.abs(curPosition[0] - newX);
-		y = Math.abs(curPosition[1] - newY);
+//		x = Math.abs(curPosition[0] - newX);
+//		y = Math.abs(curPosition[1] - newY);
+		x = Math.abs(curPosition[0] - goalState[0]);
+		y = Math.abs(curPosition[1] - goalState[1]);
 		cost = x + y;
 		return cost;
 	}
