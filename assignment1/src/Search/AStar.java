@@ -37,6 +37,7 @@ public class AStar {
 			curPosition = findGoalStateAStar(curPosition);
 		}
 		
+		printMaze();
 		System.out.println("Cost: " + totalCost);
 		System.out.println("Nodes Expanded: " + expanded);
 		System.out.println("Smallest Cost: " + smallestCost);
@@ -86,7 +87,6 @@ public class AStar {
 		
 		expandFrontier(curPosition);
 		updatePuzzle(curPosition);
-		printMaze();
 		return findNextSmallestCost();
 	}
 	
