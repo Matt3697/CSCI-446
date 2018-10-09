@@ -50,11 +50,8 @@ public class Main {
 		AStar AStarSearch = new AStar();
 		System.out.println("-------AStarSearch-------");
 		AStarSearch.initPuzzle(mediumMaze2);
-		AStarSearch.addStats();
 		AStarSearch.initPuzzle(largeMaze2);
-		AStarSearch.addStats();
 		AStarSearch.initPuzzle(openMaze2);
-		AStarSearch.addStats();
 		
 		writer.println("-------AStarSearch-------");
 		for (String s : AStarSearch.getStats()) {
@@ -68,11 +65,8 @@ public class Main {
 		GBFS gbfs = new GBFS();
 		System.out.println("-------GDFS-------");
 		gbfs.initPuzzle(mediumMaze3);
-		gbfs.addStats();
 		gbfs.initPuzzle(largeMaze3);
-		gbfs.addStats();
 		gbfs.initPuzzle(openMaze3);
-		gbfs.addStats();
 		
 		writer.println("-------GBFS-------");
 		for (String s : gbfs.getStats()) {

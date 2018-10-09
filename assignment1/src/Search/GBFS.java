@@ -38,6 +38,7 @@ public class GBFS {
 		}
 		finished = false;
 		printMaze();
+		addStats();
 		System.out.println("Cost: " + totalCost);
 		System.out.println("Nodes Expanded: " + expanded);
 		System.out.println("Smallest Cost: " + smallestCost);
