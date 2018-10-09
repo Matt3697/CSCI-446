@@ -10,8 +10,6 @@ package Search;
 import java.io.FileNotFoundException;
 import java.io.PrintWriter;
 import java.io.UnsupportedEncodingException;
-import java.util.ArrayList;
-
 
 public class Main {
 	
@@ -21,35 +19,46 @@ public class Main {
 		Maze mediumMaze = new Maze("medium_maze");
 		Maze largeMaze = new Maze("large_maze");
 		Maze openMaze = new Maze("open_maze");
-		//BFS bfs = new BFS();
-		//bfs.solve(mediumMaze);
-		
-		/*Maze mediumMaze1 = new Maze("medium_maze");//mazes for Depth First Search.
-		Maze largeMaze1 = new Maze("large_maze");
-		Maze openMaze1 = new Maze("open_maze");*/
-		DFS depthFirstSearch = new DFS();
-		depthFirstSearch.solve(mediumMaze);
-		depthFirstSearch.solve(largeMaze);
-		depthFirstSearch.solve(openMaze);
-		
-		/*Maze mediumMaze2 = new Maze("medium_maze");
-		Maze largeMaze2 = new Maze("large_maze");
-		Maze openMaze2 = new Maze("open_maze");*/
-		//AStar AStarSearch = new AStar();
-		//AStarSearch.initPuzzle(mediumMaze);
-		
-		/*Maze mediumMaze3 = new Maze("medium_maze");
-		Maze largeMaze3 = new Maze("large_maze");
-		Maze openMaze3 = new Maze("open_maze");*/
-		//GBFS gbfs = new GBFS();
-		//gbfs.initPuzzle(mediumMaze);
-		//printResults(writer, depthFirstSearch.getStats());
-		writer.close();
-	}
-	public static void printResults(PrintWriter writer, ArrayList<String> dfsStats) {
-		for(int i = 0; i < dfsStats.size();i++) {
-			writer.println(dfsStats.get(i));
+		BFS bfs = new BFS();
+		bfs.solve(mediumMaze);
+		bfs.solve(openMaze);
+		bfs.solve(largeMaze);
+	
+		for (String s : bfs.getStats()) {
+			System.out.println(s);
+			writer.println(s);
 		}
+		
+		Maze mediumMaze1 = new Maze("medium_maze");//mazes for Depth First Search.
+		Maze largeMaze1 = new Maze("large_maze");
+		Maze openMaze1 = new Maze("open_maze");
+		DFS depthFirstSearch = new DFS();
+		depthFirstSearch.solve(mediumMaze1);
+		depthFirstSearch.solve(largeMaze1);
+		depthFirstSearch.solve(openMaze1);
+		
+		for (String s : depthFirstSearch.getStats()) {
+			System.out.println(s);
+			writer.println(s);
+		}
+//		
+//		Maze mediumMaze2 = new Maze("medium_maze");
+//		Maze largeMaze2 = new Maze("large_maze");
+//		Maze openMaze2 = new Maze("open_maze");
+//		AStar AStarSearch = new AStar();
+//		AStarSearch.initPuzzle(mediumMaze2);
+//		AStarSearch.initPuzzle(largeMaze2);
+//		AStarSearch.initPuzzle(openMaze2);
+//		
+//		Maze mediumMaze3 = new Maze("medium_maze");
+//		Maze largeMaze3 = new Maze("large_maze");
+//		Maze openMaze3 = new Maze("open_maze");
+//		GBFS gbfs = new GBFS();
+//		gbfs.initPuzzle(mediumMaze3);
+//		gbfs.initPuzzle(largeMaze3);
+//		gbfs.initPuzzle(openMaze3);
+
+		writer.close();		
 	}
 	
 }
