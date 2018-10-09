@@ -24,6 +24,7 @@ public class Main {
 		bfs.solve(openMaze);
 		bfs.solve(largeMaze);
 	
+		writer.println("-------BFS-------");
 		for (String s : bfs.getStats()) {
 			System.out.println(s);
 			writer.println(s);
@@ -37,6 +38,7 @@ public class Main {
 		depthFirstSearch.solve(largeMaze1);
 		depthFirstSearch.solve(openMaze1);
 		
+		writer.println("-------DFS-------");
 		for (String s : depthFirstSearch.getStats()) {
 			System.out.println(s);
 			writer.println(s);
@@ -48,8 +50,17 @@ public class Main {
 		AStar AStarSearch = new AStar();
 		System.out.println("-------AStarSearch-------");
 		AStarSearch.initPuzzle(mediumMaze2);
+		AStarSearch.addStats();
 		AStarSearch.initPuzzle(largeMaze2);
+		AStarSearch.addStats();
 		AStarSearch.initPuzzle(openMaze2);
+		AStarSearch.addStats();
+		
+		writer.println("-------AStarSearch-------");
+		for (String s : AStarSearch.getStats()) {
+			System.out.println(s);
+			writer.println(s);
+		}
 		
 		Maze mediumMaze3 = new Maze("medium_maze");
 		Maze largeMaze3 = new Maze("large_maze");
@@ -57,8 +68,17 @@ public class Main {
 		GBFS gbfs = new GBFS();
 		System.out.println("-------GDFS-------");
 		gbfs.initPuzzle(mediumMaze3);
+		gbfs.addStats();
 		gbfs.initPuzzle(largeMaze3);
+		gbfs.addStats();
 		gbfs.initPuzzle(openMaze3);
+		gbfs.addStats();
+		
+		writer.println("-------GBFS-------");
+		for (String s : gbfs.getStats()) {
+			System.out.println(s);
+			writer.println(s);
+		}
 		
 		writer.close();
 	}

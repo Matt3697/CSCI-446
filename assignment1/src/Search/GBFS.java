@@ -11,7 +11,7 @@ public class GBFS {
 	boolean finished = false;
 	int[] goalState;
 	int[] curPosition;
-	int[] initialPosition;
+	int[] initialPosition = new int[2];
 	char[][] puzzle = null;
 	ArrayList<Node> path;
 	ArrayList<Integer[]> visited;
@@ -265,7 +265,7 @@ public class GBFS {
 		String start = ("Start: " + "(" + initialPosition[0] + ", " + initialPosition[1] + ")");
 		String cost = ("Total least cost found: " + smallestCost);
 		String totalExpanded = ("Total expanded: " + expanded);
-		stats.add("ASTAR " + type);
+		stats.add("GBFS " + type);
 		stats.add(start);
 		stats.add(cost);
 		stats.add(totalExpanded + "\n");	

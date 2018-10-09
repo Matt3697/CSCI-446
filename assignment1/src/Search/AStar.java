@@ -11,7 +11,7 @@ public class AStar {
 	boolean finished = false;
 	int[] goalState;
 	int[] curPosition;
-	int[] initialPosition;
+	int[] initialPosition = new int[2];
 	char[][] puzzle = null;
 	ArrayList<Node> path;
 	ArrayList<Integer[]> visited;

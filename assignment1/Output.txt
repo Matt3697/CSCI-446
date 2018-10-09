@@ -1,3 +1,4 @@
+-------BFS-------
 BFS medium_maze
 Start: (21, 1)
 Total least cost: 94
@@ -13,6 +14,7 @@ Start: (1, 1)
 Total least cost: 148
 Total expanded: 1345
 
+-------DFS-------
 DFS medium_maze
 Start: (21, 1)
 Total least cost: 170
@@ -27,4 +29,36 @@ DFS open_maze
 Start: (1, 23)
 Total least cost: 124
 Total expanded: 334
+
+-------AStarSearch-------
+ASTAR medium_maze
+Start: (21, 1)
+Total least cost found: 94
+Total expanded: 351
+
+ASTAR large_maze
+Start: (1, 1)
+Total least cost found: 152
+Total expanded: 1113
+
+ASTAR open_maze
+Start: (1, 23)
+Total least cost found: 44
+Total expanded: 246
+
+-------GBFS-------
+GBFS medium_maze
+Start: (21, 1)
+Total least cost found: 94
+Total expanded: 124
+
+GBFS large_maze
+Start: (1, 1)
+Total least cost found: 222
+Total expanded: 319
+
+GBFS open_maze
+Start: (1, 23)
+Total least cost found: 44
+Total expanded: 195
 
