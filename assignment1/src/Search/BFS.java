@@ -32,10 +32,11 @@ public class BFS {
 				System.out.println("total cost: " + currNode.getCost());
 				System.out.println("expanded nodes: " + expandedNodes.size());
 				while (currNode.getValue() != 'P') { // Update visual path of least cost in the maze, represented with 'o' char
-					currNode.setValue('.');
+					if (currNode != goalNode)
+						currNode.setValue('.');
 					currNode = currNode.getPrev();
 				}
-				currNode.setValue('.');
+				//currNode.setValue('.');
 				m.printNodeMatrix();
 				break;
 			}
