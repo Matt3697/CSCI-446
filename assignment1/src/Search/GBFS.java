@@ -16,12 +16,15 @@ public class GBFS {
 	ArrayList<Node> path;
 	ArrayList<Integer[]> visited;
 	Frontier frontier;
+	ArrayList<String> stats = new ArrayList<>();
+	String type;
 	
 
 	public GBFS() {
 	}
 	
 	public void initPuzzle(Maze puzzle) {
+		type = puzzle.getMazeType();
 		resetVariables();
 		frontier = new Frontier();
 		visited = new ArrayList<Integer[]>();
@@ -73,6 +76,8 @@ public class GBFS {
 				if(puzzle[i][j] == goalstate) {
 					initialLocation[0] = i;	//i = row
 					initialLocation[1] = j;	//j = column
+					initialPosition[0] = i;
+					initialPosition[1] = j;
 					return initialLocation;
 				}
 			}
@@ -255,4 +260,18 @@ public class GBFS {
 			System.out.println();
 		}
 	}
+	
+	public void addStats() {
+		String start = ("Start: " + "(" + initialPosition[0] + ", " + initialPosition[1] + ")");
+		String cost = ("Total least cost found: " + smallestCost);
+		String totalExpanded = ("Total expanded: " + expanded);
+		stats.add("ASTAR " + type);
+		stats.add(start);
+		stats.add(cost);
+		stats.add(totalExpanded + "\n");	
+	}
+	public ArrayList<String> getStats(){
+		return stats;
+	}
 }
+
