@@ -66,7 +66,7 @@ public class Maze {
 		System.out.println(mazeType);
 		for(int i = 0; i < maze.length; i++) {//loops through the maze and print out its contents. stdout
 			for(int y = 0; y < maze[0].length; y++) {
-     			System.out.print(maze[i][y]);
+				System.out.print(maze[i][y]);
      		}
      		System.out.println();
 		}
@@ -110,6 +110,16 @@ public class Maze {
 			}
 		}
 		setNeighbors();
+	}
+	
+	public void printNodeMatrix() {
+		System.out.println(mazeType);
+		for (int i = 0; i < nodeMaze.length; i++) {
+			for (int j = 0; j < nodeMaze[0].length; j++) {
+				System.out.print(nodeMaze[i][j].getValue());
+			}
+			System.out.println();
+		}
 	}
 	
 	// Set all neighbors of all nodes

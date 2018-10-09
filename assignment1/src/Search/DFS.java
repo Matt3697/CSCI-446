@@ -17,9 +17,10 @@ public class DFS {
 		this.maze = maze.getMatrix();
 		cost = 0;
 		expanded = new ArrayList<>();
-		maze.printMaze();
+		maze.printNodeMatrix();
 		Node[][] nodeMaze;
 		Node currNode = maze.getStartingPoint();
+		Node goalNode = maze.getGoalNode();
 		x = currNode.getX();
 		y = currNode.getY();
 		nodeMaze = maze.getNodeMatrix(); // Get maze as a 2D array of Nodes
@@ -28,16 +29,16 @@ public class DFS {
 		nodes.push(currNode);
 		while(!nodes.isEmpty()) {
 			currNode = nodes.pop(); //get the node off of the top of the stack.
-			if (currNode.getValue() == '*') { // End has been found
+			if (currNode == goalNode) { // End has been found
 				System.out.println("total cost: " + currNode.getCost());
 				cost = currNode.getCost();
 				System.out.println("total expanded: " + expanded.size());
 				while (currNode.getValue() != 'P') { // Update visual path of least cost in the maze, represented with 'o' char
-					maze.updateValue(currNode.getX(), currNode.getY(), 'o');
+					currNode.setValue('.');
 					currNode = currNode.getPrev();
 				}
-				maze.updateValue(currNode.getX(), currNode.getY(), 'o'); 
-				maze.printMaze();
+				currNode.setValue('.'); 
+				maze.printNodeMatrix();
 				addStats();
 			}
 			else {
@@ -46,7 +47,7 @@ public class DFS {
 						n.setVisited();
 						n.setCost(currNode.getCost() + 1); // Cost is current node cost + 1 for the neighbor
 						n.setPrev(currNode); // Previous node of neighbor is current node
-						maze.updateValue(n.getX(), n.getY(), '.'); // (optional) Update char maze to represent nodes that have been visited
+						//maze.updateValue(n.getX(), n.getY(), '.'); // (optional) Update char maze to represent nodes that have been visited
 						nodes.push(n);
 					}
 				}

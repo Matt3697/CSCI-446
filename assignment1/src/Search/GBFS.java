@@ -33,6 +33,7 @@ public class GBFS {
 			curPosition = findGoalStateGBFS(curPosition);
 		}
 		
+		printMaze();
 		System.out.println("Cost: " + totalCost);
 		System.out.println("Nodes Expanded: " + expanded);
 		System.out.println("Smallest Cost: " + smallestCost);
@@ -82,7 +83,6 @@ public class GBFS {
 		
 		expandFrontier(curPosition);
 		updatePuzzle(curPosition);
-		printMaze();
 		return findNextSmallestCost();
 	}
 	

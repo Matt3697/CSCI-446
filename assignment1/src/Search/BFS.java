@@ -18,23 +18,26 @@ public class BFS {
 	
 	public void solve(Maze m) {
 		ArrayList<Node> expandedNodes = new ArrayList<>();
-		m.printMaze();
+		//m.printMaze();
+		m.printNodeMatrix();
 		Node currNode = m.getStartingPoint();
+		Node goalNode = m.getGoalNode();
 		nodeMaze = m.getNodeMatrix(); // Get maze as a 2D array of Nodes
 		System.out.println("start: (" + currNode.getX() + ", " + currNode.getY() + ")");  
 		q.add(currNode); 
 		
 		while (!q.isEmpty()) {
 			currNode = q.remove();
-			if (currNode.getValue() == '*') { // End has been found
+			if (currNode == goalNode) { // End has been found
 				System.out.println("total cost: " + currNode.getCost());
 				System.out.println("expanded nodes: " + expandedNodes.size());
 				while (currNode.getValue() != 'P') { // Update visual path of least cost in the maze, represented with 'o' char
-					m.updateValue(currNode.getX(), currNode.getY(), '.');
+					if (currNode != goalNode)
+						currNode.setValue('.');
 					currNode = currNode.getPrev();
 				}
-				m.updateValue(currNode.getX(), currNode.getY(), '.'); 
-				m.printMaze();
+				//currNode.setValue('.');
+				m.printNodeMatrix();
 				break;
 			}
 			
