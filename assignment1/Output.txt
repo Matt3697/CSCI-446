@@ -1,0 +1,30 @@
+BFS medium_maze
+Start: (21, 1)
+Total least cost: 94
+Total expanded: 609
+
+BFS open_maze
+Start: (1, 23)
+Total least cost: 44
+Total expanded: 579
+
+BFS large_maze
+Start: (1, 1)
+Total least cost: 148
+Total expanded: 1345
+
+DFS medium_maze
+Start: (21, 1)
+Total least cost: 170
+Total expanded: 390
+
+DFS large_maze
+Start: (1, 1)
+Total least cost: 500
+Total expanded: 942
+
+DFS open_maze
+Start: (1, 23)
+Total least cost: 124
+Total expanded: 334
+

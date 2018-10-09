@@ -40,6 +40,7 @@ public class Main {
 		for (String s : depthFirstSearch.getStats()) {
 			System.out.println(s);
 			writer.println(s);
+		}
             
 		Maze mediumMaze2 = new Maze("medium_maze");
 		Maze largeMaze2 = new Maze("large_maze");
@@ -58,6 +59,7 @@ public class Main {
 		gbfs.initPuzzle(mediumMaze3);
 		gbfs.initPuzzle(largeMaze3);
 		gbfs.initPuzzle(openMaze3);
+		
 		writer.close();
 	}
 	
