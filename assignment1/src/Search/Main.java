@@ -21,29 +21,37 @@ public class Main {
 		Maze mediumMaze = new Maze("medium_maze");
 		Maze largeMaze = new Maze("large_maze");
 		Maze openMaze = new Maze("open_maze");
-		//BFS bfs = new BFS();
-		//bfs.solve(mediumMaze);
+		BFS bfs = new BFS();
+		bfs.solve(mediumMaze);
+		bfs.solve(largeMaze);
+		bfs.solve(openMaze);
 		
-		/*Maze mediumMaze1 = new Maze("medium_maze");//mazes for Depth First Search.
+		Maze mediumMaze1 = new Maze("medium_maze");//mazes for Depth First Search.
 		Maze largeMaze1 = new Maze("large_maze");
-		Maze openMaze1 = new Maze("open_maze");*/
+		Maze openMaze1 = new Maze("open_maze");
 		DFS depthFirstSearch = new DFS();
-		depthFirstSearch.solve(mediumMaze);
-		depthFirstSearch.solve(largeMaze);
-		depthFirstSearch.solve(openMaze);
+		depthFirstSearch.solve(mediumMaze1);
+		depthFirstSearch.solve(largeMaze1);
+		depthFirstSearch.solve(openMaze1);
 		
-		/*Maze mediumMaze2 = new Maze("medium_maze");
+		Maze mediumMaze2 = new Maze("medium_maze");
 		Maze largeMaze2 = new Maze("large_maze");
-		Maze openMaze2 = new Maze("open_maze");*/
-		//AStar AStarSearch = new AStar();
-		//AStarSearch.initPuzzle(mediumMaze);
+		Maze openMaze2 = new Maze("open_maze");
+		AStar AStarSearch = new AStar();
+		System.out.println("-------AStarSearch-------");
+		AStarSearch.initPuzzle(mediumMaze2);
+		AStarSearch.initPuzzle(largeMaze2);
+		AStarSearch.initPuzzle(openMaze2);
 		
-		/*Maze mediumMaze3 = new Maze("medium_maze");
+		Maze mediumMaze3 = new Maze("medium_maze");
 		Maze largeMaze3 = new Maze("large_maze");
-		Maze openMaze3 = new Maze("open_maze");*/
-		//GBFS gbfs = new GBFS();
-		//gbfs.initPuzzle(mediumMaze);
-		//printResults(writer, depthFirstSearch.getStats());
+		Maze openMaze3 = new Maze("open_maze");
+		GBFS gbfs = new GBFS();
+		System.out.println("-------GDFS-------");
+		gbfs.initPuzzle(mediumMaze3);
+		gbfs.initPuzzle(largeMaze3);
+		gbfs.initPuzzle(openMaze3);
+		printResults(writer, depthFirstSearch.getStats());
 		writer.close();
 	}
 	public static void printResults(PrintWriter writer, ArrayList<String> dfsStats) {
