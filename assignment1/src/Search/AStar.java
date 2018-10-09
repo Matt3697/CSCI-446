@@ -19,11 +19,12 @@ public class AStar {
 	
 
 	public AStar() {
-		frontier = new Frontier();
-		visited = new ArrayList<Integer[]>();
 	}
 	
 	public void initPuzzle(Maze puzzle) {
+		resetVariables();
+		frontier = new Frontier();
+		visited = new ArrayList<Integer[]>();
 		this.puzzle = puzzle.getMatrix();
 		goalState = findGoalState();
 		curPosition = findInitialState();
@@ -37,10 +38,18 @@ public class AStar {
 			curPosition = findGoalStateAStar(curPosition);
 		}
 		
+		finished = false;
 		printMaze();
 		System.out.println("Cost: " + totalCost);
 		System.out.println("Nodes Expanded: " + expanded);
 		System.out.println("Smallest Cost: " + smallestCost);
+	}
+	
+	public void resetVariables() {
+		totalCost = 0;
+		estimation = 0;
+		expanded = 0;
+		smallestCost = 0;
 	}
 
 	public int[] findGoalState() {

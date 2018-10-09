@@ -40,25 +40,25 @@ public class Main {
 		for (String s : depthFirstSearch.getStats()) {
 			System.out.println(s);
 			writer.println(s);
-		}
-//		
-//		Maze mediumMaze2 = new Maze("medium_maze");
-//		Maze largeMaze2 = new Maze("large_maze");
-//		Maze openMaze2 = new Maze("open_maze");
-//		AStar AStarSearch = new AStar();
-//		AStarSearch.initPuzzle(mediumMaze2);
-//		AStarSearch.initPuzzle(largeMaze2);
-//		AStarSearch.initPuzzle(openMaze2);
-//		
-//		Maze mediumMaze3 = new Maze("medium_maze");
-//		Maze largeMaze3 = new Maze("large_maze");
-//		Maze openMaze3 = new Maze("open_maze");
-//		GBFS gbfs = new GBFS();
-//		gbfs.initPuzzle(mediumMaze3);
-//		gbfs.initPuzzle(largeMaze3);
-//		gbfs.initPuzzle(openMaze3);
-
-		writer.close();		
+            
+		Maze mediumMaze2 = new Maze("medium_maze");
+		Maze largeMaze2 = new Maze("large_maze");
+		Maze openMaze2 = new Maze("open_maze");
+		AStar AStarSearch = new AStar();
+		System.out.println("-------AStarSearch-------");
+		AStarSearch.initPuzzle(mediumMaze2);
+		AStarSearch.initPuzzle(largeMaze2);
+		AStarSearch.initPuzzle(openMaze2);
+		
+		Maze mediumMaze3 = new Maze("medium_maze");
+		Maze largeMaze3 = new Maze("large_maze");
+		Maze openMaze3 = new Maze("open_maze");
+		GBFS gbfs = new GBFS();
+		System.out.println("-------GDFS-------");
+		gbfs.initPuzzle(mediumMaze3);
+		gbfs.initPuzzle(largeMaze3);
+		gbfs.initPuzzle(openMaze3);
+		writer.close();
 	}
 	
 }
