@@ -25,21 +25,18 @@ public class Maze {
 		if(mazeType == "medium_maze") {	//if the maze type is a medium maze cater to its specific dimensions.
 			maze = new char[23][62];		//[rows][columns]
 			nodeMaze = new Node[23][62];
-			DFSmaze = new char[23][62];
 			rows = new String[23];
 			columns = new char[62];
 		}
 		else if(mazeType == "large_maze") {//else if it is a large maze...
 			maze = new char[31][81];		  //[rows][columns]
 			nodeMaze = new Node[31][81];
-			DFSmaze = new char[31][81];
 			rows = new String[31];
 			columns = new char[81];
 		}
 		else if(mazeType == "open_maze") {//else if it is an open maze...
 			maze = new char[20][37];		 //[rows][columns]
 			nodeMaze = new Node[20][37];
-			DFSmaze = new char[20][37];
 			rows = new String[20];
 			columns = new char[37];
 		}
