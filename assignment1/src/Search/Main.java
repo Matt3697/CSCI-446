@@ -24,25 +24,25 @@ public class Main {
 		BFS bfs = new BFS();
 		bfs.solve(mediumMaze);
 		
-		Maze mediumMaze1 = new Maze("medium_maze");//mazes for Depth First Search.
+		/*Maze mediumMaze1 = new Maze("medium_maze");//mazes for Depth First Search.
 		Maze largeMaze1 = new Maze("large_maze");
-		Maze openMaze1 = new Maze("open_maze");
+		Maze openMaze1 = new Maze("open_maze");*/
 		DFS depthFirstSearch = new DFS();
-		depthFirstSearch.solve(mediumMaze1);
-		depthFirstSearch.solve(largeMaze1);
-		depthFirstSearch.solve(openMaze1);
+		depthFirstSearch.solve(mediumMaze);
+		depthFirstSearch.solve(largeMaze);
+		depthFirstSearch.solve(openMaze);
 		
-		Maze mediumMaze2 = new Maze("medium_maze");
+		/*Maze mediumMaze2 = new Maze("medium_maze");
 		Maze largeMaze2 = new Maze("large_maze");
-		Maze openMaze2 = new Maze("open_maze");
+		Maze openMaze2 = new Maze("open_maze");*/
 		AStar AStarSearch = new AStar();
-		AStarSearch.initPuzzle(mediumMaze2);
+		AStarSearch.initPuzzle(mediumMaze);
 		
-		Maze mediumMaze3 = new Maze("medium_maze");
+		/*Maze mediumMaze3 = new Maze("medium_maze");
 		Maze largeMaze3 = new Maze("large_maze");
-		Maze openMaze3 = new Maze("open_maze");
+		Maze openMaze3 = new Maze("open_maze");*/
 		GBFS gbfs = new GBFS();
-		gbfs.initPuzzle(mediumMaze3);
+		gbfs.initPuzzle(mediumMaze);
 		//printResults(writer, depthFirstSearch.getStats());
 		writer.close();
 	}
