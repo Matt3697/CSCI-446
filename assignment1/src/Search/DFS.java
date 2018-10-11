@@ -9,12 +9,14 @@ import java.util.Stack;
  */
 public class DFS {
 	public int x,y,cost;
+	public String mazeType;
 	public Stack<Node> nodes = new Stack<Node>();
 	public char[][] maze;
 	public ArrayList<Node> expanded;
 	public ArrayList<String> stats = new ArrayList<String>();
 	public void solve(Maze maze) {
 		this.maze = maze.getMatrix();
+		mazeType = maze.getMazeType();
 		cost = 0;
 		expanded = new ArrayList<>();
 		maze.printNodeMatrix();
@@ -68,11 +70,13 @@ public class DFS {
 	}
 	
 	public void addStats() {
-		String start = ("start: " + "(" + x + ", " + y + ")");
-		String totalCost = ("total cost: " + cost);
-		String totalExpanded = ("total expanded: " + expanded.size());
+		String start = ("Start: " + "(" + x + ", " + y + ")");
+		String totalCost = ("Total least cost: " + cost);
+		String totalExpanded = ("Total expanded: " + expanded.size());
+		stats.add("DFS " + mazeType);
+		stats.add(start);
 		stats.add(totalCost);
-		stats.add(totalExpanded);	
+		stats.add(totalExpanded + "\n");	
 	}
 	public ArrayList<String> getStats(){
 		return stats;

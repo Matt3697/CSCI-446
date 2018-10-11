@@ -10,8 +10,6 @@ package Search;
 import java.io.FileNotFoundException;
 import java.io.PrintWriter;
 import java.io.UnsupportedEncodingException;
-import java.util.ArrayList;
-
 
 public class Main {
 	
@@ -23,8 +21,14 @@ public class Main {
 		Maze openMaze = new Maze("open_maze");
 		BFS bfs = new BFS();
 		bfs.solve(mediumMaze);
-		bfs.solve(largeMaze);
 		bfs.solve(openMaze);
+		bfs.solve(largeMaze);
+	
+		writer.println("-------BFS-------");
+		for (String s : bfs.getStats()) {
+			System.out.println(s);
+			writer.println(s);
+		}
 		
 		Maze mediumMaze1 = new Maze("medium_maze");//mazes for Depth First Search.
 		Maze largeMaze1 = new Maze("large_maze");
@@ -34,6 +38,12 @@ public class Main {
 		depthFirstSearch.solve(largeMaze1);
 		depthFirstSearch.solve(openMaze1);
 		
+		writer.println("-------DFS-------");
+		for (String s : depthFirstSearch.getStats()) {
+			System.out.println(s);
+			writer.println(s);
+		}
+            
 		Maze mediumMaze2 = new Maze("medium_maze");
 		Maze largeMaze2 = new Maze("large_maze");
 		Maze openMaze2 = new Maze("open_maze");
@@ -43,6 +53,12 @@ public class Main {
 		AStarSearch.initPuzzle(largeMaze2);
 		AStarSearch.initPuzzle(openMaze2);
 		
+		writer.println("-------AStarSearch-------");
+		for (String s : AStarSearch.getStats()) {
+			System.out.println(s);
+			writer.println(s);
+		}
+		
 		Maze mediumMaze3 = new Maze("medium_maze");
 		Maze largeMaze3 = new Maze("large_maze");
 		Maze openMaze3 = new Maze("open_maze");
@@ -51,13 +67,14 @@ public class Main {
 		gbfs.initPuzzle(mediumMaze3);
 		gbfs.initPuzzle(largeMaze3);
 		gbfs.initPuzzle(openMaze3);
-		printResults(writer, depthFirstSearch.getStats());
-		writer.close();
-	}
-	public static void printResults(PrintWriter writer, ArrayList<String> dfsStats) {
-		for(int i = 0; i < dfsStats.size();i++) {
-			writer.println(dfsStats.get(i));
+		
+		writer.println("-------GBFS-------");
+		for (String s : gbfs.getStats()) {
+			System.out.println(s);
+			writer.println(s);
 		}
+		
+		writer.close();
 	}
 	
 }
