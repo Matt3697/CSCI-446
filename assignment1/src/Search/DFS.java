@@ -71,7 +71,6 @@ public class DFS {
 		String start = ("start: " + "(" + x + ", " + y + ")");
 		String totalCost = ("total cost: " + cost);
 		String totalExpanded = ("total expanded: " + expanded.size());
-		stats.add(start);
 		stats.add(totalCost);
 		stats.add(totalExpanded);	
 	}
