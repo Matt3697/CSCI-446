@@ -118,7 +118,7 @@ public class Maze {
 			for (int j = 0; j < maze[0].length; j++) {
 				Node n = new Node(i, j, maze[i][j]);
 				nodeMaze[i][j] = n;
-				if(!vals.contains(maze[i][j])) { //add all the starting nodes to a list
+				if(!vals.contains(maze[i][j]) && maze[i][j] != '_') { //add all the starting nodes to a list
 					startNodes.add(n);
 					vals.add(maze[i][j]);
 				}
