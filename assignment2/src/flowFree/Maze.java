@@ -19,26 +19,43 @@ public class Maze {
 		Scanner mazeScanner = null;
 		String[] rows = null;			//holds the initial lines from the text file
 		char[] columns = null;			//holds each index of a row.
-		/*
-		if(mazeType == "medium_maze") {	//if the maze type is a medium maze cater to its specific dimensions.
-			maze = new char[23][62];		//[rows][columns]
-			nodeMaze = new Node[23][62];
-			rows = new String[23];
-			columns = new char[62];
+		if(mazeType == "5x5maze") {	//if the maze type is a medium maze cater to its specific dimensions.
+			maze = new char[5][5];		//[rows][columns]
+			nodeMaze = new Node[5][5];
+			rows = new String[5];
+			columns = new char[5];
 		}
-		else if(mazeType == "large_maze") {//else if it is a large maze...
-			maze = new char[31][81];		  //[rows][columns]
-			nodeMaze = new Node[31][81];
-			rows = new String[31];
-			columns = new char[81];
+		else if(mazeType == "7x7maze") {//else if it is a large maze...
+			maze = new char[7][7];		  //[rows][columns]
+			nodeMaze = new Node[7][7];
+			rows = new String[7];
+			columns = new char[7];
 		}
-		else if(mazeType == "open_maze") {//else if it is an open maze...
-			maze = new char[20][37];		 //[rows][columns]
-			nodeMaze = new Node[20][37];
-			rows = new String[20];
-			columns = new char[37];
+		else if(mazeType == "8x8maze") {//else if it is an open maze...
+			maze = new char[8][8];		 //[rows][columns]
+			nodeMaze = new Node[8][8];
+			rows = new String[8];
+			columns = new char[8];
 		}
-		*/
+		else if(mazeType == "9x9maze") {//else if it is an open maze...
+			maze = new char[9][9];		 //[rows][columns]
+			nodeMaze = new Node[9][9];
+			rows = new String[9];
+			columns = new char[9];
+		}
+		else if(mazeType == "10x10maze") {//else if it is an open maze...
+			maze = new char[10][10];		 //[rows][columns]
+			nodeMaze = new Node[10][10];
+			rows = new String[10];
+			columns = new char[10];
+		}
+		else if(mazeType == "12x12maze") {//else if it is an open maze...
+			maze = new char[12][12];		 //[rows][columns]
+			nodeMaze = new Node[12][12];
+			rows = new String[12];
+			columns = new char[12];
+		}
+	
         try{ //Try to open file location
         	mazeScanner = new Scanner(new File("src/assets/" + mazeType + ".txt"));
         }
@@ -59,6 +76,7 @@ public class Maze {
    }
 	public void printMaze() {
 		System.out.println(mazeType);
+		System.out.println("-------------");
 		for(int i = 0; i < maze.length; i++) {//loops through the maze and print out its contents. stdout
 			for(int y = 0; y < maze[0].length; y++) {
 				System.out.print(maze[i][y]);
@@ -95,13 +113,7 @@ public class Maze {
 		for (int i = 0; i < maze.length; i++) {
 			for (int j = 0; j < maze[0].length; j++) {
 				Node n = new Node(i, j, maze[i][j]);
-				nodeMaze[i][j] = n;	
-				if (n.getValue() == 'P') //set starting point
-					startNode = n;
-				if (n.getValue() == '*')
-					goalNode = n;
-				if (n.getValue() == '%') //ignore walls
-					n.setVisited();		
+				nodeMaze[i][j] = n;		
 			}
 		}
 		setNeighbors();
