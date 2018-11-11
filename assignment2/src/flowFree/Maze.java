@@ -1,12 +1,15 @@
 package flowFree;
 
 import java.io.File;
+import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.Scanner;
 
 public class Maze {
 	public String mazeType;
 	public char[][] maze = null;
 	public char[][] DFSmaze = null;
+	public ArrayList<Node> startNodes = new ArrayList<Node>();
 	private Node[][] nodeMaze;
 	private Node startNode, goalNode;
 	
@@ -110,10 +113,16 @@ public class Maze {
 	
 	// Create a matrix where each item is a Node
 	public void makeNodeMatrix() {
+		HashSet<Character> vals = new HashSet<Character>();
+		int z = 0;
 		for (int i = 0; i < maze.length; i++) {
 			for (int j = 0; j < maze[0].length; j++) {
 				Node n = new Node(i, j, maze[i][j]);
-				nodeMaze[i][j] = n;		
+				nodeMaze[i][j] = n;
+				if(!vals.contains(maze[i][j])) { //add all the starting nodes to a list
+					startNodes.add(n);
+					vals.add(maze[i][j]);
+				}
 			}
 		}
 		setNeighbors();
@@ -141,6 +150,9 @@ public class Maze {
 				n.addNeighbor(nodeMaze[i][j-1]); // West  neighbor
 			}
 		}
+	}
+	public ArrayList<Node> getStartNodes() {
+		return startNodes;
 	}
 	public String getMazeType() {
 		return mazeType;

@@ -1,8 +1,8 @@
 package flowFree;
 
+import java.util.ArrayList;
 import java.util.Stack;
 
-import Search.Node;
 
 public class DumbBackTracking {
 	Maze maze;
@@ -14,13 +14,15 @@ public class DumbBackTracking {
 	}
 		
 	
-	public void dfs() {
+	public void backTrackSearch() {
 		Node[][] nodeMaze;
+		ArrayList<Node> startNodes = maze.getStartNodes();
 		nodeMaze = maze.getNodeMatrix(); // Get maze as a 2D array of Nodes
 		Node currNode = nodeMaze[0][0];
 		Node goalNode = maze.getGoalNode();
 		x = currNode.getX();
 		y = currNode.getY();
+		char val = currNode.getValue();
 		
 		System.out.println("BackTracking Search:");
 		nodes.push(currNode);
@@ -28,10 +30,10 @@ public class DumbBackTracking {
 			currNode = nodes.pop(); //get the node off of the top of the stack.
 			if (currNode == goalNode) { // End has been found
 				while (currNode.getValue() != 'P') { // Update visual path of least cost in the maze, represented with 'o' char
-					currNode.setValue('.');
+					currNode.setValue(val);
 					currNode = currNode.getPrev();
 				}
-				currNode.setValue('.'); 
+				currNode.setValue(val); 
 				maze.printNodeMatrix();
 			}
 			else {
