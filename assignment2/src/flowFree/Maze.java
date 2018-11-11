@@ -87,7 +87,6 @@ public class Maze {
      		System.out.println();
 		}
 		System.out.println();
-		System.out.println();
 	}
 
 	public char[][] getMatrix(){//returns the maze
@@ -97,11 +96,11 @@ public class Maze {
 	public Node[][] getNodeMatrix() {
 		return nodeMaze;
 	}
-	
+	/*
 	public Node getStartingPoint() {
 		return startNode;
 	}
-	
+	*/
 	public Node getGoalNode() {
 		return goalNode;
 	}
@@ -129,7 +128,6 @@ public class Maze {
 	}
 	
 	public void printNodeMatrix() {
-		System.out.println(mazeType);
 		for (int i = 0; i < nodeMaze.length; i++) {
 			for (int j = 0; j < nodeMaze[0].length; j++) {
 				System.out.print(nodeMaze[i][j].getValue());

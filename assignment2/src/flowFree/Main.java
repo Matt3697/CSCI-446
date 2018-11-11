@@ -18,5 +18,6 @@ public class Main {
 		maze.printMaze();
 		DumbBackTracking dbts = new DumbBackTracking(maze);
 		dbts.backTrackSearch();
+		maze.printNodeMatrix();
 	}
 }
