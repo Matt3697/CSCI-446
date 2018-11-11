@@ -16,7 +16,7 @@ public class Main {
 		maze5.printMaze();
 		*/
 		maze.printMaze();
-		FlowFree flow = new FlowFree(maze);
+		DumbBackTracking dbts = new DumbBackTracking(maze);
 		
 	}
 }

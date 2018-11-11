@@ -57,14 +57,14 @@ public class Maze {
 		}
 	
         try{ //Try to open file location
-        	mazeScanner = new Scanner(new File("src/assets/" + mazeType + ".txt"));
+        		mazeScanner = new Scanner(new File("src/assets/" + mazeType + ".txt"));
         }
         catch(Exception e){//throw error if the file can't be located.
             System.out.println("File not found.");
             System.exit(0);
         }
         for(int i = 0; i < rows.length; i++) {//get the initial rows from the text file
-        	rows[i] = mazeScanner.nextLine();
+        		rows[i] = mazeScanner.nextLine();
         }
         for(int i = 0; i < rows.length; i++) {//loop through each row
         	columns = rows[i].toCharArray();  //convert row to a char array, this represents an index of each column in a row.
