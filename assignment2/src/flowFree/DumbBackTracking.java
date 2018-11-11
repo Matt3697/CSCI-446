@@ -28,9 +28,10 @@ public class DumbBackTracking {
 			x = currNode.getX();
 			y = currNode.getY();
 			nodes.push(currNode);
+			int counter = 0;
 			while(!nodes.isEmpty()) {
 				currNode = nodes.pop(); //get the node off of the top of the stack.
-				if (currNode.getValue() == goalVal) { // End has been found
+				if (currNode.getValue() == goalVal && counter > 0) { // End has been found
 					while (currNode.getValue() != goalVal) { // Update visual path of least cost in the maze, represented with same color of start and finish
 						currNode.setValue(goalVal);
 						currNode = currNode.getPrev();
@@ -47,6 +48,7 @@ public class DumbBackTracking {
 						}
 					}
 				}
+				counter++;
 			}
 			startNodes.remove(i);
 		}
