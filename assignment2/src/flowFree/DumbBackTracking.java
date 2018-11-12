@@ -44,7 +44,7 @@ public class DumbBackTracking {
 						if (!n.isVisited()) { // If neighbor has not been visited, add it to the stack
 							n.setVisited();
 							n.setPrev(currNode); // Previous node of neighbor is current node
-							//maze.updateValue(n.getX(), n.getY(), '.'); // (optional) Update char maze to represent nodes that have been visited
+							maze.updateValue(n.getX(), n.getY(), 'D'); // (optional) Update char maze to represent nodes that have been visited
 							nodes.push(n);
 						}
 					}
