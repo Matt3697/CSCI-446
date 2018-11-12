@@ -11,7 +11,7 @@ public class Maze {
 	public char[][] DFSmaze = null;
 	public ArrayList<Node> startNodes = new ArrayList<Node>();
 	private Node[][] nodeMaze;
-	private Node startNode, goalNode;
+	private Node goalNode;
 	
 	public Maze(String mazeType) { //constructor for Maze
 		this.mazeType = mazeType;
@@ -113,7 +113,6 @@ public class Maze {
 	// Create a matrix where each item is a Node
 	public void makeNodeMatrix() {
 		HashSet<Character> vals = new HashSet<Character>();
-		int z = 0;
 		for (int i = 0; i < maze.length; i++) {
 			for (int j = 0; j < maze[0].length; j++) {
 				Node n = new Node(i, j, maze[i][j]);
@@ -147,7 +146,9 @@ public class Maze {
 				n.addNeighbor(nodeMaze[i][j+1]); // East  neighbor
 				n.addNeighbor(nodeMaze[i][j-1]); // West  neighbor
 			}
+			
 		}
+		
 	}
 	public ArrayList<Node> getStartNodes() {
 		return startNodes;

@@ -14,13 +14,14 @@ public class DumbBackTracking {
 		
 	
 	public void backTrackSearch() {
-		Node[][] nodeMaze;
+		
 		ArrayList<Node> startNodes = maze.getStartNodes();//a list of the starting nodes
-		nodeMaze = maze.getNodeMatrix(); // Get maze as a 2D array of Nodes
+		Node[][] nodeMaze = maze.getNodeMatrix(); // Get maze as a 2D array of Nodes
 		String mazeType = maze.getMazeType();
 		
 		System.out.println("Dumb BackTracking Search: " + mazeType);
 		System.out.println("----------------------------------");
+		
 		for(int i = 0; i < startNodes.size(); i++) {//perform backtracking search on each starting node
 			Node currNode = startNodes.get(i);
 			Stack<Node> nodes = new Stack<Node>();
@@ -50,7 +51,6 @@ public class DumbBackTracking {
 				}
 				counter++;
 			}
-			startNodes.remove(i);
 		}
 	}
 }
