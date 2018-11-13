@@ -33,6 +33,7 @@ public class DumbBackTracking {
 			while(!nodes.isEmpty()) {
 				currNode = nodes.pop(); //get the node off of the top of the stack.
 				if (currNode.getValue() == goalVal && counter > 0) { // End has been found
+					System.out.println("hi" + goalVal);
 					while (currNode.getValue() != goalVal) { // Update visual path of least cost in the maze, represented with same color of start and finish
 						currNode.setValue(goalVal);
 						currNode = currNode.getPrev();
@@ -44,7 +45,7 @@ public class DumbBackTracking {
 						if (!n.isVisited()) { // If neighbor has not been visited, add it to the stack
 							n.setVisited();
 							n.setPrev(currNode); // Previous node of neighbor is current node
-							maze.updateValue(n.getX(), n.getY(), 'D'); // (optional) Update char maze to represent nodes that have been visited
+							//maze.updateValue(n.getX(), n.getY(), 'D'); // (optional) Update char maze to represent nodes that have been visited
 							nodes.push(n);
 						}
 					}
