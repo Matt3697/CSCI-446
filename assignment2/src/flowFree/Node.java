@@ -5,7 +5,7 @@ import java.util.ArrayList;
 public class Node {
 	public int x,y, cost, smallestCost;
 	public char value;
-	public boolean isVisited, hasPrev, goal;
+	public boolean isVisited, hasPrev, goal, isSource;
 	public ArrayList<Node> neighbors = new ArrayList<>();
 	public Node prev;
 	
@@ -18,12 +18,17 @@ public class Node {
 		this.x = x;
 		this.y = y;
 		value = c;
+		isSource = false;
 		cost = 0;
 		prev = null;
 	}
 	
-	public void isGoal(boolean isGoal) {
-		goal = isGoal;
+	public void setAsSource() {
+		isSource = true;
+	}
+	
+	public boolean isSource() {
+		return isSource;
 	}
 	
 	public int getX() {
