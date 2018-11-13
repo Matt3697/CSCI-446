@@ -1,5 +1,9 @@
 package flowFree;
-
+/*
+ * Authors: Carie Pointer, Hugh Jackovich, Matthew Sagen
+ * Date:    11/13/18
+ * Artificial Intelligence: Flow Free
+ */
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.Stack;
@@ -30,7 +34,7 @@ public class DumbBackTracking {
 		variables = maze.getSize();
 		domain = new HashSet<Character>();
 		int startVar = 1;
-		Node currNode;
+		//Node currNode;
 		startNodes = maze.getStartNodes();
 		
 		// Add possible colors to the domain, which will consist of the colors in the startNodes list
@@ -39,11 +43,13 @@ public class DumbBackTracking {
 		}
 		
 		// First node will just be the first startNode
-		currNode = startNodes.get(0);
+		//currNode = startNodes.get(0);
 		
 		// First call to recursive function
-		if (backtrackNode(currNode, currNode.getValue(), startVar) != true) {
-			System.out.println("no solution");
+		for(Node currNode : startNodes) {
+			if (backtrackNode(currNode, currNode.getValue(), startVar) != true) {
+				System.out.println("no solution");
+			}
 		}
 	}
 	
@@ -109,13 +115,15 @@ public class DumbBackTracking {
 		// Count number of neighbors with the same color
 		for (Node neighbor : n.getNeighbors()) {
 			if (neighbor.getValue() == currColor)
+				
 				numNeighbors++;
 		}
 		
 		/* If it is a source node, then only one neighbor can be the same color;
 		 * if it is not a source node, then only two neighbors can be the same color; 
 		 */
-		if ((!n.isSource && numNeighbors > 2) || (n.isSource() && numNeighbors > 1))
+		
+		if ((!n.isSource() && numNeighbors > 2) || (n.isSource() && numNeighbors > 1) || (n.isSource && n.getValue() != currColor) )
 			return false;
 		else 
 			return true;

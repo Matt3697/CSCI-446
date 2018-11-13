@@ -1,5 +1,9 @@
 package flowFree;
-
+/*
+ * Authors: Carie Pointer, Hugh Jackovich, Matthew Sagen
+ * Date:    11/13/18
+ * Artificial Intelligence: Flow Free
+ */
 import java.util.ArrayList;
 
 public class Node {
