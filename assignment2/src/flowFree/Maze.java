@@ -14,6 +14,7 @@ public class Maze {
 	public char[][] maze = null;
 	public char[][] DFSmaze = null;
 	public ArrayList<Node> startNodes = new ArrayList<Node>();
+	private ArrayList<Node> varList = new ArrayList<Node>();
 	private Node[][] nodeMaze;
 	private Node goalNode;
 	private int size;
@@ -132,6 +133,7 @@ public class Maze {
 			for (int j = 0; j < maze[0].length; j++) {
 				Node n = new Node(i, j, maze[i][j]);
 				nodeMaze[i][j] = n;
+				varList.add(n);
 				if(n.getValue() != '_') {
 					n.setAsSource(); // If the value is not empty, it is a source node
 					if(!vals.contains(n.getValue())) { //add all the starting nodes to a list
@@ -181,6 +183,10 @@ public class Maze {
 	}
 	public ArrayList<Node> getStartNodes() {
 		return startNodes;
+	}
+	
+	public ArrayList<Node> getVarList() {
+		return varList;
 	}
 	public String getMazeType() {
 		return mazeType;
