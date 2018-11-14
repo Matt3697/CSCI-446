@@ -72,7 +72,9 @@ public class Node {
 	public void setVisited() {
 		isVisited = true;
 	}
-	
+	public void setUnVisited() {
+		isVisited = false;
+	}
 	public void setValue(char c) {
 		value = c;
 	}

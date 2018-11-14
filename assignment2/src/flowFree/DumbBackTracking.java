@@ -11,7 +11,7 @@ import java.util.Stack;
 
 public class DumbBackTracking {
 	Maze maze;
-	public int x,y;
+	public int x,y,counter;
 	private int variables;
 	private HashSet<Character> domain;
 	private ArrayList<Node> startNodes;
@@ -47,6 +47,7 @@ public class DumbBackTracking {
 		
 		// First call to recursive function
 		for(Node currNode : startNodes) {
+			maze.setUnvisited();
 			if (backtrackNode(currNode, currNode.getValue(), startVar) != true) {
 				System.out.println("no solution");
 			}
@@ -74,6 +75,11 @@ public class DumbBackTracking {
 		if (!startNodes.contains(n) && n.isSource()) {
 			System.out.println("END");
 			System.out.println("number of variables colored = " + num); //this should be 25 at the end for 5x5 maze
+			/*if(counter < startNodes.size()) {
+				Node node = startNodes.get(counter);
+				backtrackNode(node, node.getValue(), num);
+				counter++;
+			}*/
 			return true;
 		}
 		
@@ -99,9 +105,8 @@ public class DumbBackTracking {
 					
 					//break;
 				}	
-			}
-		
-		//}
+			//}
+		}
 		
 		return false;
 	}
@@ -127,48 +132,5 @@ public class DumbBackTracking {
 			return false;
 		else 
 			return true;
-		
-	}
-	
-	public void backTrackSearch() {
-		
-		ArrayList<Node> startNodes = maze.getStartNodes();//a list of the starting nodes
-		Node[][] nodeMaze = maze.getNodeMatrix(); // Get maze as a 2D array of Nodes
-		String mazeType = maze.getMazeType();
-		
-		System.out.println("Dumb BackTracking Search: " + mazeType);
-		System.out.println("----------------------------------");
-		
-		for(int i = 0; i < startNodes.size(); i++) {//perform backtracking search on each starting node
-			Node currNode = startNodes.get(i);
-			Stack<Node> nodes = new Stack<Node>();
-			char goalVal = currNode.getValue();
-			x = currNode.getX();
-			y = currNode.getY();
-			nodes.push(currNode);
-			int counter = 0;
-			while(!nodes.isEmpty()) {
-				currNode = nodes.pop(); //get the node off of the top of the stack.
-				if (currNode.getValue() == goalVal && counter > 0) { // End has been found
-					System.out.println("hi" + goalVal);
-					while (currNode.getValue() != goalVal) { // Update visual path of least cost in the maze, represented with same color of start and finish
-						currNode.setValue(goalVal);
-						currNode = currNode.getPrev();
-					}
-					currNode.setValue(goalVal); 
-				}
-				else {
-					for (Node n : currNode.getNeighbors()) {
-						if (!n.isVisited()) { // If neighbor has not been visited, add it to the stack
-							n.setVisited();
-							n.setPrev(currNode); // Previous node of neighbor is current node
-							//maze.updateValue(n.getX(), n.getY(), 'D'); // (optional) Update char maze to represent nodes that have been visited
-							nodes.push(n);
-						}
-					}
-				}
-				counter++;
-			}
-		}
 	}
 }

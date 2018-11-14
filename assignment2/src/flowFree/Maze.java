@@ -170,7 +170,15 @@ public class Maze {
 			}
 		}
 	}
-	
+	public void setUnvisited() {
+		Node n;
+		for(int i = 0; i < nodeMaze.length; i++) {
+			for(int j = 0; j < nodeMaze[0].length; j++) {	
+				n = nodeMaze[i][j];
+				n.setUnVisited();
+			}
+		}
+	}
 	public ArrayList<Node> getStartNodes() {
 		return startNodes;
 	}
