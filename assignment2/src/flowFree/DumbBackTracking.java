@@ -28,8 +28,7 @@ public class DumbBackTracking {
 		this.nodeMaze = maze.getNodeMatrix();
 	}
 	
-	//ATTEMPT 3
-	public void backtrack3() {
+	public void backtrack() {
 		colors = new HashSet<Character>();
 		startNodes = maze.getStartNodes();
 		
@@ -37,9 +36,7 @@ public class DumbBackTracking {
 		for (Node n : startNodes) {
 			colors.add(n.getValue());	
 		}
-		
-		//varList.remove(0);
-		
+
 		Node[][] assignment = maze.getNodeMatrix();
 		if (backtrackRecursive(assignment) == false)
 			System.out.println("no solution");
@@ -63,7 +60,7 @@ public class DumbBackTracking {
 		for (char c : colors) {
 			
 			n.setValue(c);
-			if (checkNeighbors(n, c, assignment)) {
+			if (canMakeAssignment(n, c, assignment)) {
 				
 				if (backtrackRecursive(assignment))
 					return true;
@@ -85,24 +82,27 @@ public class DumbBackTracking {
 		return null;
 	}
 	
-	public boolean checkNeighbors(Node n, char c, Node[][] assignment) {
-		System.out.println("checking neighbors of node " + n.getX() + " " + n.getY());
-		System.out.println("current color: " + n.getValue());
+	public boolean canMakeAssignment(Node n, char c, Node[][] assignment) {
+		//System.out.println("checking neighbors of node " + n.getX() + " " + n.getY());
+		//System.out.println("current color: " + n.getValue());
 		for (Node neighbor : n.getNeighbors()) {
-			if(!canMakeAssignment(neighbor, c, assignment))
+			if(!checkNeighborConstraints(neighbor, c, assignment))
 				return false;
 		}
 
 		return true;
 	}
 	
-	public boolean canMakeAssignment(Node n, char c, Node[][] assignment) {
+	public boolean checkNeighborConstraints(Node n, char c, Node[][] assignment) {
 		int sameColor = 0;
 		int blanks = 0;
+		
+		if (n.getValue() == '_')
+			return true;
 
-		System.out.println("curr node " + n.getX() + " " + n.getY());
+		//System.out.println("curr node " + n.getX() + " " + n.getY() + " color "+n.getValue());
 		for (Node neighbor : n.getNeighbors()) {
-			System.out.println("neighbor node " + neighbor.getX() + " " + neighbor.getY() + " " + neighbor.getValue());
+			//System.out.println("neighbor node " + neighbor.getX() + " " + neighbor.getY() + " " + neighbor.getValue());
 			if (neighbor.getValue() == '_')
 				blanks++;
 			else if (neighbor.getValue() == n.getValue()) {
@@ -111,13 +111,12 @@ public class DumbBackTracking {
 			
 		}
 		if ((sameColor > 1 && n.isSource()) || (sameColor > 2 && !n.isSource())) {
-			System.out.println("failed");
+			//System.out.println("failed");
 			return false;
 		}
 			
-		
 		if (((sameColor + blanks < 1) && n.isSource()) || ((sameColor + blanks < 2) && !n.isSource())) {
-			System.out.println("failed 2");
+			//System.out.println("sameColor + blanks = " + (sameColor + blanks));
 			return false;
 		}
 		
@@ -260,6 +259,7 @@ public class DumbBackTracking {
 		else 
 			return true;
 	}
+
 	public ArrayList<String> getStats(){
 		return stats;
 	}
