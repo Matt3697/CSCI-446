@@ -1,0 +1,10 @@
+Dumb Backtracking: 5x5maze
+----------------------------
+BYYRO
+BYYYO
+YYYYO
+YROOG
+BBG__
+
+Smart Backtracking: 5x5maze
+----------------------------

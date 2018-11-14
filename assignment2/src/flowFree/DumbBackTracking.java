@@ -15,7 +15,8 @@ public class DumbBackTracking {
 	private int variables;
 	private HashSet<Character> domain;
 	private ArrayList<Node> startNodes;
-	
+	public ArrayList<String> stats = new ArrayList<String>();
+
 	public DumbBackTracking(Maze maze) {
 		this.maze = maze;
 	}
@@ -76,7 +77,7 @@ public class DumbBackTracking {
 			System.out.println("END");
 			System.out.println("number of variables colored = " + num); //this should be 25 at the end for 5x5 maze
 			if(counter <= startNodes.size()) {
-				//maze.setUnvisited();
+				maze.setUnvisited();
 				counter++;
 				Node node = startNodes.get(counter);
 				backtrackNode(node, node.getValue(), num);
@@ -101,7 +102,7 @@ public class DumbBackTracking {
 					// Recursive call to function with the next node in neighbors
 					if (backtrackNode(next, currColor, num + 1) == true) {
 						return true;
-					}
+					} 
 					next.setValue(prevColor); // Set the color back to it's original if the new color choice breaks constraints
 				}
 		}
@@ -129,5 +130,8 @@ public class DumbBackTracking {
 			return false;
 		else 
 			return true;
+	}
+	public ArrayList<String> getStats(){
+		return stats;
 	}
 }
