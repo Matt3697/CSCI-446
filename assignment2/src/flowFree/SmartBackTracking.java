@@ -2,11 +2,10 @@ package flowFree;
 /*
  * Authors: Carie Pointer, Hugh Jackovich, Matthew Sagen
  * Date:    11/13/18
- * Artificial Intelligence: Flow Free
+ * Artificial Intelligence: Assignment 2
  */
 import java.util.ArrayList;
 import java.util.HashSet;
-import java.util.Stack;
 
 
 public class SmartBackTracking {

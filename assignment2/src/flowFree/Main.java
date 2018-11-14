@@ -33,7 +33,7 @@ public class Main {
 		Node[][] nodes = maze.getNodeMatrix();
 		writer.println("Dumb Backtracking: " + maze.getMazeType());
 		writer.println("----------------------------");
-		for(int i = 0; i < nodes.length; i++) {
+		for(int i = 0; i < nodes.length; i++) {//prints the dumb backtracking solution maze to the output file for 5x5 maze
 			for(int j = 0; j < nodes[0].length; j++) {
 				writer.print(nodes[i][j].getValue());
 			}
@@ -42,7 +42,7 @@ public class Main {
 		writer.println();
 		writer.println("Smart Backtracking: " + maze.getMazeType());
 		writer.println("----------------------------");
-		/*for(int i = 0; i < nodes.length; i++) {
+		/*for(int i = 0; i < nodes.length; i++) {//prints the smart backtracking solution maze to the output file for 5x5 maze
 			for(int j = 0; j < nodes[0].length; j++) {
 				writer.print(nodes[i][j].getValue());
 			}

@@ -2,7 +2,7 @@ package flowFree;
 /*
  * Authors: Carie Pointer, Hugh Jackovich, Matthew Sagen
  * Date:    11/13/18
- * Artificial Intelligence: Flow Free
+ * Artificial Intelligence: Assignment 2
  */
 import java.io.File;
 import java.util.ArrayList;
@@ -111,11 +111,7 @@ public class Maze {
 	public int getSize() {
 		return size;
 	}
-	/*
-	public Node getStartingPoint() {
-		return startNode;
-	}
-	*/
+	
 	public Node getGoalNode() {
 		return goalNode;
 	}
