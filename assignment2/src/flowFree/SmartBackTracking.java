@@ -54,7 +54,6 @@ public class SmartBackTracking {
 	 * TODO: Need to figure out how to iterate through all colors in the maze; right now it only solves the first color it is given
 	 */
 	public boolean backtrackNode(Node n, char currColor, int num) {
-		System.out.println("*******NODE: "+ n.getValue() + " IS VISITED? "+ n.isVisited() + " IS SOURCE? " +n.isSource() + " (" +n.getX() + ","+ n.getY() + ") COLOR " + n.getValue());
 		char prevColor;
 		
 		/* If the current number equals the number of total nodes in the graph, then all nodes
@@ -90,9 +89,8 @@ public class SmartBackTracking {
 		//for (char color : domain) {		
 			for (Node next : n.getNeighbors()) { // Go through list of neighbors to assign next color to
 				prevColor = next.getValue();
-				if (canAssign(next, currColor) && !next.isVisited()) { // If constraints are held, this neighbor can be assigned a color
+				if (canAssign(next, currColor)) { // If constraints are held, this neighbor can be assigned a color
 					next.setValue(currColor);
-					next.setVisited(); // Set that the node was "visited" or colored -- might not need this
 					
 					// Recursive call to function with the next node in neighbors
 					if (backtrackNode(next, currColor, num + 1) == true) {
@@ -120,7 +118,7 @@ public class SmartBackTracking {
 		 * if it is not a source node, then only two neighbors can be the same color; 
 		 */
 		
-		if ((!n.isSource() && numNeighbors > 2) || (n.isSource() && numNeighbors > 1) || (n.isSource && n.getValue() != currColor) )
+		if ((!n.isSource() && numNeighbors > 2) || (n.isSource() && numNeighbors > 1) || (n.isSource() && n.getValue() != currColor) )
 			return false;
 		else 
 			return true;

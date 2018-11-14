@@ -14,19 +14,14 @@ public class DumbBackTracking {
 	Maze maze;
 	Node[][] nodeMaze;
 	public int x,y,counter;
-	private int variables;
-	private HashSet<Character> domain;
 	private HashSet<Character> colors;
 	private ArrayList<Node> startNodes;
 	private ArrayList<Node> varList;
-	private ArrayList<Node> coloredList;
-	
 	public ArrayList<String> stats = new ArrayList<String>();
 
 	public DumbBackTracking(Maze maze) {
 		this.maze = maze;
 		this.varList = maze.getVarList();
-		this.coloredList = new ArrayList<Node>();
 		this.nodeMaze = maze.getNodeMatrix();
 	}
 	

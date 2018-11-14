@@ -16,7 +16,6 @@ public class Maze {
 	public ArrayList<Node> startNodes = new ArrayList<Node>();
 	private ArrayList<Node> varList = new ArrayList<Node>();
 	private Node[][] nodeMaze;
-	private Node goalNode;
 	private int size;
 	
 	public Maze(String mazeType) { //constructor for Maze
@@ -113,10 +112,6 @@ public class Maze {
 		return size;
 	}
 	
-	public Node getGoalNode() {
-		return goalNode;
-	}
-	
 	// Method for updating matrix values to track visited nodes
 	public void updateValue(int x, int y, char c) {
 		maze[x][y] = c;
@@ -168,15 +163,7 @@ public class Maze {
 			}
 		}
 	}
-	public void setUnvisited() {
-		Node n;
-		for(int i = 0; i < nodeMaze.length; i++) {
-			for(int j = 0; j < nodeMaze[0].length; j++) {	
-				n = nodeMaze[i][j];
-				n.setUnVisited();
-			}
-		}
-	}
+
 	public ArrayList<Node> getStartNodes() {
 		return startNodes;
 	}
