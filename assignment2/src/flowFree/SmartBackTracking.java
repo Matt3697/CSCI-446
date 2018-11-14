@@ -42,7 +42,8 @@ public class SmartBackTracking {
 		}
 		
 		// First node will just be the first startNode
-		Node currNode = startNodes.get(0);
+		ArrayList<Node> orderedNodes = orderByMostConstrainedNode(startNodes);
+		Node currNode = orderedNodes.get(0);
 		
 		// First call to recursive function
 		if (backtrackNode(currNode, currNode.getValue(), startVar) != true) {
@@ -102,6 +103,17 @@ public class SmartBackTracking {
 				}
 		}
 		return false;
+	}
+	
+	public ArrayList<Node> orderByMostConstrainedNode(ArrayList<Node> startNodes) { //start the search at the most constrained node.
+		ArrayList<Node> mostConstrained = new ArrayList<Node>();
+		int maxNeighbors = 0;
+		for(Node n : startNodes) {
+			if(n.getNeighbors().size() > maxNeighbors) {
+				mostConstrained.add(n);
+			}
+		}
+		return mostConstrained;
 	}
 	
 	/* Checks the constraints against the current node.

@@ -104,8 +104,7 @@ public class DumbBackTracking {
 					} 
 					next.setValue(prevColor); // Set the color back to it's original if the new color choice breaks constraints
 				}
-		}
-		
+			}
 		return false;
 	}
 	
