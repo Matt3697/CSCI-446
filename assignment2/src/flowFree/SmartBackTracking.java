@@ -9,14 +9,14 @@ import java.util.HashSet;
 import java.util.Stack;
 
 
-public class DumbBackTracking {
+public class SmartBackTracking {
 	Maze maze;
 	public int x,y,counter;
 	private int variables;
 	private HashSet<Character> domain;
 	private ArrayList<Node> startNodes;
 	
-	public DumbBackTracking(Maze maze) {
+	public SmartBackTracking(Maze maze) {
 		this.maze = maze;
 	}
 	
@@ -102,11 +102,9 @@ public class DumbBackTracking {
 					if (backtrackNode(next, currColor, num + 1) == true) {
 						return true;
 					}
-					
 					next.setValue(prevColor); // Set the color back to it's original if the new color choice breaks constraints
 				}
 		}
-		
 		return false;
 	}
 	
