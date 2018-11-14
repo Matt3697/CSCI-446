@@ -28,7 +28,7 @@ public class Main {
 		maze.printMaze();
 		DumbBackTracking dbts = new DumbBackTracking(maze);
 		//dbts.backTrackSearch();
-		dbts.backtrack2();
+		dbts.backtrack3();
 		maze.printNodeMatrix();
 		Node[][] nodes = maze.getNodeMatrix();
 		writer.println("Dumb Backtracking: " + maze.getMazeType());
