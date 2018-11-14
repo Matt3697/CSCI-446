@@ -43,15 +43,15 @@ public class DumbBackTracking {
 		}
 		
 		// First node will just be the first startNode
-		//currNode = startNodes.get(0);
+		Node currNode = startNodes.get(0);
 		
 		// First call to recursive function
-		for(Node currNode : startNodes) {
-			maze.setUnvisited();
+		//for(Node currNode : startNodes) {
+			//maze.setUnvisited();
 			if (backtrackNode(currNode, currNode.getValue(), startVar) != true) {
 				System.out.println("no solution");
 			}
-		}
+		//}
 	}
 	
 	/* Recursive algorithm for coloring all nodes of the graph.
@@ -75,11 +75,12 @@ public class DumbBackTracking {
 		if (!startNodes.contains(n) && n.isSource()) {
 			System.out.println("END");
 			System.out.println("number of variables colored = " + num); //this should be 25 at the end for 5x5 maze
-			/*if(counter < startNodes.size()) {
+			if(counter <= startNodes.size()) {
+				//maze.setUnvisited();
+				counter++;
 				Node node = startNodes.get(counter);
 				backtrackNode(node, node.getValue(), num);
-				counter++;
-			}*/
+			}
 			return true;
 		}
 		
@@ -104,7 +105,8 @@ public class DumbBackTracking {
 					next.setValue(prevColor); // Set the color back to it's original if the new color choice breaks constraints
 					
 					//break;
-				}	
+				}
+				
 			//}
 		}
 		
@@ -120,7 +122,6 @@ public class DumbBackTracking {
 		// Count number of neighbors with the same color
 		for (Node neighbor : n.getNeighbors()) {
 			if (neighbor.getValue() == currColor)
-				
 				numNeighbors++;
 		}
 		
