@@ -1,9 +1,9 @@
 Dumb Backtracking: 5x5maze
 ----------------------------
-BYYRO
-BYYYO
-YYYYO
-YROOG
+B_RRO
+BRRYO
+BRYOO
+BROOG
 BBG__
 
 Smart Backtracking: 5x5maze

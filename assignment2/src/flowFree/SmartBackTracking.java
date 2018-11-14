@@ -45,12 +45,9 @@ public class SmartBackTracking {
 		Node currNode = startNodes.get(0);
 		
 		// First call to recursive function
-		//for(Node currNode : startNodes) {
-			//maze.setUnvisited();
-			if (backtrackNode(currNode, currNode.getValue(), startVar) != true) {
-				System.out.println("no solution");
-			}
-		//}
+		if (backtrackNode(currNode, currNode.getValue(), startVar) != true) {
+			System.out.println("no solution");
+		}
 	}
 	
 	/* Recursive algorithm for coloring all nodes of the graph.

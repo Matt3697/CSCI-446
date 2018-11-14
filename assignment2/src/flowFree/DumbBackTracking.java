@@ -76,7 +76,7 @@ public class DumbBackTracking {
 			System.out.println("END");
 			System.out.println("number of variables colored = " + num); //this should be 25 at the end for 5x5 maze
 			if(counter <= startNodes.size()) {
-				maze.setUnvisited();
+				//maze.setUnvisited();
 				counter++;
 				Node node = startNodes.get(counter);
 				backtrackNode(node, node.getValue(), num);
