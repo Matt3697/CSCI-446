@@ -2,12 +2,17 @@ package flowFree;
 /*
  * Authors: Carie Pointer, Hugh Jackovich, Matthew Sagen
  * Date:    11/13/18
- * Artificial Intelligence: Flow Free
+ * Artificial Intelligence: Assignment 2
  */
+
+import java.io.FileNotFoundException;
+import java.io.PrintWriter;
+import java.io.UnsupportedEncodingException;
 
 public class Main {
 
-	public static void main(String[] args) {
+	public static void main(String[] args) throws FileNotFoundException, UnsupportedEncodingException {
+		PrintWriter writer = new PrintWriter("Output.txt", "UTF-8"); //outputs to directory Assignment1
 		Maze maze = new Maze("5x5maze");
 		/*Maze maze1 = new Maze("7x7maze");
 		Maze maze2 = new Maze("8x8maze");
@@ -25,5 +30,25 @@ public class Main {
 		//dbts.backTrackSearch();
 		dbts.backtrack3();
 		maze.printNodeMatrix();
+		Node[][] nodes = maze.getNodeMatrix();
+		writer.println("Dumb Backtracking: " + maze.getMazeType());
+		writer.println("----------------------------");
+		for(int i = 0; i < nodes.length; i++) {//prints the dumb backtracking solution maze to the output file for 5x5 maze
+			for(int j = 0; j < nodes[0].length; j++) {
+				writer.print(nodes[i][j].getValue());
+			}
+			writer.println();
+		}
+		writer.println();
+		writer.println("Smart Backtracking: " + maze.getMazeType());
+		writer.println("----------------------------");
+		/*for(int i = 0; i < nodes.length; i++) {//prints the smart backtracking solution maze to the output file for 5x5 maze
+			for(int j = 0; j < nodes[0].length; j++) {
+				writer.print(nodes[i][j].getValue());
+			}
+			writer.println();
+		}*/
+		
+		writer.close();
 	}
 }
