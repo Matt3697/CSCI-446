@@ -102,7 +102,6 @@ public class DumbBackTracking {
 					if (backtrackNode(next, currColor, num + 1) == true) {
 						return true;
 					}
-					
 					next.setValue(prevColor); // Set the color back to it's original if the new color choice breaks constraints
 				}
 		}
