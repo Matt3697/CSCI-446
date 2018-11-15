@@ -1,4 +1,5 @@
 package flowFree;
+
 /*
  * Authors: Carie Pointer, Hugh Jackovich, Matthew Sagen
  * Date:    11/13/18
@@ -7,11 +8,13 @@ package flowFree;
 import java.util.ArrayList;
 
 public class Node {
-	public int x,y, cost, smallestCost;
-	public char value;
-	public boolean isVisited, hasPrev, goal, isSource;
-	public ArrayList<Node> neighbors = new ArrayList<>();
-	public Node prev;
+	private int x,y;
+	private char value;
+	private boolean isSource;
+	private ArrayList<Node> neighbors = new ArrayList<>();
+	private int[] otherSource;
+	private int dist, cost;
+	private ArrayList<Path> domain;
 	
 	public Node(int x, int y) {
 		this.x = x;
@@ -23,12 +26,71 @@ public class Node {
 		this.y = y;
 		value = c;
 		isSource = false;
-		cost = 0;
-		prev = null;
+		domain = new ArrayList<Path>();
 	}
 	
 	public void setAsSource() {
 		isSource = true;
+	}
+	
+	public void setOtherSource(int[] loc)
+	{
+		otherSource = loc;
+	}
+	
+	public int[] getOtherSource()
+	{
+		return otherSource;
+	}
+	
+	public void setDist(int n)
+	{
+		dist = n;
+	}
+	
+	public int getDist()
+	{
+		return dist;
+	}
+	
+	public void addPath(Path p)
+	{
+		domain.add(p);
+	}
+	
+	public void removePath()
+	{
+		domain.remove(domain.size()-1);
+	}
+	
+	public Path getPath()
+	{
+		return domain.get(domain.size()-1);
+	}
+	
+	public ArrayList<Path> getPaths()
+	{
+		return domain;
+	}
+	
+	public void sortPaths()
+	{		
+		Path tempI;
+		for(int i = 0; i < domain.size(); i++)
+		{
+			for(int j = i + 1; j < domain.size(); j++)
+			{
+				int first = domain.get(i).getPath().size();
+				int second = domain.get(j).getPath().size();
+				
+				if(first < second)
+				{
+	                tempI = domain.get(j);
+	                domain.set(i, domain.get(j));
+	                domain.set(j,tempI);
+				}
+			}
+		}
 	}
 	
 	public boolean isSource() {
@@ -43,38 +105,14 @@ public class Node {
 		return y;
 	}
 	
-	public void setCost(int cost) {
-		this.cost = cost;
-	}
-	
-	public void setSmallestCost(int cost) {
-		smallestCost = cost;
-	}
-	
-	public int getSmallestCost() {
-		return smallestCost;
-	}
-	
-	public int getCost() {
-		return cost;
-	}
-	
 	public void addNeighbor(Node n) {
 		neighbors.add(n);
 	}
+	
 	public ArrayList<Node> getNeighbors() {
 		return neighbors;
 	}
-	public boolean isVisited() {
-		return isVisited;
-	}
 	
-	public void setVisited() {
-		isVisited = true;
-	}
-	public void setUnVisited() {
-		isVisited = false;
-	}
 	public void setValue(char c) {
 		value = c;
 	}
@@ -83,17 +121,14 @@ public class Node {
 		return value;
 	}
 	
-	public void setPrev(Node n) {
-		prev = n;
-		hasPrev = true;
+	public void setCost(int n)
+	{
+		cost = n;
 	}
 	
-	public Node getPrev() {
-		return prev;
-	}
-	
-	public boolean hasPrev() {
-		return hasPrev;
+	public int getCost()
+	{
+		return cost;
 	}
 }
 
