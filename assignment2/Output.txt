@@ -1,10 +1,138 @@
+============================
 Dumb Backtracking: 5x5maze
 ----------------------------
+Original:
+
+B__RO
+___Y_
+__Y__
+_RO_G
+_BG__
+
+Solution:
+
 BRRRO
 BRYYO
 BRYOO
 BROOG
 BBGGG
 
-Smart Backtracking: 5x5maze
+Stats:
+Total nodes colored: 177
+Execution time: 2ms
+============================
+Dumb Backtracking: 7x7maze
 ----------------------------
+Original:
+
+___O___
+_B__GY_
+___BR__
+___Y___
+_______
+__R____
+G___O__
+
+Solution:
+
+GGGOOOO
+GBGGGYO
+GBBBRYO
+GYYYRYO
+GYRRRYO
+GYRYYYO
+GYYYOOO
+
+Stats:
+Total nodes colored: 787
+Execution time: 4ms
+============================
+Dumb Backtracking: 8x8maze
+----------------------------
+Original:
+
+___R__G_
+_BYP____
+___O_GR_
+___P____
+______Y_
+____BOQ_
+_Q______
+________
+
+Solution:
+
+YYYRRRGG
+YBYPPRRG
+YBOOPGRG
+YBOPPGGG
+YBOOOOYY
+YBBBBOQY
+YQQQQQQY
+YYYYYYYY
+
+Stats:
+Total nodes colored: 7521
+Execution time: 17ms
+============================
+Dumb Backtracking: 9x9maze
+----------------------------
+Original:
+
+D__BOK___
+__O__R___
+__RQ__Q__
+DB_______
+_G_______
+___P____G
+__Y___Y__
+______KP_
+_________
+
+Solution:
+
+DBBBOKKKK
+DBOOORRRK
+DBRQQQQRK
+DBRRRRRRK
+GGKKKKKKK
+GKKPPPPPG
+GKYYYYYPG
+GKKKKKKPG
+GGGGGGGGG
+
+Stats:
+Total nodes colored: 128092
+Execution time: 50ms
+============================
+Dumb Backtracking: 10x10maze
+----------------------------
+Original:
+
+RG________
+____O___O_
+_YP_Q___Q_
+__________
+__G_______
+______R___
+______B___
+P_________
+_Y______B_
+__________
+
+Solution:
+
+RGGGGGGGGG
+RRRROOOOOG
+YYPRQQQQQG
+YPPRRRRRRG
+YPGGBBBBRG
+YPPGBRRBRG
+YYPGBRBBRG
+PYPGBRRRRG
+PYPGBBBBBG
+PPPGGGGGGG
+
+Stats:
+Total nodes colored: 3266652
+Execution time: 611ms

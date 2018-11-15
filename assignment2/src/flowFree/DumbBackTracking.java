@@ -18,7 +18,7 @@ public class DumbBackTracking {
 	private ArrayList<Node> startNodes;
 	private ArrayList<Node> varList;
 	public ArrayList<String> stats = new ArrayList<String>();
-	int colorAttempts = 0;
+	private int colorAttempts = 0;
 
 	public DumbBackTracking(Maze maze) {
 		this.maze = maze;
@@ -28,6 +28,7 @@ public class DumbBackTracking {
 	
 	/* Initializes recursive backtracking solver */
 	public void backtrack() {
+		long start, end, timeTook;
 		colors = new HashSet<Character>();
 		startNodes = maze.getStartNodes();
 		
@@ -37,8 +38,16 @@ public class DumbBackTracking {
 		}
 
 		Node[][] assignment = maze.getNodeMatrix();
+		
+		start = System.currentTimeMillis();
 		if (backtrackRecursive(assignment) == false)
 			System.out.println("no solution");
+		end = System.currentTimeMillis();
+		
+		// Calculate the time it took for the search to execute and add to our list of stats
+		timeTook = end - start;
+		String s = "Execution time: " + timeTook + "ms";
+		stats.add(s);
 	}
 	
 	
@@ -49,7 +58,8 @@ public class DumbBackTracking {
 		if (assignmentComplete(assignment)) {
 			System.out.println("Solution:");
 			printAssignment(assignment);
-			System.out.println("Number of total nodes colored: "+ colorAttempts);
+			String str = "Total nodes colored: "+ colorAttempts;
+			stats.add(str);
 			return true;
 		}
 		
