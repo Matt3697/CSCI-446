@@ -130,11 +130,12 @@ public class Maze {
 				if(n.getValue() != '_') {
 					n.setAsSource(); // If the value is not empty, it is a source node
 					if(!vals.containsKey(n.getValue())) { //add all the starting nodes to a list
-						startNodes.add(n);
+//						startNodes.add(n);
 						vals.put(n.getValue(), temp);
 					}
 					else
 					{
+						startNodes.add(n);
 						n.setOtherSource(vals.get(n.getValue()));
 					}
 				}
@@ -179,5 +180,10 @@ public class Maze {
 	}
 	public String getMazeType() {
 		return mazeType;
+	}
+	
+	public Node getNode(int x, int y)
+	{
+		return nodeMaze[x][y];
 	}
 }
