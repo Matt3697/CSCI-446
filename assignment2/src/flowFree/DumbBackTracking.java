@@ -18,6 +18,7 @@ public class DumbBackTracking {
 	private ArrayList<Node> startNodes;
 	private ArrayList<Node> varList;
 	public ArrayList<String> stats = new ArrayList<String>();
+	private int colorAttempts = 0;
 
 	public DumbBackTracking(Maze maze) {
 		this.maze = maze;
@@ -27,6 +28,7 @@ public class DumbBackTracking {
 	
 	/* Initializes recursive backtracking solver */
 	public void backtrack() {
+		long start, end, timeTook;
 		colors = new HashSet<Character>();
 		startNodes = maze.getStartNodes();
 		
@@ -36,8 +38,16 @@ public class DumbBackTracking {
 		}
 
 		Node[][] assignment = maze.getNodeMatrix();
+		
+		start = System.currentTimeMillis();
 		if (backtrackRecursive(assignment) == false)
 			System.out.println("no solution");
+		end = System.currentTimeMillis();
+		
+		// Calculate the time it took for the search to execute and add to our list of stats
+		timeTook = end - start;
+		String s = "Execution time: " + timeTook + "ms";
+		stats.add(s);
 	}
 	
 	
@@ -48,6 +58,8 @@ public class DumbBackTracking {
 		if (assignmentComplete(assignment)) {
 			System.out.println("Solution:");
 			printAssignment(assignment);
+			String str = "Total nodes colored: "+ colorAttempts;
+			stats.add(str);
 			return true;
 		}
 		
@@ -61,6 +73,7 @@ public class DumbBackTracking {
 		for (char c : colors) {
 			
 			n.setValue(c);
+			colorAttempts++;
 			
 			// Check if this color assignment is valid
 			if (canMakeAssignment(n, c, assignment)) {
@@ -75,7 +88,6 @@ public class DumbBackTracking {
 			else
 				n.setValue('_');
 		}
-
 		return false;
 	}
 	
@@ -96,7 +108,7 @@ public class DumbBackTracking {
 			if(!checkNeighborConstraints(neighbor, c, assignment))
 				return false;
 		}
-
+		
 		return true;
 	}
 	
@@ -116,8 +128,7 @@ public class DumbBackTracking {
 				blanks++;
 			else if (neighbor.getValue() == n.getValue()) {
 				sameColor++;
-			}
-			
+			}	
 		}
 		
 		// Source cannot have more than one neighbor of the same color 
