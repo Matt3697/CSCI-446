@@ -8,6 +8,7 @@ import java.io.File;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.Scanner;
+import java.util.HashMap;
 
 public class Maze {
 	public String mazeType;
@@ -119,17 +120,22 @@ public class Maze {
 	
 	// Create a matrix where each item is a Node
 	public void makeNodeMatrix() {
-		HashSet<Character> vals = new HashSet<Character>();
+		HashMap<Character, int[]> vals = new HashMap<Character, int[]>();
 		for (int i = 0; i < maze.length; i++) {
 			for (int j = 0; j < maze[0].length; j++) {
+				int[] temp = {i, j};
 				Node n = new Node(i, j, maze[i][j]);
 				nodeMaze[i][j] = n;
 				varList.add(n);
 				if(n.getValue() != '_') {
 					n.setAsSource(); // If the value is not empty, it is a source node
-					if(!vals.contains(n.getValue())) { //add all the starting nodes to a list
+					if(!vals.containsKey(n.getValue())) { //add all the starting nodes to a list
 						startNodes.add(n);
-						vals.add(n.getValue());
+						vals.put(n.getValue(), temp);
+					}
+					else
+					{
+						n.setOtherSource(vals.get(n.getValue()));
 					}
 				}
 			}

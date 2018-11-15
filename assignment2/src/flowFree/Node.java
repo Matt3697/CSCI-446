@@ -11,6 +11,7 @@ public class Node {
 	private char value;
 	private boolean isSource;
 	private ArrayList<Node> neighbors = new ArrayList<>();
+	private int[] otherSource;
 	
 	public Node(int x, int y) {
 		this.x = x;
@@ -26,6 +27,16 @@ public class Node {
 	
 	public void setAsSource() {
 		isSource = true;
+	}
+	
+	public void setOtherSource(int[] loc)
+	{
+		otherSource = loc;
+	}
+	
+	public int[] getOtherSource()
+	{
+		return otherSource;
 	}
 	
 	public boolean isSource() {
