@@ -31,7 +31,7 @@ public class Node {
 		domain = new ArrayList<Path>();
 	}
 	
-	public void setAsSource() {
+	public void setAsSource() {//sets the node as a source node
 		isSource = true;
 	}
 	
