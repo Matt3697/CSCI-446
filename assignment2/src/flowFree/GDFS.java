@@ -10,7 +10,7 @@ public class GDFS
 	int[] goalState;
 	int[] curPosition;
 	int[] initialPosition;
-	char[][] puzzle = null;
+	Node[][] puzzle = null;
 	ArrayList<Node> path;
 	ArrayList<Integer[]> visited;
 	Frontier frontier;
@@ -19,7 +19,7 @@ public class GDFS
 	public GDFS() {
 	}
 	
-	public boolean initSearch(char[][] puzzle, int[] ini, int[] goal, char c) {
+	public boolean initSearch(Node[][] puzzle, int[] ini, int[] goal, char c) {
 		initialPosition = ini;
 		goalState = goal;
 		curPosition = ini;
@@ -43,7 +43,7 @@ public class GDFS
 	
 	public int[] GDFSearch(int[] curPosition, char c) {
 		
-		if(puzzle[curPosition[0]][curPosition[1]] == c) {
+		if(puzzle[curPosition[0]][curPosition[1]].getValue() == c) {
 			setCompleted();
 			return curPosition;
 		}
@@ -73,7 +73,7 @@ public class GDFS
 				y = curPos[1] - 1;
 				if(!checkVisited(x, y)) {
 					try{
-						if(puzzle[x][y] == '_' || puzzle[x][y] == c) {
+						if(puzzle[x][y].getValue() == '_' || puzzle[x][y].getValue() == c) {
 							Node newNode = new Node(x, y);
 							newNode.setCost(estimateNodeCost(x, y));
 							frontier.addNode(newNode);
@@ -91,7 +91,7 @@ public class GDFS
 				y = curPos[1] + 1;
 				if(!checkVisited(x, y)) {
 					try{
-						if(puzzle[x][y] == '_' || puzzle[x][y] == c){
+						if(puzzle[x][y].getValue() == '_' || puzzle[x][y].getValue() == c){
 							Node newNode = new Node(x, y);
 							newNode.setCost(estimateNodeCost(x, y));
 							frontier.addNode(newNode);
@@ -109,7 +109,7 @@ public class GDFS
 				y = curPos[1];
 				if(!checkVisited(x, y)) {
 					try{
-						if(puzzle[x][y] == '_' || puzzle[x][y] == c) {
+						if(puzzle[x][y].getValue() == '_' || puzzle[x][y].getValue() == c) {
 							Node newNode = new Node(x, y);
 							newNode.setCost(estimateNodeCost(x, y));
 							frontier.addNode(newNode);
@@ -127,9 +127,8 @@ public class GDFS
 				y = curPos[1];
 				if(!checkVisited(x, y)) {
 					try{
-						if(puzzle[x][y] != '%') {
+						if(puzzle[x][y].getValue() == '_' || puzzle[x][y].getValue() == c) {
 							Node newNode = new Node(x, y);
-							if(puzzle[x][y] == '_' || puzzle[x][y] == c);
 							newNode.setCost(estimateNodeCost(x, y));
 							frontier.addNode(newNode);
 							expanded++;

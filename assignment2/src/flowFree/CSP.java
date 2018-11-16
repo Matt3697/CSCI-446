@@ -215,7 +215,7 @@ public class CSP
 			Node cur = var.get(i);
 			int[] ini = {cur.getX(), cur.getY()};
 			int[] goal = cur.getOtherSource();
-			if(search.initSearch(charMaze, ini, goal, cur.getValue()))
+			if(search.initSearch(nodeMaze, ini, goal, cur.getValue()))
 			{}
 			else
 			{
@@ -236,15 +236,19 @@ public class CSP
 			switch(n)
 			{
 			case 1: charMaze[x+1][y] = path.getColor();
+					nodeMaze[x+1][y].setValue(path.getColor());
 					x++;
 					break;
 			case 2: charMaze[x-1][y] = path.getColor();
+					nodeMaze[x-1][y].setValue(path.getColor());
 					x--;
 					break;
 			case 3: charMaze[x][y+1] = path.getColor();
+					nodeMaze[x][y+1].setValue(path.getColor());
 					y++;
 					break;
 			case 4: charMaze[x][y-1] = path.getColor();
+					nodeMaze[x][y-1].setValue(path.getColor());
 					y--;
 					break;
 			}
@@ -264,15 +268,19 @@ public class CSP
 			switch(n)
 			{
 			case 1: charMaze[x+1][y] = '_';
+					nodeMaze[x+1][y].setValue('_');
 					x++;
 					break;
 			case 2: charMaze[x-1][y] = '_';
+					nodeMaze[x-1][y].setValue('_');
 					x--;
 					break;
 			case 3: charMaze[x][y+1] = '_';
+					nodeMaze[x][y+1].setValue('_');
 					y++;
 					break;
 			case 4: charMaze[x][y-1] = '_';
+					nodeMaze[x][y-1].setValue('_');
 					y--;
 					break;
 			}

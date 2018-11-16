@@ -65,6 +65,10 @@ public class smartCSP
 		
 		if(cur_node.isSource() && flag)
 		{
+			if(!forwardChecking(starters.get(z), assignment))
+			{
+				return false;
+			}
 			flag = false;
 			if(solvePuzzle(assignment, starters.get(z)))
 			{
@@ -146,6 +150,20 @@ public class smartCSP
 			return false;
 		}
 				
+		return true;
+	}
+	
+	public boolean forwardChecking(Node n, Node[][] assignment)
+	{
+		GDFS search = new GDFS();
+		int[] ini = {n.getX(), n.getY()};
+		int[] goal = n.getOtherSource();
+		if(search.initSearch(assignment, ini, goal, n.getValue()))
+		{}
+		else
+		{
+			return false;
+		}
 		return true;
 	}
 	
