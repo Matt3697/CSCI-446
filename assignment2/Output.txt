@@ -19,7 +19,7 @@ BBGGG
 
 Stats:
 Total nodes colored: 147
-Execution time: 2ms
+Execution time: 1ms
 ============================
 Dumb Backtracking: 7x7maze
 ----------------------------
@@ -73,7 +73,7 @@ YYYYYYYY
 
 Stats:
 Total nodes colored: 7521
-Execution time: 8ms
+Execution time: 7ms
 ============================
 Dumb Backtracking: 9x9maze
 ----------------------------
@@ -103,7 +103,7 @@ GGGGGGGGG
 
 Stats:
 Total nodes colored: 106109
-Execution time: 55ms
+Execution time: 26ms
 ============================
 Dumb Backtracking: 10x10maze
 ----------------------------
@@ -135,7 +135,7 @@ PPPGGGGGGG
 
 Stats:
 Total nodes colored: 3266652
-Execution time: 625ms
+Execution time: 305ms
 ============================
 Smart Backtracking: 5x5maze
 ----------------------------
@@ -170,7 +170,6 @@ ___Y___
 _______
 __R____
 G___O__
-
 Solution:
 
 GGGOOOO
@@ -197,6 +196,14 @@ ______Y_
 ____BOQ_
 _Q______
 ________
+YYYRRRGG
+YBYPPRRG
+YBOOPGRG
+YBOPPGGG
+YBOOOOYY
+YBBBBOQY
+YQQQQQQY
+YYYYYYYY
 
 Solution:
 
@@ -212,11 +219,14 @@ YYYYYYYY
 Stats:
 Total nodes colored: 5773
 Execution time: 3ms
-============================
+Total nodes colored: 12303
+Execution time: 8.0ms
+>>>>>>> c9e55725bb936172c66d484e9c11e00fd687e756
 Smart Backtracking: 9x9maze
 ----------------------------
 Original:
 
+<<<<<<< HEAD
 D__BOK___
 __O__R___
 __RQ__Q__
@@ -229,6 +239,8 @@ _________
 
 Solution:
 
+=======
+>>>>>>> c9e55725bb936172c66d484e9c11e00fd687e756
 DBBBOKKKK
 DBOOORRRK
 DBRQQQQRK
@@ -239,6 +251,7 @@ GKYYYYYPG
 GKKKKKKPG
 GGGGGGGGG
 
+<<<<<<< HEAD
 Stats:
 Total nodes colored: 77673
 Execution time: 21ms
@@ -274,3 +287,20 @@ PPPGGGGGGG
 Stats:
 Total nodes colored: 3266648
 Execution time: 644ms
+=======
+Solution:
+
+DBBBOKKKK
+DBOOORRRK
+DBRQQQQRK
+DBRRRRRRK
+GGKKKKKKK
+GKKPPPPPG
+GKYYYYYPG
+GKKKKKKPG
+GGGGGGGGG
+
+Stats:
+Total nodes colored: 28743
+Execution time: 18.0ms
+>>>>>>> c9e55725bb936172c66d484e9c11e00fd687e756

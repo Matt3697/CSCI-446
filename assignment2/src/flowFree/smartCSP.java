@@ -41,7 +41,6 @@ public class smartCSP
 		// start from most constrained starting node
 		Node n = starters.get(0);
 		z = 1;
-		canMakeAssignment(n, n.getValue(), assignment);
 		
 		start = System.currentTimeMillis();
 		if (solvePuzzle(assignment, n) == false)
@@ -85,14 +84,27 @@ public class smartCSP
 		}
 		flag = true;
 		// Start with first valid Neighbor
-		for(Node n : cur_node.getValidN())
+		System.out.println("REAL SIZE: " + cur_node.getNeighbors().size());
+		for(Node n : cur_node.getNeighbors())
 		{
+			System.out.println("HELLO: " + cur_node.getX() + " " + cur_node.getY());
+			if(n.getValue() != '_')
+			{
+				continue;
+			}
 			System.out.println("BUENOS");
 			n.setValue(cur_node.getValue());
 			colorAttempts++;
 				
 				// Check if this color assignment is valid
-			if (canMakeAssignment(n, cur_node.getValue(), assignment)) {
+			for(int i = 0; i < assignment.length; i++)
+			{
+				for(int j = 0; j < assignment[i].length; j++)
+				{
+					System.out.print(assignment[i][j].getValue() + " ");
+				}System.out.println();
+			}
+			if (canMakeAssignment(n, n.getValue(), assignment)) {
 				System.out.println("MINE");
 				
 				// Recursive call to function if previous assignment is valid
@@ -107,9 +119,10 @@ public class smartCSP
 			else
 			{
 				n.setValue('_');
+				System.out.println("HELLO: " + cur_node.getX() + " " + cur_node.getY());
 			}
 		}
-			return false;
+		return false;
 	}
 		
 	/* Checks if current node has a valid assignment by checking each of its neighbors. 
@@ -117,15 +130,10 @@ public class smartCSP
 	 */
 	public boolean canMakeAssignment(Node n, char c, Node[][] assignment) {
 		for (Node neighbor : n.getNeighbors()) {
-			if(neighbor.getValue() == '_')
-			{
-				if(!n.getValidN().contains((neighbor)))
-				{
-					n.addValidN(neighbor);
-				}
-			}
 			if(!checkNeighborConstraints(neighbor, c, assignment))
+			{
 				return false;
+			}
 		}
 		
 		return true;
@@ -137,6 +145,7 @@ public class smartCSP
 	public boolean checkNeighborConstraints(Node n, char c, Node[][] assignment) {
 		int sameColor = 0;
 		int blanks = 0;
+		int otherColor = 0;
 
 		// Count number of neighbors that are unassigned or the same color as n
 		for (Node neighbor : n.getNeighbors()) {
@@ -144,11 +153,14 @@ public class smartCSP
 			{
 				blanks++;
 			}
-			if (neighbor.getValue() == n.getValue()) {
+			else if (neighbor.getValue() == n.getValue()) {
 				sameColor++;
 			}
+			if(neighbor.getValue() != '_' && neighbor.getValue() != n.getValue())
+			{
+				otherColor++;
+			}
 		}
-		
 		// Source cannot have more than one neighbor of the same color 
 		// and non-source nodes cannot have more than two neighbors of the same color
 		if ((sameColor > 1 && n.isSource()) || (sameColor > 2 && !n.isSource())) {
@@ -158,15 +170,16 @@ public class smartCSP
 		// Source nodes must have one neighbor of the same color
 		// and non-source nodes must have two neighbors of same color.
 		// Unassigned nodes are potential neighbors of same color.
-		if (((sameColor + blanks < 1) && n.isSource()) || ((sameColor + blanks < 2) && !n.isSource())) {
+		if (((blanks + sameColor < 1) && n.isSource()) || ((blanks + sameColor < n.getNeighbors().size()/2) && !n.isSource() && n.getValue() != '_'))
+		{
 			return false;
 		}
 		
 		//Assures no stranded sources
-//		if(blanks < 1 && n.isSource())
-//		{
-//			return false;
-//		}
+		if(otherColor == n.getNeighbors().size())
+		{
+			return false;
+		}
 				
 		return true;
 	}

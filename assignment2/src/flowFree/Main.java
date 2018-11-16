@@ -19,6 +19,7 @@ public class Main {
 		Maze maze4 = new Maze("9x9maze");
 		Maze maze5 = new Maze("10x10maze");
 		//Maze maze6 = new Maze("12x12maze");
+
 	
 		runDumbSearch(maze1, writer, false);
 		runDumbSearch(maze2, writer, false);
@@ -65,7 +66,23 @@ public class Main {
 			writer.println(s);
 		}
 	}
-	
+	// Method for calling and running the smart backtracking implementation. Prints output to Output.txt
+	public static void runSmartSearch(Maze maze, PrintWriter writer) {
+		writer.println("============================");
+		writer.println("Smart Backtracking: " + maze.getMazeType());
+		writer.println("----------------------------");
+		writer.println("Original:\n");
+		printAssignment(maze.getNodeMatrix(), writer);
+		CSP csp = new CSP(maze);
+		writer.println("\nSolution:\n");
+		printAssignment(maze.getNodeMatrix(), writer);
+		writer.println("\nStats:");
+		
+		// Print stats for the search (execution time and number of nodes colored)
+		for (String s : csp.getStats()) {
+			writer.println(s);
+		}
+	}
 	// Helper method used for printing the node matrix
 	public static void printAssignment(Node[][] nodes, PrintWriter writer) {
 		for(int i = 0; i < nodes.length; i++) {

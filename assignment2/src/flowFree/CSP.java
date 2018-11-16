@@ -11,6 +11,8 @@ public class CSP
 	Node[][] nodeMaze;
 	char[][] charMaze;
 	ArrayList<Path> temp_domain;
+	public ArrayList<String> stats = new ArrayList<String>();
+	int counter = 0;
 	
 	public CSP(Maze maze)
 	{
@@ -25,10 +27,20 @@ public class CSP
 	
 	public void run()
 	{	
+		double start = System.currentTimeMillis();
+		
+		
 		if(solvePuzzle(var.get(0), 1))
 		{
 			System.out.println("Solved!");
 		}
+		double end = System.currentTimeMillis();
+		String str = "Total nodes colored: "+ counter;
+		stats.add(str);
+		// Calculate the time it took for the search to execute and add to our list of stats
+		double timeTook = end - start;
+		String s = "Execution time: " + timeTook + "ms";
+		stats.add(s);
 	}
 	
 	public boolean solvePuzzle(Node curSource, int j)
@@ -253,6 +265,8 @@ public class CSP
 					break;
 			}
 			
+			counter++; //increment counter by one.
+			
 		}
 	}
 	
@@ -359,5 +373,7 @@ public class CSP
 		}
 		return true;
 	}
-		
+	public ArrayList<String> getStats(){
+		return stats;
+	}
 }
