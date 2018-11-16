@@ -40,7 +40,7 @@ public class smartCSP
 		// start from most constrained starting node
 		Node n = starters.get(0);
 		z = 1;
-		checkNeighborConstraints(n, n.getValue(), assignment);
+		canMakeAssignment(n, n.getValue(), assignment);
 		
 		start = System.currentTimeMillis();
 		if (solvePuzzle(assignment, n) == false)

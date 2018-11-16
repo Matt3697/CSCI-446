@@ -28,6 +28,7 @@ public class Node {
 		value = c;
 		isSource = false;
 		domain = new ArrayList<Path>();
+		validNeighbors = new ArrayList<Node>();
 	}
 	
 	public void setAsSource() {
