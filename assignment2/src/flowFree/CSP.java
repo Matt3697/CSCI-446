@@ -34,9 +34,9 @@ public class CSP
 		{
 			System.out.println("Solved!");
 		}
+		double end = System.currentTimeMillis();
 		String str = "Total nodes colored: "+ counter;
 		stats.add(str);
-		double end = System.currentTimeMillis();
 		// Calculate the time it took for the search to execute and add to our list of stats
 		double timeTook = end - start;
 		String s = "Execution time: " + timeTook + "ms";

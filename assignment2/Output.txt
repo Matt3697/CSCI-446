@@ -19,7 +19,7 @@ BBGGG
 
 Stats:
 Total nodes colored: 147
-Execution time: 2ms
+Execution time: 1ms
 ============================
 Dumb Backtracking: 7x7maze
 ----------------------------
@@ -45,7 +45,7 @@ GYYYOOO
 
 Stats:
 Total nodes colored: 787
-Execution time: 2ms
+Execution time: 3ms
 ============================
 Dumb Backtracking: 8x8maze
 ----------------------------
@@ -73,7 +73,7 @@ YYYYYYYY
 
 Stats:
 Total nodes colored: 7521
-Execution time: 6ms
+Execution time: 7ms
 ============================
 Dumb Backtracking: 9x9maze
 ----------------------------
@@ -103,7 +103,7 @@ GGGGGGGGG
 
 Stats:
 Total nodes colored: 106109
-Execution time: 27ms
+Execution time: 26ms
 ============================
 Dumb Backtracking: 10x10maze
 ----------------------------
@@ -135,7 +135,7 @@ PPPGGGGGGG
 
 Stats:
 Total nodes colored: 3266652
-Execution time: 312ms
+Execution time: 305ms
 ============================
 Smart Backtracking: 5x5maze
 ----------------------------
@@ -183,7 +183,7 @@ GYYYOOO
 
 Stats:
 Total nodes colored: 22164
-Execution time: 96.0ms
+Execution time: 93.0ms
 ============================
 Smart Backtracking: 8x8maze
 ----------------------------
@@ -211,7 +211,7 @@ YYYYYYYY
 
 Stats:
 Total nodes colored: 12303
-Execution time: 7.0ms
+Execution time: 8.0ms
 ============================
 Smart Backtracking: 9x9maze
 ----------------------------
@@ -241,4 +241,4 @@ GGGGGGGGG
 
 Stats:
 Total nodes colored: 28743
-Execution time: 13.0ms
+Execution time: 18.0ms
