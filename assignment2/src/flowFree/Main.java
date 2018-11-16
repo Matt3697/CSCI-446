@@ -18,24 +18,41 @@ public class Main {
 		Maze maze3 = new Maze("8x8maze");
 		Maze maze4 = new Maze("9x9maze");
 		Maze maze5 = new Maze("10x10maze");
-		//Maze maze = new Maze("12x12maze");
-		
-		runDumbSearch(maze1, writer);
-		runDumbSearch(maze2, writer);
-		runDumbSearch(maze3, writer);
-		runDumbSearch(maze4, writer);
-		runDumbSearch(maze5, writer);
+		//Maze maze6 = new Maze("12x12maze");
+	
+		runDumbSearch(maze1, writer, false);
+		runDumbSearch(maze2, writer, false);
+		runDumbSearch(maze3, writer, false);
+		runDumbSearch(maze4, writer, false);
+		runDumbSearch(maze5, writer, false);
 		//runDumbSearch(maze6, writer);
 
+		Maze maze11 = new Maze("5x5maze");
+		Maze maze22 = new Maze("7x7maze");
+		Maze maze33 = new Maze("8x8maze");
+		Maze maze44 = new Maze("9x9maze");
+		Maze maze55 = new Maze("10x10maze");
+		//Maze maze66 = new Maze("12x12maze");
+	
+		runDumbSearch(maze11, writer, true);
+		runDumbSearch(maze22, writer, true);
+		runDumbSearch(maze33, writer, true);
+		runDumbSearch(maze44, writer, true);
+		runDumbSearch(maze55, writer, true);
+		//runDumbSearch(maze66, writer);
+		
 		writer.close();
 	}
 	
 	// Method for calling and running the DumbBackTracking implementation. Prints output to Output.txt
-	public static void runDumbSearch(Maze maze, PrintWriter writer) {
+	public static void runDumbSearch(Maze maze, PrintWriter writer, boolean isSmart) {
 		writer.println("============================");
-		writer.println("Dumb Backtracking: " + maze.getMazeType());
+		if (isSmart)
+			writer.println("Smart Backtracking: " + maze.getMazeType());
+		else
+			writer.println("Dumb Backtracking: " + maze.getMazeType());
 		writer.println("----------------------------");
-		DumbBackTracking dbts = new DumbBackTracking(maze);
+		DumbBackTracking dbts = new DumbBackTracking(maze, isSmart);
 		writer.println("Original:\n");
 		printAssignment(maze.getNodeMatrix(), writer);
 		dbts.backtrack();
