@@ -18,7 +18,7 @@ public class Main {
 		Maze maze3 = new Maze("8x8maze");
 		Maze maze4 = new Maze("9x9maze");
 		Maze maze5 = new Maze("10x10maze");
-		//Maze maze = new Maze("12x12maze");
+		//Maze maze6 = new Maze("12x12maze");
 		
 		runDumbSearch(maze1, writer);
 		runDumbSearch(maze2, writer);
@@ -26,7 +26,14 @@ public class Main {
 		runDumbSearch(maze4, writer);
 		runDumbSearch(maze5, writer);
 		//runDumbSearch(maze6, writer);
-
+		
+		runSmartSearch(maze1,writer);
+		runSmartSearch(maze2,writer);
+		runSmartSearch(maze3,writer);
+		runSmartSearch(maze4,writer);
+		//runSmartSearch(maze5,writer);
+		//runSmartSearch(maze6,writer);
+		
 		writer.close();
 	}
 	
@@ -49,6 +56,22 @@ public class Main {
 		}
 	}
 	
+	public static void runSmartSearch(Maze maze, PrintWriter writer) {
+		writer.println("============================");
+		writer.println("Smart Backtracking: " + maze.getMazeType());
+		writer.println("----------------------------");
+		writer.println("Original:\n");
+		printAssignment(maze.getNodeMatrix(), writer);
+		CSP csp = new CSP(maze);
+		writer.println("\nSolution:\n");
+		printAssignment(maze.getNodeMatrix(), writer);
+		writer.println("\nStats:");
+		
+		// Print stats for the search (execution time and number of nodes colored)
+		for (String s : csp.getStats()) {
+			writer.println(s);
+		}
+	}
 	// Helper method used for printing the node matrix
 	public static void printAssignment(Node[][] nodes, PrintWriter writer) {
 		for(int i = 0; i < nodes.length; i++) {
