@@ -283,7 +283,7 @@ public class CSP
 	public ArrayList<Node> orderVariables(ArrayList<Node> start)
 	{
 		ArrayList<Node> orderedVar = new ArrayList<Node>();
-		HashMap<Integer, Node> tempo = new HashMap<Integer, Node>();
+		HashMap<Integer, Node> tempMap = new HashMap<Integer, Node>();
 		int tempI;
 
 		for(Node n: start)
@@ -297,14 +297,14 @@ public class CSP
 				
 				while(true)
 				{
-					if(tempo.containsKey(u))
+					if(tempMap.containsKey(u))
 					{
 						u++;
 						continue;
 					}
 					else
 					{
-						tempo.put(u, n);
+						tempMap.put(u, n);
 						break;
 					}
 				}
@@ -312,26 +312,26 @@ public class CSP
 		}
 		
 		//Orders largest to Smallest
-		int size = tempo.keySet().size();
-		Integer[] tempa = new Integer[size];
-		tempo.keySet().toArray(tempa);
+		int size = tempMap.keySet().size();
+		Integer[] temp = new Integer[size];
+		tempMap.keySet().toArray(temp);
 		
         for (int i = 0; i < size; i++) 
         {
             for (int j = i + 1; j < size; j++) 
             {
-                if (tempa[i] < tempa[j]) 
+                if (temp[i] < temp[j]) 
                 {
-                    tempI = tempa[i];
-                    tempa[i] = tempa[j];
-                    tempa[j] = tempI;  
+                    tempI = temp[i];
+                    temp[i] = temp[j];
+                    temp[j] = tempI;  
                 }
             }
         }
         
-        for(int i : tempa)
+        for(int i : temp)
         {
-        	orderedVar.add(tempo.get(i));
+        	orderedVar.add(tempMap.get(i));
         }
         
 		return orderedVar;

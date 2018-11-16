@@ -15,6 +15,7 @@ public class Node {
 	private int[] otherSource;
 	private int dist, cost;
 	private ArrayList<Path> domain;
+	private ArrayList<Node> validNeighbors;
 	
 	public Node(int x, int y) {
 		this.x = x;
@@ -129,6 +130,16 @@ public class Node {
 	public int getCost()
 	{
 		return cost;
+	}
+	
+	public void addValidN(Node n)
+	{
+		validNeighbors.add(n);
+	}
+	
+	public ArrayList<Node> getValidN()
+	{
+		return validNeighbors;
 	}
 }
 
