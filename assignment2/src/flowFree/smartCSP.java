@@ -9,7 +9,7 @@ public class smartCSP
 	Maze maze;
 	Node[][] nodeMaze;
 	ArrayList<Node> starters;
-	public int x,y,counter;
+	public int x,y,counter, z;
 	private HashSet<Character> colors;
 	private ArrayList<Node> startNodes;
 	private ArrayList<Node> varList;
@@ -38,18 +38,10 @@ public class smartCSP
 		Node[][] assignment = maze.getNodeMatrix();
 		// start from most constrained starting node
 		Node n = starters.get(0);
-
-		// Start with first color in list of possible colors
-		ArrayList<Node> adj = n.getNeighbors();
-		Node cur_node = adj.get(x);
-		while(cur_node.getValue() != '_') {
-			++x;
-			cur_node = adj.get(x);
-		}
-		cur_node.setValue(n.getValue());
+		checkNeighborConstraints(n, n.getValue(), assignment);
 		
 		start = System.currentTimeMillis();
-		if (solvePuzzle(assignment, cur_node) == false)
+		if (solvePuzzle(assignment, n) == false)
 			System.out.println("no solution");
 		end = System.currentTimeMillis();
 		
@@ -59,9 +51,8 @@ public class smartCSP
 		stats.add(s);
 	}
 	
-	public boolean solvePuzzle(Node[][] assignment, Node prev_node)
+	public boolean solvePuzzle(Node[][] assignment, Node cur_node)
 	{
-		int x = 0;
 		if (assignmentComplete(assignment)) {
 			System.out.println("Solution:");
 			printAssignment(assignment);
@@ -69,25 +60,15 @@ public class smartCSP
 			stats.add(str);
 			return true;
 		}
-		
-		// start from most constrained starting node
-		Node n = starters.get(0);
-		char c = n.getValue();
 
 		// Start with first color in list of possible colors
-		ArrayList<Node> adj = n.getNeighbors();
-		Node cur_node = adj.get(x);
-		while(cur_node.getValue() != '_') {
-			++x;
-			cur_node = adj.get(x);
-		}
-		cur_node.setValue(cur_node.getValue());
-		for(Node neighbor : cur_node.getValidN())
+		for(Node n : cur_node.getValidN())
 		{
+			n.setValue(cur_node.getValue());
 			colorAttempts++;
 				
 				// Check if this color assignment is valid
-			if (canMakeAssignment(neighbor, cur_node.getValue(), assignment)) {
+			if (canMakeAssignment(n, cur_node.getValue(), assignment)) {
 				
 				// Recursive call to function if previous assignment is valid
 				if (solvePuzzle(assignment, cur_node))
@@ -111,6 +92,10 @@ public class smartCSP
 	 */
 	public boolean canMakeAssignment(Node n, char c, Node[][] assignment) {
 		for (Node neighbor : n.getNeighbors()) {
+			if(neighbor.getValue() == '_')
+			{
+				n.addValidN(neighbor);
+			}
 			if(!checkNeighborConstraints(neighbor, c, assignment))
 				return false;
 		}
@@ -124,21 +109,15 @@ public class smartCSP
 	public boolean checkNeighborConstraints(Node n, char c, Node[][] assignment) {
 		int sameColor = 0;
 		int blanks = 0;
-		ArrayList<Node> nearbySource = new ArrayList<Node>();
 
 		// Count number of neighbors that are unassigned or the same color as n
 		for (Node neighbor : n.getNeighbors()) {
 			if (neighbor.getValue() == '_')
 			{
 				blanks++;
-				n.addValidN(neighbor);
 			}
 			else if (neighbor.getValue() == n.getValue()) {
 				sameColor++;
-			}
-			else if(neighbor.isSource())
-			{
-				nearbySource.add(neighbor);
 			}
 		}
 		
@@ -154,33 +133,7 @@ public class smartCSP
 		if (((sameColor + blanks < 1) && n.isSource()) || ((sameColor + blanks < 2) && !n.isSource())) {
 			return false;
 		}
-		
-		if(nearbySource.size() > 0)
-		{
-			for(Node source : nearbySource)
-			{
-				int validity = 4;
-				for(Node neighbor : source.getNeighbors())
-				{
-					if(neighbor.isSource())
-					{
-						validity --;
-					}
-					else if(neighbor.getValue() != source.getValue() && neighbor.getValue() != '_')
-					{
-						validity --;
-					}
-				}
-				if(validity <= 0)
-				{
-					return false;
-				}
-					
-			}
-		}
-		
-		
-		
+				
 		return true;
 	}
 	
