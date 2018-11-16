@@ -72,6 +72,10 @@ public class DumbBackTracking {
 		// Start with first color in list of possible colors
 		for (char c : colors) {
 			
+			// Check if any neighbors have current color
+			if (!checkNeighborColors(n, c))
+				continue;
+
 			n.setValue(c);
 			colorAttempts++;
 			
@@ -91,6 +95,19 @@ public class DumbBackTracking {
 		return false;
 	}
 	
+	/* Returns true if any neighbors are of current color. These nodes are more likely to be
+	 * within constraints if they are next to a node of the same color */
+	public boolean checkNeighborColors(Node n, char c) {
+		if (n.isSource())
+			return true;
+		for (Node neighbor : n.getNeighbors()) {
+			if (neighbor.getValue() == c)
+				return true;
+			else if (neighbor.getValue() == '_')
+				return true;
+		}
+		return false;
+	}	
 	/* Returns first variable in list that is not assigned a color */
 	public Node getVariable() {
 		for (Node n : varList) {
