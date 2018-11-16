@@ -14,6 +14,7 @@ public class DumbBackTracking {
 	Maze maze;
 	Node[][] nodeMaze;
 	public int x,y,counter;
+	private boolean isSmart;
 	private HashSet<Character> colors;
 	private ArrayList<Node> startNodes;
 	private ArrayList<Node> varList;
@@ -24,6 +25,14 @@ public class DumbBackTracking {
 		this.maze = maze;
 		this.varList = maze.getVarList();
 		this.nodeMaze = maze.getNodeMatrix();
+		isSmart = false;
+	}
+	
+	public DumbBackTracking(Maze maze, boolean isSmart) {
+		this.maze = maze;
+		this.varList = maze.getVarList();
+		this.nodeMaze = maze.getNodeMatrix();
+		this.isSmart = isSmart;
 	}
 	
 	/* Initializes recursive backtracking solver */
@@ -72,7 +81,14 @@ public class DumbBackTracking {
 		// Start with first color in list of possible colors
 		for (char c : colors) {
 			
+			
+			if (isSmart) {
+				// Check if any neighbors have current color
+				if (!checkNeighborColors(n, c))
+					continue;
+			}
 			n.setValue(c);
+			
 			colorAttempts++;
 			
 			// Check if this color assignment is valid
@@ -87,6 +103,20 @@ public class DumbBackTracking {
 			}
 			else
 				n.setValue('_');
+		}
+		return false;
+	}
+	
+	/* Returns true if any neighbors are of current color. These nodes are more likely to be
+	 * within constraints if they are next to a node of the same color */
+	public boolean checkNeighborColors(Node n, char c) {
+		if (n.isSource())
+			return true;
+		for (Node neighbor : n.getNeighbors()) {
+			if (neighbor.getValue() == c)
+				return true;
+			else if (neighbor.getValue() == '_')
+				return true;
 		}
 		return false;
 	}
