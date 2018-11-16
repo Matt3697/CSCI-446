@@ -17,8 +17,6 @@ public class Node {
 	private int[] otherSource;
 	private int dist, cost;
 	private ArrayList<Path> domain;
-	private ArrayList<Node> validNeighbors;
-	Set<Node> nearbySources;
 	
 	public Node(int x, int y) {
 		this.x = x;
@@ -31,8 +29,6 @@ public class Node {
 		value = c;
 		isSource = false;
 		domain = new ArrayList<Path>();
-		validNeighbors = new ArrayList<Node>();
-		nearbySources = new HashSet<Node>();
 	}
 	
 	public void setAsSource() {
@@ -135,16 +131,6 @@ public class Node {
 	public int getCost()
 	{
 		return cost;
-	}
-	
-	public void addValidN(Node n)
-	{
-		nearbySources.add(n);
-	}
-	
-	public Set<Node> getValidN()
-	{
-		return nearbySources;
 	}
 }
 
