@@ -36,9 +36,20 @@ public class smartCSP
 		}
 
 		Node[][] assignment = maze.getNodeMatrix();
+		// start from most constrained starting node
+		Node n = starters.get(0);
+
+		// Start with first color in list of possible colors
+		ArrayList<Node> adj = n.getNeighbors();
+		Node cur_node = adj.get(x);
+		while(cur_node.getValue() != '_') {
+			++x;
+			cur_node = adj.get(x);
+		}
+		cur_node.setValue(n.getValue());
 		
 		start = System.currentTimeMillis();
-		if (solvePuzzle(assignment) == false)
+		if (solvePuzzle(assignment, cur_node) == false)
 			System.out.println("no solution");
 		end = System.currentTimeMillis();
 		
@@ -51,7 +62,7 @@ public class smartCSP
 	public boolean solvePuzzle(Node[][] assignment, Node prev_node)
 	{
 		int x = 0;
-		if (assignmentComplete(Node[][] assignment)) {
+		if (assignmentComplete(assignment)) {
 			System.out.println("Solution:");
 			printAssignment(assignment);
 			String str = "Total nodes colored: "+ colorAttempts;
@@ -79,7 +90,7 @@ public class smartCSP
 			if (canMakeAssignment(neighbor, cur_node.getValue(), assignment)) {
 				
 				// Recursive call to function if previous assignment is valid
-				if (solvePuzzle(assignment))
+				if (solvePuzzle(assignment, cur_node))
 				{
 					return true;
 				}
@@ -149,7 +160,7 @@ public class smartCSP
 			for(Node source : nearbySource)
 			{
 				int validity = 4;
-				for(Node neighbor : neighbor.getNeighbors())
+				for(Node neighbor : source.getNeighbors())
 				{
 					if(neighbor.isSource())
 					{
@@ -230,13 +241,13 @@ public class smartCSP
 		return orderedVar;
 	}
 	
-	public boolean assignmentComplete(node[][] assignment)
+	public boolean assignmentComplete(Node[][] assignment)
 	{
 		for(int i = 0; i < assignment.length; i++)
 		{
 			for(int k = 0; k < assignment[i].length; k++)
 			{
-				if(assignment[i][k] == '_')
+				if(assignment[i][k].getValue() == '_')
 				{
 					return false;
 				}
