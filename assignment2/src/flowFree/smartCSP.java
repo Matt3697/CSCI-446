@@ -9,12 +9,13 @@ public class smartCSP
 	Maze maze;
 	Node[][] nodeMaze;
 	ArrayList<Node> starters;
-	public int x,y,counter, z;
+	public int counter, z;
 	private HashSet<Character> colors;
 	private ArrayList<Node> startNodes;
 	private ArrayList<Node> varList;
 	public ArrayList<String> stats = new ArrayList<String>();
 	private int colorAttempts = 0;
+	private boolean flag = false;
 	
 	public smartCSP(Maze maze)
 	{
@@ -38,6 +39,7 @@ public class smartCSP
 		Node[][] assignment = maze.getNodeMatrix();
 		// start from most constrained starting node
 		Node n = starters.get(0);
+		z = 1;
 		checkNeighborConstraints(n, n.getValue(), assignment);
 		
 		start = System.currentTimeMillis();
@@ -52,7 +54,7 @@ public class smartCSP
 	}
 	
 	public boolean solvePuzzle(Node[][] assignment, Node cur_node)
-	{
+	{	
 		if (assignmentComplete(assignment)) {
 			System.out.println("Solution:");
 			printAssignment(assignment);
@@ -60,8 +62,18 @@ public class smartCSP
 			stats.add(str);
 			return true;
 		}
-
-		// Start with first color in list of possible colors
+		
+		if(cur_node.isSource() && flag)
+		{
+			flag = false;
+			if(solvePuzzle(assignment, starters.get(z)))
+			{
+				return true;
+			}
+			z++;
+		}
+		flag = true;
+		// Start with first valid Neighbor
 		for(Node n : cur_node.getValidN())
 		{
 			n.setValue(cur_node.getValue());
