@@ -55,7 +55,7 @@ public class Main {
 			writer.println(s);
 		}
 	}
-	// Method for calling and running the smart backtracking implementation. Prints output to Output.txt
+	// Method for calling and running the smart implementation. Prints output to Output.txt
 	public static void runSmartSearch(Maze maze, PrintWriter writer) {
 		writer.println("============================");
 		writer.println("Smart Backtracking: " + maze.getMazeType());
