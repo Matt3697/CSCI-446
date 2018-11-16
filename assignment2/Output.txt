@@ -18,8 +18,8 @@ BROOG
 BBGGG
 
 Stats:
-Total nodes colored: 147
-Execution time: 2ms
+Total nodes colored: 42
+Execution time: 1ms
 ============================
 Dumb Backtracking: 7x7maze
 ----------------------------
@@ -44,8 +44,8 @@ GYRYYYO
 GYYYOOO
 
 Stats:
-Total nodes colored: 787
-Execution time: 3ms
+Total nodes colored: 775
+Execution time: 4ms
 ============================
 Dumb Backtracking: 8x8maze
 ----------------------------
@@ -72,7 +72,7 @@ YQQQQQQY
 YYYYYYYY
 
 Stats:
-Total nodes colored: 7521
+Total nodes colored: 5773
 Execution time: 9ms
 ============================
 Dumb Backtracking: 9x9maze
@@ -102,8 +102,8 @@ GKKKKKKPG
 GGGGGGGGG
 
 Stats:
-Total nodes colored: 106109
-Execution time: 29ms
+Total nodes colored: 77673
+Execution time: 50ms
 ============================
 Dumb Backtracking: 10x10maze
 ----------------------------
@@ -134,5 +134,5 @@ PYPGBBBBBG
 PPPGGGGGGG
 
 Stats:
-Total nodes colored: 3266652
-Execution time: 311ms
+Total nodes colored: 3266648
+Execution time: 628ms
