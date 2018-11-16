@@ -3,6 +3,7 @@ package flowFree;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.HashSet;
+import java.util.Set;
 
 public class smartCSP
 {
@@ -65,29 +66,37 @@ public class smartCSP
 		
 		if(cur_node.isSource() && flag)
 		{
-			if(!forwardChecking(starters.get(z), assignment))
+			System.out.println("YO " + z);
+			if(z < startNodes.size())
 			{
-				return false;
+				if(!forwardChecking(starters.get(z), assignment))
+				{
+					return false;
+				}
+				
+				flag = false;
+				if(solvePuzzle(assignment, starters.get(z)))
+				{
+					return true;
+				}
+				z++;
 			}
-			flag = false;
-			if(solvePuzzle(assignment, starters.get(z)))
-			{
-				return true;
-			}
-			z++;
+			return false;
 		}
 		flag = true;
 		// Start with first valid Neighbor
 		for(Node n : cur_node.getValidN())
 		{
+			System.out.println("BUENOS");
 			n.setValue(cur_node.getValue());
 			colorAttempts++;
 				
 				// Check if this color assignment is valid
 			if (canMakeAssignment(n, cur_node.getValue(), assignment)) {
+				System.out.println("MINE");
 				
 				// Recursive call to function if previous assignment is valid
-				if (solvePuzzle(assignment, cur_node))
+				if (solvePuzzle(assignment, n))
 				{
 					return true;
 				}
@@ -110,7 +119,10 @@ public class smartCSP
 		for (Node neighbor : n.getNeighbors()) {
 			if(neighbor.getValue() == '_')
 			{
-				n.addValidN(neighbor);
+				if(!n.getValidN().contains((neighbor)))
+				{
+					n.addValidN(neighbor);
+				}
 			}
 			if(!checkNeighborConstraints(neighbor, c, assignment))
 				return false;
@@ -132,7 +144,7 @@ public class smartCSP
 			{
 				blanks++;
 			}
-			else if (neighbor.getValue() == n.getValue()) {
+			if (neighbor.getValue() == n.getValue()) {
 				sameColor++;
 			}
 		}
@@ -149,6 +161,12 @@ public class smartCSP
 		if (((sameColor + blanks < 1) && n.isSource()) || ((sameColor + blanks < 2) && !n.isSource())) {
 			return false;
 		}
+		
+		//Assures no stranded sources
+//		if(blanks < 1 && n.isSource())
+//		{
+//			return false;
+//		}
 				
 		return true;
 	}

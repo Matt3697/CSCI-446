@@ -6,6 +6,8 @@ package flowFree;
  * Artificial Intelligence: Assignment 2
  */
 import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.Set;
 
 public class Node {
 	private int x,y;
@@ -16,6 +18,7 @@ public class Node {
 	private int dist, cost;
 	private ArrayList<Path> domain;
 	private ArrayList<Node> validNeighbors;
+	Set<Node> nearbySources;
 	
 	public Node(int x, int y) {
 		this.x = x;
@@ -29,6 +32,7 @@ public class Node {
 		isSource = false;
 		domain = new ArrayList<Path>();
 		validNeighbors = new ArrayList<Node>();
+		nearbySources = new HashSet<Node>();
 	}
 	
 	public void setAsSource() {
@@ -135,12 +139,12 @@ public class Node {
 	
 	public void addValidN(Node n)
 	{
-		validNeighbors.add(n);
+		nearbySources.add(n);
 	}
 	
-	public ArrayList<Node> getValidN()
+	public Set<Node> getValidN()
 	{
-		return validNeighbors;
+		return nearbySources;
 	}
 }
 
