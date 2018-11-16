@@ -19,7 +19,7 @@ BBGGG
 
 Stats:
 Total nodes colored: 147
-Execution time: 1ms
+Execution time: 2ms
 ============================
 Dumb Backtracking: 7x7maze
 ----------------------------
@@ -45,7 +45,7 @@ GYYYOOO
 
 Stats:
 Total nodes colored: 787
-Execution time: 4ms
+Execution time: 3ms
 ============================
 Dumb Backtracking: 8x8maze
 ----------------------------
@@ -103,7 +103,7 @@ GGGGGGGGG
 
 Stats:
 Total nodes colored: 106109
-Execution time: 26ms
+Execution time: 46ms
 ============================
 Dumb Backtracking: 10x10maze
 ----------------------------
@@ -135,7 +135,7 @@ PPPGGGGGGG
 
 Stats:
 Total nodes colored: 3266652
-Execution time: 305ms
+Execution time: 607ms
 ============================
 Smart Backtracking: 5x5maze
 ----------------------------
@@ -170,6 +170,7 @@ ___Y___
 _______
 __R____
 G___O__
+
 Solution:
 
 GGGOOOO
@@ -196,14 +197,6 @@ ______Y_
 ____BOQ_
 _Q______
 ________
-YYYRRRGG
-YBYPPRRG
-YBOOPGRG
-YBOPPGGG
-YBOOOOYY
-YBBBBOQY
-YQQQQQQY
-YYYYYYYY
 
 Solution:
 
@@ -218,15 +211,12 @@ YYYYYYYY
 
 Stats:
 Total nodes colored: 5773
-Execution time: 3ms
-Total nodes colored: 12303
-Execution time: 8.0ms
->>>>>>> c9e55725bb936172c66d484e9c11e00fd687e756
+Execution time: 2ms
+============================
 Smart Backtracking: 9x9maze
 ----------------------------
 Original:
 
-<<<<<<< HEAD
 D__BOK___
 __O__R___
 __RQ__Q__
@@ -239,8 +229,6 @@ _________
 
 Solution:
 
-=======
->>>>>>> c9e55725bb936172c66d484e9c11e00fd687e756
 DBBBOKKKK
 DBOOORRRK
 DBRQQQQRK
@@ -251,10 +239,9 @@ GKYYYYYPG
 GKKKKKKPG
 GGGGGGGGG
 
-<<<<<<< HEAD
 Stats:
 Total nodes colored: 77673
-Execution time: 21ms
+Execution time: 24ms
 ============================
 Smart Backtracking: 10x10maze
 ----------------------------
@@ -286,21 +273,4 @@ PPPGGGGGGG
 
 Stats:
 Total nodes colored: 3266648
-Execution time: 644ms
-=======
-Solution:
-
-DBBBOKKKK
-DBOOORRRK
-DBRQQQQRK
-DBRRRRRRK
-GGKKKKKKK
-GKKPPPPPG
-GKYYYYYPG
-GKKKKKKPG
-GGGGGGGGG
-
-Stats:
-Total nodes colored: 28743
-Execution time: 18.0ms
->>>>>>> c9e55725bb936172c66d484e9c11e00fd687e756
+Execution time: 574ms
