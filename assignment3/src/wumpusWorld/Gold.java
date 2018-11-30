@@ -16,6 +16,7 @@ public class Gold {
 		Random rnd = new Random();
 		x = rnd.nextInt(upperBound + 1);
 		y = rnd.nextInt(upperBound + 1);
+		//System.out.println(id + " " + x + ": " + y);
 	}
 	
 	public int getX() {//return x position of gold

@@ -42,7 +42,15 @@ public class Maze {
 				maze[i][y] = '_';
 			}
 		}
-		//Possibly add conditional to check if gold and wumpus are on same square, call setLocation again...
+		//keep trying to place the gold and wumpus. They cannot be placed at same spot as agent
+		while((gold.getX() == 0 && gold.getY() == 0) || (wumpus.getX() == 0 && wumpus.getY() == 0)) { 
+			if(gold.getX() == 0 && gold.getY() == 0) {
+				gold.setLocation();
+			}
+			else {
+				wumpus.setLocation();
+			}
+		}
 		maze[agent.getX()][agent.getY()] = agent.getId();
 		maze[gold.getX()][gold.getY()] = gold.getId();
 		maze[wumpus.getX()][wumpus.getY()] = wumpus.getId();
