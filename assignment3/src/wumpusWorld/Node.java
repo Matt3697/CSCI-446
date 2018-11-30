@@ -1,9 +1,9 @@
 package wumpusWorld;
-
 /*
  * Authors: Carie Pointer, Hugh Jackovich, Matthew Sagen
- * Date:    11/13/18
- * Artificial Intelligence: Assignment 2
+ * Date:    11/30/18
+ * Programming Assignment 3: Wumpus World
+ * 
  */
 import java.util.ArrayList;
 import java.util.HashSet;
@@ -33,25 +33,6 @@ public class Node {
 		//domain = new ArrayList<Path>();
 		validNeighbors = new ArrayList<Node>();
 		nearbySources = new HashSet<Node>();
-	}
-	
-	public void setAsSource() {
-		isSource = true;
-	}
-	
-	public void setOtherSource(int[] loc)
-	{
-		otherSource = loc;
-	}
-	
-	public int[] getOtherSource()
-	{
-		return otherSource;
-	}
-	
-	public void setDist(int n)
-	{
-		dist = n;
 	}
 	
 	public int getDist()
@@ -99,10 +80,6 @@ public class Node {
 		}
 	}
 	*/
-	public boolean isSource() {
-		return isSource;
-	}
-	
 	public int getX() {
 		return x;
 	}
@@ -127,23 +104,19 @@ public class Node {
 		return value;
 	}
 	
-	public void setCost(int n)
-	{
+	public void setCost(int n){
 		cost = n;
 	}
 	
-	public int getCost()
-	{
+	public int getCost(){
 		return cost;
 	}
 	
-	public void addValidN(Node n)
-	{
+	public void addValidN(Node n){
 		nearbySources.add(n);
 	}
 	
-	public Set<Node> getValidN()
-	{
+	public Set<Node> getValidN(){
 		return nearbySources;
 	}
 }
