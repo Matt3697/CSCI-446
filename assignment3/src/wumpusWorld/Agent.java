@@ -8,11 +8,13 @@ package wumpusWorld;
 public class Agent {
 	public int x,y;
 	public boolean arrow;
+	public char id;
 	
 	public Agent(int x, int y) {//x and y coordinates of agent
 		this.x = x;
 		this.y = y;
 		this.arrow = true;
+		this.id = 'A';
 	}
 	
 	public boolean hasArrow() {//return whether or not the agent currently has it's arrow
@@ -26,5 +28,8 @@ public class Agent {
 	}
 	public int getY() {//return the y position of the agent
 		return y;
+	}
+	public char getId() {//return character representation of Agent --> A
+		return id;
 	}
 }

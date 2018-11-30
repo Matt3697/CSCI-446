@@ -30,15 +30,20 @@ public class Maze {
 		nodeMaze = new Node[height][length];
 		char[] rows = new char[height];
 		char[] columns = new char[length];
+		
+		//create gold,wumpus,pits,agent
 		Gold gold = new Gold(height);
 		Wumpus wumpus = new Wumpus(height);
 		Pit pit = new Pit(height);
+		Agent agent = new Agent(0,0);//the agent always starts at square {1,1}
+
 		for(int i = 0; i < rows.length; i++) {//loop left to right, top to bottom, to initialize maze.
 			for(int y = 0; y < columns.length; y++) {
 				maze[i][y] = '_';
 			}
 		}
 		//Possibly add conditional to check if gold and wumpus are on same square, call setLocation again...
+		maze[agent.getX()][agent.getY()] = agent.getId();
 		maze[gold.getX()][gold.getY()] = gold.getId();
 		maze[wumpus.getX()][wumpus.getY()] = wumpus.getId();
 		
@@ -62,16 +67,12 @@ public class Maze {
 	
 	// Create a matrix where each item is a Node
 	public void makeNodeMatrix() {
-		HashMap<Character, int[]> vals = new HashMap<Character, int[]>();
 		for (int i = 0; i < maze.length; i++) {
 			for (int j = 0; j < maze[0].length; j++) {
 				int[] temp = {i, j};
 				Node n = new Node(i, j, maze[i][j]);
 				nodeMaze[i][j] = n;
 				varList.add(n);
-				if(n.getValue() != '_') {
-					
-				}
 			}
 		}
 		setNeighbors();
