@@ -153,13 +153,16 @@ public class Maze {
 				}
 				if(n.containsPit()) {// if a node has a pit, put a breeze on its adjacent squares.
 					for(Node node : n.getNeighbors()) {
-						node.hasBreeze();
+						node.setBreeze();
 					}
 				}
 				if(n.containsWumpus()) {//if a node contains the wumpus, put a stench in the adjacent squares.
 					for(Node node : n.getNeighbors()) {
 						node.setStench();
 					}
+				}
+				if(n.getX() == nodeMaze.length - 1 && n.getY() == nodeMaze[0].length) {//if a node contains a wall, add a bump percept.
+					n.setBump();
 				}
 			}
 		}

@@ -12,7 +12,7 @@ import java.util.Set;
 public class Node {
 	private int x,y;
 	private char value;
-	private boolean isSource, stench, wumpus, pit, gold, glitter,breeze;
+	private boolean isSource, stench, wumpus, pit, gold, glitter, breeze, bump;
 	private ArrayList<Node> neighbors = new ArrayList<>();
 	private int[] otherSource;
 	private int dist, cost;
@@ -153,8 +153,18 @@ public class Node {
 	public boolean containsGlitter() {//return whether or not a node has glitter in it.
 		return glitter;
 	}
-	public void hasBreeze() {//set a node to have a breeze.
+	public void setBreeze() {//set a node to have a breeze.
 		breeze = true;
 		System.out.println(x + ": " + y + " has breeze.");
+	}
+	public boolean hasBreeze() {//return whether or not a pit has a breeze.
+		return breeze;
+	}
+	public void setBump() {//set a node to have a wall.
+		bump = true;
+		System.out.println(x + ": " + y + " is wall.");
+	}
+	public boolean perceiveBump() {//return whether or not we hit a wall.
+		return bump;
 	}
 }
