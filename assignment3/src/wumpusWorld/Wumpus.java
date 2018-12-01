@@ -6,10 +6,12 @@ public class Wumpus {
 	
 	private int upperBound,x,y;
 	private char id;
+	private boolean alive;
 	
 	public Wumpus(int upperBound) {
 		this.upperBound = upperBound - 1;
 		this.id = 'W';
+		this.alive = true;
 		setLocation();
 	}
 	
@@ -36,5 +38,11 @@ public class Wumpus {
 	}
 	public char getId() {//return character representation of wumpus --> W
 		return id;
+	}
+	public void killWumpus() {//kill the wumpus
+		alive = false;
+	}
+	public boolean isAlive() {//return whether or not wumpus is alive.
+		return alive;
 	}
 }
