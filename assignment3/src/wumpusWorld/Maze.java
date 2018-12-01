@@ -149,7 +149,7 @@ public class Maze {
 			for(int j = 0; j < nodeMaze[0].length; j++) {	
 				n = nodeMaze[i][j];
 				if(n.containsGold()) {//if a node has gold, put glitter in the square
-					n.containsGlitter();
+					n.setGlitter();
 				}
 				if(n.containsPit()) {// if a node has a pit, put a breeze on its adjacent squares.
 					for(Node node : n.getNeighbors()) {
@@ -158,7 +158,7 @@ public class Maze {
 				}
 				if(n.containsWumpus()) {//if a node contains the wumpus, put a stench in the adjacent squares.
 					for(Node node : n.getNeighbors()) {
-						node.hasStench();
+						node.setStench();
 					}
 				}
 			}

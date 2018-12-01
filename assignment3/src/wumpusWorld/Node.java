@@ -35,8 +35,7 @@ public class Node {
 		nearbySources = new HashSet<Node>();
 	}
 	
-	public int getDist()
-	{
+	public int getDist(){
 		return dist;
 	}
 	/*
@@ -81,11 +80,11 @@ public class Node {
 	}
 	*/
 	
-	public int getX() {
+	public int getX() {//return x location of node
 		return x;
 	}
 	
-	public int getY() {
+	public int getY() {//return y location of node.
 		return y;
 	}
 	
@@ -109,7 +108,7 @@ public class Node {
 		cost = n;
 	}
 	
-	public int getCost(){
+	public int getCost(){//return cost of node.
 		return cost;
 	}
 	
@@ -120,36 +119,42 @@ public class Node {
 	public Set<Node> getValidN(){
 		return nearbySources;
 	}
-	public boolean hasStench() {
+	public boolean hasStench() {//return whether or not a node has a stench.
 		return stench;
 	}
-	public void setWumpus() {
+	public void setStench() {
+		stench = true;
+		System.out.println(x + ": " + y + " has stench.");
+	}
+	public void setWumpus() {//set a pit to have the wumpus.
 		wumpus = true;
 	}
-	public boolean containsWumpus() {
+	public boolean containsWumpus() {//return whether or not a pit contains the wumpus.
 		return wumpus;
 	}
-	public void setPit() {
+	public void setPit() {//set a node to have a pit.
 		pit = true;
 	}
-	public boolean containsPit() {
+	public boolean containsPit() {//return whether or not a node contains a pit
 		return pit;
 	}
-	public void setGold() {
+	public void setGold() {//set a node to have gold
 		gold = true;
 	}
-	public boolean containsGold() {
+	public boolean containsGold() {//return whether or not a node contains gold
 		return gold;
 	}
 
-	public void containsGlitter() {
+	public void setGlitter() {//set a node to have glitter.
 		// TODO Auto-generated method stub
 		glitter = true;
-		
+		System.out.println(x + ": " + y + " has glitter.");
 	}
-
-	public void hasBreeze() {
-		// TODO Auto-generated method stub
+	public boolean containsGlitter() {//return whether or not a node has glitter in it.
+		return glitter;
+	}
+	public void hasBreeze() {//set a node to have a breeze.
 		breeze = true;
+		System.out.println(x + ": " + y + " has breeze.");
 	}
 }
