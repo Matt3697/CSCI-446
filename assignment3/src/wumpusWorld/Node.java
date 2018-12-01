@@ -12,7 +12,7 @@ import java.util.Set;
 public class Node {
 	private int x,y;
 	private char value;
-	private boolean isSource, stench, wumpus, pit, gold;
+	private boolean isSource, stench, wumpus, pit, gold, glitter,breeze;
 	private ArrayList<Node> neighbors = new ArrayList<>();
 	private int[] otherSource;
 	private int dist, cost;
@@ -80,6 +80,7 @@ public class Node {
 		}
 	}
 	*/
+	
 	public int getX() {
 		return x;
 	}
@@ -139,5 +140,16 @@ public class Node {
 	}
 	public boolean containsGold() {
 		return gold;
+	}
+
+	public void containsGlitter() {
+		// TODO Auto-generated method stub
+		glitter = true;
+		
+	}
+
+	public void hasBreeze() {
+		// TODO Auto-generated method stub
+		breeze = true;
 	}
 }

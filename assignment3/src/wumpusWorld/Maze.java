@@ -102,6 +102,7 @@ public class Maze {
 			}
 		}
 		setNeighbors();
+		setPercepts();
 	}
 	
 	public void printNodeMatrix() {
@@ -133,7 +134,36 @@ public class Maze {
 			}
 		}
 	}
-	
+	/*
+	 * From book:
+	 * In the square containing the wumpus and in the directly (not diagonally) adjacent squares, the agent will perceive a Stench.
+		– In the squares directly adjacent to a pit, the agent will perceive a Breeze.
+		– In the square where the gold is, the agent will perceive a Glitter.
+		– When an agent walks into a wall, it will perceive a Bump.
+		– When the wumpus is killed, it emits a woeful Scream that can be perceived any-
+		where in the cave
+	 */
+	public void setPercepts() {
+		Node n;
+		for(int i = 0; i < nodeMaze.length; i++) {//loop through the maze, 
+			for(int j = 0; j < nodeMaze[0].length; j++) {	
+				n = nodeMaze[i][j];
+				if(n.containsGold()) {//if a node has gold, put glitter in the square
+					n.containsGlitter();
+				}
+				if(n.containsPit()) {// if a node has a pit, put a breeze on its adjacent squares.
+					for(Node node : n.getNeighbors()) {
+						node.hasBreeze();
+					}
+				}
+				if(n.containsWumpus()) {//if a node contains the wumpus, put a stench in the adjacent squares.
+					for(Node node : n.getNeighbors()) {
+						node.hasStench();
+					}
+				}
+			}
+		}
+	}
 	public Node getNode(int x, int y){
 		return nodeMaze[x][y];
 	}
