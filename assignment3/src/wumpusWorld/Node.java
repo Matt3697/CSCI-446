@@ -12,7 +12,7 @@ import java.util.Set;
 public class Node {
 	private int x,y;
 	private char value;
-	private boolean isSource, stench;
+	private boolean isSource, stench, wumpus, pit, gold;
 	private ArrayList<Node> neighbors = new ArrayList<>();
 	private int[] otherSource;
 	private int dist, cost;
@@ -121,5 +121,23 @@ public class Node {
 	}
 	public boolean hasStench() {
 		return stench;
+	}
+	public void setWumpus() {
+		wumpus = true;
+	}
+	public boolean containsWumpus() {
+		return wumpus;
+	}
+	public void setPit() {
+		pit = true;
+	}
+	public boolean containsPit() {
+		return pit;
+	}
+	public void setGold() {
+		gold = true;
+	}
+	public boolean containsGold() {
+		return gold;
 	}
 }

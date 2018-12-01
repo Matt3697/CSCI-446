@@ -90,7 +90,15 @@ public class Maze {
 				int[] temp = {i, j};
 				Node n = new Node(i, j, maze[i][j]);
 				nodeMaze[i][j] = n;
-				
+				if(maze[i][j] == 'W') {
+					n.setWumpus();
+				}
+				else if(maze[i][j] == 'P') {
+					n.setPit();
+				}
+				else if(maze[i][j] == 'G') {
+					n.setGold();
+				}
 			}
 		}
 		setNeighbors();
