@@ -16,46 +16,57 @@ public class Maze {
 	public char[][] DFSmaze = null;
 	private ArrayList<Node> varList = new ArrayList<Node>();
 	private Node[][] nodeMaze;
-	private int length, height;
+	private int length, height, size, upperBound;
 	
-	public Maze(int length, int height) { //constructor for Maze
+	public Maze(int length, int height, Agent agent) { //constructor for Maze
 		this.length = length;
 		this.height = height;
-		create_maze();
+		this.upperBound = length;
+		create_maze(agent);
 	}
 	
-	public void create_maze() { //reads from different text files to create mazes.
+	public void create_maze(Agent agent) { //reads from different text files to create mazes.
 
 		maze = new char[height][length];		//[rows][columns]
 		nodeMaze = new Node[height][length];
 		char[] rows = new char[height];
 		char[] columns = new char[length];
+		size = length * height;
 		
 		//create gold,wumpus,pits,agent
 		Gold gold = new Gold(height);
 		Wumpus wumpus = new Wumpus(height);
-		Pit pit = new Pit(height);
-		Agent agent = new Agent(0,0);//the agent always starts at square {1,1}
+		//Agent agent = new Agent(0,0);//the agent always starts at square {1,1}
 
 		for(int i = 0; i < rows.length; i++) {//loop left to right, top to bottom, to initialize maze.
 			for(int y = 0; y < columns.length; y++) {
 				maze[i][y] = '_';
 			}
 		}
-		//keep trying to place the gold and wumpus. They cannot be placed at same spot as agent
-		while((gold.getX() == 0 && gold.getY() == 0) || (wumpus.getX() == 0 && wumpus.getY() == 0)) { 
-			if(gold.getX() == 0 && gold.getY() == 0) {
-				gold.setLocation();
-			}
-			else {
-				wumpus.setLocation();
-			}
+		//place wumpus-->gold-->for every square place a pit if not start, not gold
+		//Gold and wumpus cannot be spawned at same spot as agent --> (0,0).
+	
+		while(!wumpus.isValidLocation()) {
+			wumpus.setLocation();
 		}
+		while(!gold.isValidLocation()) {
+			gold.setLocation();
+		}
+		
 		maze[agent.getX()][agent.getY()] = agent.getId();
 		maze[gold.getX()][gold.getY()] = gold.getId();
 		maze[wumpus.getX()][wumpus.getY()] = wumpus.getId();
 		
-		
+		for(int i = 0; i < rows.length; i++) {//loop left to right, top to bottom, to initialize maze. pit has 20% chance at each spot to occur. 
+			for(int y = 0; y < columns.length; y++) {
+				Random rnd = new Random();
+				int random = rnd.nextInt(10);
+				if(random == 2) {
+					Pit pit = new Pit(i,y);
+					maze[i][y] = pit.getId();
+				}
+			}
+		}
         makeNodeMatrix();
    }
 
@@ -121,5 +132,8 @@ public class Maze {
 	}
 	public Node getNode(int x, int y){
 		return nodeMaze[x][y];
+	}
+	public int getUpperBound() {//return length for upper bound. Since all mazes are square, choice doesn't matter between lenght and height.
+		return upperBound;
 	}
 }

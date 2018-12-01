@@ -32,4 +32,19 @@ public class Agent {
 	public char getId() {//return character representation of Agent --> A
 		return id;
 	}
+	public void turnLeft() {
+		
+	}
+	public void turnRight() {
+		
+	}
+	public void moveForward(int upperBound) {
+		if(x < upperBound - 1 && y < upperBound - 1) {
+			x++;
+			y++;
+		}
+		else {
+			System.out.println("Can't move forward from here.");
+		}
+	}
 }

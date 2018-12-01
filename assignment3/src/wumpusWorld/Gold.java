@@ -18,7 +18,14 @@ public class Gold {
 		y = rnd.nextInt(upperBound + 1);
 		//System.out.println(id + " " + x + ": " + y);
 	}
-	
+	public boolean isValidLocation() {//gold cannot be spawned at 0,0, the starting point of the agent.
+		if(x == 0 && y == 0) {
+			return false;
+		}
+		else {
+			return true;
+		}
+	}
 	public int getX() {//return x position of gold
 		return x;
 	}

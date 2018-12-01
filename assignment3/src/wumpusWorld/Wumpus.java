@@ -20,6 +20,14 @@ public class Wumpus {
 		//System.out.println(id + " " + x + ": " + y);
 	}
 	
+	public boolean isValidLocation() {//wumpus cannot be spawned at 0,0, the starting point of the agent.
+		if(x == 0 && y == 0) {
+			return false;
+		}
+		else {
+			return true;
+		}
+	}
 	public int getX() {//return x location of wumpus
 		return x;
 	}
