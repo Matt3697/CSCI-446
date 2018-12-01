@@ -39,8 +39,8 @@ public class Agent {
 	public void turnRight() {
 		
 	}
-	public void moveForward(int upperBound) {
-		if(x < upperBound - 1 && y < upperBound - 1) {
+	public void moveForward(int upperBound) {//move the agent forward by one if the agent remains within the bounds of the maze.
+		if((x < upperBound - 1 && y < upperBound - 1)) {
 			x++;
 			y++;
 		}
