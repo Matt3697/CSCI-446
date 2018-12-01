@@ -161,8 +161,17 @@ public class Maze {
 						node.setStench();
 					}
 				}
-				if(n.getX() == nodeMaze.length - 1 && n.getY() == nodeMaze[0].length) {//if a node contains a wall, add a bump percept.
+				if(n.getX() == nodeMaze.length - 1 && n.getY() == nodeMaze[0].length - 1) {//if a node contains a wall, add a bump percept.
 					n.setBump();
+				}
+				if(n.getX() == 0 && n.getY() == 0) {
+					n.setBump();
+				}
+				if(n.getX() == nodeMaze.length - 1 && n.getY() == 0) {
+					n.setBump();
+				}
+				if(n.getX() == 0 && n.getY() == nodeMaze[0].length - 1) {
+					n.setBreeze();
 				}
 			}
 		}
