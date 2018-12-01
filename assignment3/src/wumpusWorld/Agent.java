@@ -7,7 +7,7 @@ package wumpusWorld;
  */
 public class Agent {
 	public int x,y;
-	public boolean arrow;
+	public boolean arrow, gold;
 	public char id;
 	
 	public Agent(int x, int y) {//x and y coordinates of agent
@@ -15,6 +15,7 @@ public class Agent {
 		this.y = y;
 		this.arrow = true;
 		this.id = 'A';
+		this.gold = false;
 	}
 	
 	public boolean hasArrow() {//return whether or not the agent currently has it's arrow
@@ -46,5 +47,11 @@ public class Agent {
 		else {
 			System.out.println("Can't move forward from here.");
 		}
+	}
+	public void grab() {//lets the agent grab the gold from a square
+		gold = true;
+	}
+	public boolean hasGold() {//return whether or not agent has the gold
+		return gold;
 	}
 }
