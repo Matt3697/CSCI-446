@@ -53,10 +53,10 @@ public class Maze {
 		maze[agent.getX()][agent.getY()] = agent.getId();
 		maze[gold.getX()][gold.getY()] = gold.getId();
 		maze[wumpus.getX()][wumpus.getY()] = wumpus.getId();
+		Random rnd = new Random();
 		
 		for(int i = 0; i < rows.length; i++) {//loop left to right, top to bottom, to initialize maze. pit has 20% chance at each spot to occur. 
 			for(int y = 0; y < columns.length; y++) {
-				Random rnd = new Random();
 				int random = rnd.nextInt(10);
 				if(random == 2 && i != 0 && y != 0) {//pit can't form at start position
 					Pit pit = new Pit(i,y);
@@ -85,7 +85,6 @@ public class Maze {
 	public void makeNodeMatrix() {
 		for (int i = 0; i < maze.length; i++) {
 			for (int j = 0; j < maze[0].length; j++) {
-				int[] temp = {i, j};
 				Node n = new Node(i, j, maze[i][j]);
 				nodeMaze[i][j] = n;
 				if(maze[i][j] == 'W') {
@@ -159,18 +158,29 @@ public class Maze {
 						node.setStench();
 					}
 				}
-				if(n.getX() == nodeMaze.length - 1 && n.getY() == nodeMaze[0].length - 1) {//if a node contains a wall, add a bump percept.
+				if(i == 0 && j < nodeMaze[0].length) {//set top walls
+					n.setTopWall();
+				}
+				if(i == nodeMaze.length - 1 && j < nodeMaze[0].length ) {//set bottom walls
+					n.setBottomWall();
+				}
+				if(i < nodeMaze.length && j == 0) {//set left walls
+					n.setLeftWall();
+				}
+				if(i < nodeMaze.length && j == nodeMaze[0].length - 1) {//set right walls
+					n.setRightWall();
+				}
+				/*
+				if(n.getX() == 0 && n.getY() == 0) {
 					n.setBump();
 				}
-				else if(n.getX() == 0 && n.getY() == 0) {
+				if(n.getX() == nodeMaze.length - 1 && n.getY() == 0) {
 					n.setBump();
 				}
-				else if(n.getX() == nodeMaze.length - 1 && n.getY() == 0) {
+				if(n.getX() == 0 && n.getY() == nodeMaze[0].length - 1) {
 					n.setBump();
 				}
-				else if(n.getX() == 0 && n.getY() == nodeMaze[0].length - 1) {
-					n.setBump();
-				}
+				*/
 			}
 		}
 	}

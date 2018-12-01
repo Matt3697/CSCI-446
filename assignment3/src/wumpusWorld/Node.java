@@ -13,6 +13,7 @@ public class Node {
 	private int x,y;
 	private char value;
 	private boolean isSource, stench, wumpus, pit, gold, glitter, breeze, bump;
+	private boolean topWall, bottomWall, leftWall, rightWall;
 	private ArrayList<Node> neighbors = new ArrayList<>();
 	private int[] otherSource;
 	private int dist, cost;
@@ -160,11 +161,26 @@ public class Node {
 	public boolean hasBreeze() {//return whether or not a pit has a breeze.
 		return breeze;
 	}
-	public void setBump() {//set a node to have a wall.
-		bump = true;
-		System.out.println(x + ": " + y + " is wall.");
+	
+
+	public void setTopWall() {
+		topWall = true;
+		System.out.println(x + ": " + y + " has top wall.");
 	}
-	public boolean perceiveBump() {//return whether or not we hit a wall.
-		return bump;
+
+	public void setBottomWall() {
+		bottomWall = true;
+		System.out.println(x + ": " + y + " has bottom wall.");
 	}
+
+	public void setLeftWall() {
+		leftWall = true;
+		System.out.println(x + ": " + y + " has left wall.");
+	}
+
+	public void setRightWall() {
+		rightWall = true;
+		System.out.println(x + ": " + y + " has right wall.");
+	}
+	
 }

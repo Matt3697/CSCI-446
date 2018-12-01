@@ -21,8 +21,22 @@ public class Agent {
 	public boolean hasArrow() {//return whether or not the agent currently has it's arrow
 		return arrow;
 	}
-	public void shootArrow() {//if the agent shoots it's arrow, set hasArrow to false.
-		arrow = false;
+	public boolean shootArrow(Node[][] nodeMaze) {//if the agent shoots it's arrow, set hasArrow to false. If we hit the wumpus return true
+		if(arrow == true) {
+			arrow = false;
+		    /*	
+			for (int i = 0; i < nodeMaze.length; i++) {
+				for (int j = 0; j < nodeMaze[0].length; j++) {
+					Node n = nodeMaze[i][j];
+					nodeMaze[i][j] = n;
+					if(n.containsWumpus()) {
+						return true;
+					}
+				}
+			}
+			*/
+		}
+		return false;
 	}
 	public int getX() {//return the x position of the agent
 		return x;
