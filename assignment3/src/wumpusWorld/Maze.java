@@ -14,7 +14,6 @@ public class Maze {
 	
 	public char[][] maze = null;
 	public char[][] DFSmaze = null;
-	private ArrayList<Node> varList = new ArrayList<Node>();
 	private Node[][] nodeMaze;
 	private int length, height, size, upperBound;
 	
@@ -61,7 +60,7 @@ public class Maze {
 			for(int y = 0; y < columns.length; y++) {
 				Random rnd = new Random();
 				int random = rnd.nextInt(10);
-				if(random == 2) {
+				if(random == 2 && i != 0 && y != 0) {//pit can't form at start position
 					Pit pit = new Pit(i,y);
 					maze[i][y] = pit.getId();
 				}
@@ -91,7 +90,7 @@ public class Maze {
 				int[] temp = {i, j};
 				Node n = new Node(i, j, maze[i][j]);
 				nodeMaze[i][j] = n;
-				varList.add(n);
+				
 			}
 		}
 		setNeighbors();
@@ -127,9 +126,6 @@ public class Maze {
 		}
 	}
 	
-	public ArrayList<Node> getVarList() {
-		return varList;
-	}
 	public Node getNode(int x, int y){
 		return nodeMaze[x][y];
 	}

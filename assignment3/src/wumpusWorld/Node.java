@@ -12,7 +12,7 @@ import java.util.Set;
 public class Node {
 	private int x,y;
 	private char value;
-	private boolean isSource;
+	private boolean isSource, stench;
 	private ArrayList<Node> neighbors = new ArrayList<>();
 	private int[] otherSource;
 	private int dist, cost;
@@ -118,5 +118,8 @@ public class Node {
 	
 	public Set<Node> getValidN(){
 		return nearbySources;
+	}
+	public boolean hasStench() {
+		return stench;
 	}
 }
