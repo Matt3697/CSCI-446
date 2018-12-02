@@ -108,7 +108,10 @@ public class Maze {
 		System.out.println("==================");
 		for (int i = 0; i < nodeMaze.length; i++) {
 			for (int j = 0; j < nodeMaze[0].length; j++) {
-				System.out.print(nodeMaze[i][j].getValue());
+				if (nodeMaze[i][j].hasAgent())
+					System.out.print('A');
+				else 
+					System.out.print(nodeMaze[i][j].getValue());
 			}
 			System.out.println();
 		}

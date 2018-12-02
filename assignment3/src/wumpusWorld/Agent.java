@@ -8,6 +8,7 @@ package wumpusWorld;
 public class Agent {
 	private int x,y, performanceMeasure;
 	private boolean arrow, gold;
+	private String direction;
 	private char id;
 	
 	
@@ -54,14 +55,31 @@ public class Agent {
 	public void turnRight() {
 		
 	}
-	public void moveForward(int upperBound) {//move the agent forward by one if the agent remains within the bounds of the maze.
-		if((x < upperBound - 1 && y < upperBound - 1)) {
-			x++;
+	public void moveForward() {//move the agent forward by one if the agent remains within the bounds of the maze.
+		
+		System.out.println("moving " + this.getDirection());
+		
+		if (this.getDirection() == "North") {
+			x--;
+		}
+		else if (this.getDirection() == "East") {
 			y++;
 		}
-		else {
-			System.out.println("Can't move forward from here.");
+		else if (this.getDirection() == "South") {
+			x++;
 		}
+		else if (this.getDirection() == "West") {
+			y--;
+		}
+		
+		
+//		if((x < upperBound - 1 && y < upperBound - 1)) {
+//			x++;
+//			y++;
+//		}
+//		else {
+//			System.out.println("Can't move forward from here.");
+//		}
 	}
 	public void grab() {//lets the agent grab the gold from a square
 		gold = true;
@@ -71,5 +89,13 @@ public class Agent {
 	}
 	public int getPerformanceMeasure() {//return the agents performance measure
 		return performanceMeasure;
+	}
+	
+	public void setDirection(String direction) {
+		this.direction = direction;
+	}
+	
+	public String getDirection() {
+		return direction;
 	}
 }
