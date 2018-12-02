@@ -6,12 +6,13 @@ public class Wumpus {
 	
 	private int upperBound,x,y;
 	private char id;
-	private boolean alive;
+	private boolean alive, scream;
 	
 	public Wumpus(int upperBound) {
 		this.upperBound = upperBound - 1;
 		this.id = 'W';
 		this.alive = true;
+		this.scream = false;
 		setLocation();
 	}
 	
@@ -41,8 +42,12 @@ public class Wumpus {
 	}
 	public void killWumpus() {//kill the wumpus
 		alive = false;
+		scream = true;
 	}
 	public boolean isAlive() {//return whether or not wumpus is alive.
 		return alive;
+	}
+	public boolean didScream() {//return whether or not the wumpus screamed when the arrow was shot
+		return scream;
 	}
 }

@@ -13,8 +13,9 @@ public class Main {
 	public static void main(String[] args) throws FileNotFoundException, UnsupportedEncodingException {
 		PrintWriter writer = new PrintWriter("Output.txt", "UTF-8"); //outputs to directory Assignment3
 		Agent agent = new Agent(0,0);//the agent always starts at square [0,0]
-		Maze maze1 = new Maze(4,4,agent);
-		WumpusSolver wumpus = new WumpusSolver(maze1, agent);
+		Wumpus w = new Wumpus(4);
+		Maze maze1 = new Maze(4, 4, agent, w);
+		WumpusSolver wumpus = new WumpusSolver(maze1, agent, w);
 		wumpus.solveMaze();
 		//Maze maze2 = new Maze(5,5, agent);
 		//Maze maze3 = new Maze(8,8);

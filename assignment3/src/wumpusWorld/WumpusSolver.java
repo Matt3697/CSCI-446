@@ -1,17 +1,22 @@
 package wumpusWorld;
 
+import java.util.ArrayList;
+
 public class WumpusSolver {
 
 	//private Node[][] maze;
 	Maze maze;
 	Agent agent;
+	private Wumpus wumpus;
 	private Node start, currNode;
 	private boolean gameOver, agentMoved;
+	private ArrayList<Node> path;
 	
-	public WumpusSolver(Maze m, Agent a) {
+	public WumpusSolver(Maze m, Agent a, Wumpus w) {
 		this.maze = m;
 		this.start = m.getNode(0, 0);
 		this.agent = a;
+		this.wumpus = w;
 		agent.setDirection("East");
 	}
 	
@@ -33,15 +38,17 @@ public class WumpusSolver {
 	private void checkPercepts(Node n) {
 		boolean stench = false, breeze = false, glitter = false, bump = false, scream = false;
 		Node prev;
-
+		path.add(n);
 		if (n.containsPit()) {
 			// u ded -- game ends
+			agent.editPerformanceMeasure(-1000);
 			gameOver = true;
 			System.out.println("Fell in pit");
 			return;
 		}
 		if (n.containsWumpus()) {
 			// u ded -- game ends
+			agent.editPerformanceMeasure(-1000);
 			gameOver = true;
 			System.out.println("Wumpus killed agent");
 			return;
@@ -61,21 +68,25 @@ public class WumpusSolver {
 		
 		if(agent.getDirection() == "East" && n.hasRightWall()) {
 			bump = true;
+			agent.editPerformanceMeasure(-1);
 			System.out.println("agent hit a wall");
 			agent.setDirection("South");
 		}
 		if(agent.getDirection() == "South" && n.hasBottomWall()) {
 			bump = true;
+			agent.editPerformanceMeasure(-1);
 			System.out.println("agent hit a wall");
 			agent.setDirection("West");
 		}
 		if(agent.getDirection() == "West" && n.hasLeftWall()) {
 			bump = true;
+			agent.editPerformanceMeasure(-1);
 			System.out.println("agent hit a wall");
 			agent.setDirection("North");
 		}
 		if(agent.getDirection() == "North" && n.hasTopWall()) {
 			bump = true;
+			agent.editPerformanceMeasure(-1);
 			System.out.println("agent hit a wall");
 			agent.setDirection("East");
 		}
@@ -103,11 +114,22 @@ public class WumpusSolver {
 		else if (stench && !breeze && !glitter && !bump && !scream) {
 			System.out.println("Wumpus in adjacent node");
 			//TODO: finish logic
-			
-			for (Node neighbor : currNode.getNeighbors()) {
-				neighbor.setGuess('W'); // each neighbor could possibly be the wumpus
+			if(agent.shootArrow(maze, wumpus)) {//if we kill the wumpus, it is safe to move forwards.
+				System.out.println("Killed Wumpus");
+				agent.moveForward();
+				prev = currNode; 
+				currNode = maze.getNode(agent.getX(), agent.getY()); // Update current Node
+				currNode.setPrev(prev); // Set previous Node
+				currNode.setHasAgent(true); // The agent is on this Node -- used for printing the maze after each iteration
+				currNode.setVisited();
+				currNode.setWumpus(false);
 			}
-			
+			else {
+				System.out.println("Missed Wumpus");//also safe to move forward...
+				for (Node neighbor : currNode.getNeighbors()) {
+					neighbor.setGuess('W'); // each neighbor could possibly be the wumpus
+				}
+			}
 		}
 		
 		// There is a pit in an adjacent Node

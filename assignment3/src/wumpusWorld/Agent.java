@@ -23,20 +23,49 @@ public class Agent {
 	public boolean hasArrow() {//return whether or not the agent currently has it's arrow
 		return arrow;
 	}
-	public boolean shootArrow(Node[][] nodeMaze) {//if the agent shoots it's arrow, set hasArrow to false. If we hit the wumpus return true
+	public boolean shootArrow(Maze maze, Wumpus wumpus) {//if the agent shoots it's arrow, set hasArrow to false. If we hit the wumpus return true
 		if(arrow == true) {
 			arrow = false;
-		    /*	
-			for (int i = 0; i < nodeMaze.length; i++) {
-				for (int j = 0; j < nodeMaze[0].length; j++) {
-					Node n = nodeMaze[i][j];
-					nodeMaze[i][j] = n;
-					if(n.containsWumpus()) {
+			editPerformanceMeasure(-10); //-10 for using arrow
+			int arrowX = x;
+			int arrowY = y;
+			if(direction == "East") {
+				while(arrowX < maze.getUpperBound()) {
+					arrowX ++;
+					if(maze.getNode(arrowX, arrowY).containsWumpus()) {
+						wumpus.killWumpus();
 						return true;
 					}
 				}
 			}
-			*/
+			else if(direction == "South") {
+				while(arrowY < maze.getUpperBound()) {
+					arrowY ++;
+					if(maze.getNode(arrowX, arrowY).containsWumpus()) {
+						wumpus.killWumpus();
+						return true;
+					}
+				}
+			}
+			else if(direction == "West") {
+				while(arrowX >= 0 ) {
+					arrowX --;
+					if(maze.getNode(arrowX, arrowY).containsWumpus()) {
+						wumpus.killWumpus();
+						return true;
+					}	
+				}
+			}
+			else if(direction == "North") {
+				while(arrowY >= 0) {
+					arrowY--;
+					if(maze.getNode(arrowX, arrowY).containsWumpus()) {
+						wumpus.killWumpus();
+						return true;
+					}
+				}
+			}
+			System.out.println("Arrow hit wall");
 		}
 		return false;
 	}
@@ -71,9 +100,11 @@ public class Agent {
 		else if (this.getDirection() == "West") {
 			y--;
 		}
+		editPerformanceMeasure(-1); //-1 for taking action
 	}
 	public void grab() {//lets the agent grab the gold from a square
 		gold = true;
+		editPerformanceMeasure(-1); //-1 for taking action
 	}
 	public boolean hasGold() {//return whether or not agent has the gold
 		return gold;
@@ -81,7 +112,9 @@ public class Agent {
 	public int getPerformanceMeasure() {//return the agents performance measure
 		return performanceMeasure;
 	}
-	
+	public void editPerformanceMeasure(int measure) {
+		performanceMeasure += measure;
+	}
 	public void setDirection(String direction) {
 		this.direction = direction;
 	}

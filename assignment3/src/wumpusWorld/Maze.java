@@ -15,14 +15,14 @@ public class Maze {
 	private Node[][] nodeMaze;
 	private int length, height, size, upperBound;
 	
-	public Maze(int length, int height, Agent agent) { //constructor for Maze
+	public Maze(int length, int height, Agent agent, Wumpus wumpus) { //constructor for Maze
 		this.length = length;
 		this.height = height;
 		this.upperBound = length;
-		create_maze(agent);
+		create_maze(agent, wumpus);
 	}
 	
-	public void create_maze(Agent agent) { //reads from different text files to create mazes.
+	public void create_maze(Agent agent, Wumpus wumpus) { //reads from different text files to create mazes.
 
 		maze = new char[height][length];		//[rows][columns]
 		nodeMaze = new Node[height][length];
@@ -32,7 +32,6 @@ public class Maze {
 		
 		//create gold,wumpus,pits,agent
 		Gold gold = new Gold(height);
-		Wumpus wumpus = new Wumpus(height);
 		//Agent agent = new Agent(0,0);//the agent always starts at square {1,1}
 
 		for(int i = 0; i < rows.length; i++) {//loop left to right, top to bottom, to initialize maze.
@@ -89,7 +88,7 @@ public class Maze {
 				Node n = new Node(i, j, maze[i][j]);
 				nodeMaze[i][j] = n;
 				if(maze[i][j] == 'W') {
-					n.setWumpus();
+					n.setWumpus(true);
 				}
 				else if(maze[i][j] == 'P') {
 					n.setPit();

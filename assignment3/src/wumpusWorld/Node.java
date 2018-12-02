@@ -128,8 +128,8 @@ public class Node {
 		stench = true;
 		System.out.println(x + ": " + y + " has stench.");
 	}
-	public void setWumpus() {//set a pit to have the wumpus.
-		wumpus = true;
+	public void setWumpus(boolean flag) {//set a pit to have the wumpus.
+		wumpus = flag;
 	}
 	public boolean containsWumpus() {//return whether or not a pit contains the wumpus.
 		return wumpus;
@@ -214,6 +214,7 @@ public class Node {
 	public void setGuess(char val) {
 		if(val == 'W') {
 			//try shooting in a direction
+			
 		}
 		else if(val == 'P') {
 			//
