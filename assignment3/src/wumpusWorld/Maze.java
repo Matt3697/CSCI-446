@@ -57,7 +57,7 @@ public class Maze {
 		
 		for(int i = 0; i < rows.length; i++) {//loop left to right, top to bottom, to initialize maze. pit has 20% chance at each spot to occur. 
 			for(int y = 0; y < columns.length; y++) {
-				int random = rnd.nextInt(10);
+				int random = rnd.nextInt(5);
 				if(random == 2 && i != 0 && y != 0) {//pit can't form at start position
 					Pit pit = new Pit(i,y);
 					maze[i][y] = pit.getId();
