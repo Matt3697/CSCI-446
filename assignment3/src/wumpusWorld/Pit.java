@@ -10,13 +10,13 @@ public class Pit {
 		this.id = 'P';
 	}
 	
-	public char getId() {
+	public char getId() {//return character representation of a pit, 'P'
 		return id;
 	}
-	public int getX() {
+	public int getX() {//return x locaiton of the pit
 		return x;
 	}
-	public int getY() {
+	public int getY() {//return y location of the pit
 		return y;
 	}
 	

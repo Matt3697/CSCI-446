@@ -23,7 +23,7 @@ public class Main {
 		//maze2.printNodeMatrix();
 		//maze3.printNodeMatrix();
 		//maze4.printNodeMatrix();
-		
+		writer.close();
 		
 	}
 }

@@ -59,6 +59,7 @@ public class Maze {
 			for(int y = 0; y < columns.length; y++) {
 				int random = rnd.nextInt(5);
 				if(random == 2 && i != 0 && y != 0 && i != gold.getX() && y != gold.getY()) {//pit can't form at start position. 2 is arbitrary, any number from 1-5 should have 20% probability
+					//don't place pit at same location as gold.
 					Pit pit = new Pit(i,y);
 					maze[i][y] = pit.getId();
 				}
