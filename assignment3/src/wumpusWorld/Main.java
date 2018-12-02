@@ -11,9 +11,8 @@ import java.io.UnsupportedEncodingException;
 
 public class Main {
 	public static void main(String[] args) throws FileNotFoundException, UnsupportedEncodingException {
-		//list to hold random wumpus worlds.
-		PrintWriter writer = new PrintWriter("Output.txt", "UTF-8"); //outputs to directory Assignment1
-		Agent agent = new Agent(0,0);//the agent always starts at square {1,1}
+		PrintWriter writer = new PrintWriter("Output.txt", "UTF-8"); //outputs to directory Assignment3
+		Agent agent = new Agent(0,0);//the agent always starts at square [0,0]
 		Maze maze1 = new Maze(4,4,agent);
 		
 		//Maze maze2 = new Maze(5,5, agent);
