@@ -11,12 +11,13 @@ import java.util.Set;
 
 public class Node {
 	private int x,y;
-	private char value;
-	private boolean isSource, stench, wumpus, pit, gold, glitter, breeze, bump;
+	private char value, guess;
+	private boolean isSource, stench, wumpus, pit, gold, glitter, breeze, bump, isVisited, hasAgent;
 	private boolean topWall, bottomWall, leftWall, rightWall;
 	private ArrayList<Node> neighbors = new ArrayList<>();
 	private int[] otherSource;
 	private int dist, cost;
+	private Node prev;
 	//private ArrayList<Path> domain;
 	private ArrayList<Node> validNeighbors;
 	Set<Node> nearbySources;
@@ -183,4 +184,66 @@ public class Node {
 		System.out.println(x + ": " + y + " has right wall.");
 	}
 	
+	
+	//TODO: need to have methods for each wall probably?
+	public boolean isWall() {
+		if (rightWall || leftWall || bottomWall || topWall)
+			return true;
+		
+		else 
+			return false;
+	}
+	
+	public boolean hasTopWall() {
+		return topWall;
+	}
+	
+	public boolean hasBottomWall() {
+		return bottomWall;
+	}
+	
+	public boolean hasLeftWall() {
+		return leftWall;
+	}
+	
+	public boolean hasRightWall() {
+		return rightWall;
+	}
+	
+	// Method to set the agent's current guess as to what the node could be
+	public void setGuess(char val) {
+		guess = val;
+	}
+	
+	public char getGuess() {
+		return guess;
+	}
+	
+	// Set if this node is where the agent is currently
+	public void setHasAgent(boolean b) {
+		this.hasAgent = b;
+	}
+	
+	public boolean hasAgent() {
+		return hasAgent;
+	}
+	
+	// Set if the current node has been visited by our agent
+	public void setVisited() {
+		isVisited = true;
+	}
+	
+	public boolean isVisited() {
+		return isVisited;
+	}
+
+	
+	// Set the node previous to current node
+	public void setPrev(Node n) {
+		this.prev = n;
+	}
+	
+	public Node getPrev() {
+		return prev;
+	}
 }
