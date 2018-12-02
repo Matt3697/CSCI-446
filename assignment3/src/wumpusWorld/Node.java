@@ -163,22 +163,22 @@ public class Node {
 	}
 	
 
-	public void setTopWall() {
+	public void setTopWall() {//there is a wall at the top of the square
 		topWall = true;
 		System.out.println(x + ": " + y + " has top wall.");
 	}
 
-	public void setBottomWall() {
+	public void setBottomWall() {//there is a wall at the bottom of the square
 		bottomWall = true;
 		System.out.println(x + ": " + y + " has bottom wall.");
 	}
 
-	public void setLeftWall() {
+	public void setLeftWall() {//there is a wall on the left side of the square
 		leftWall = true;
 		System.out.println(x + ": " + y + " has left wall.");
 	}
 
-	public void setRightWall() {
+	public void setRightWall() {//there is a wall on the right side of the square
 		rightWall = true;
 		System.out.println(x + ": " + y + " has right wall.");
 	}

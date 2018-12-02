@@ -6,9 +6,10 @@ package wumpusWorld;
  * 
  */
 public class Agent {
-	public int x,y;
-	public boolean arrow, gold;
-	public char id;
+	private int x,y, performanceMeasure;
+	private boolean arrow, gold;
+	private char id;
+	
 	
 	public Agent(int x, int y) {//x and y coordinates of agent
 		this.x = x;
@@ -67,5 +68,8 @@ public class Agent {
 	}
 	public boolean hasGold() {//return whether or not agent has the gold
 		return gold;
+	}
+	public int getPerformanceMeasure() {//return the agents performance measure
+		return performanceMeasure;
 	}
 }
