@@ -46,8 +46,11 @@ public class WumpusSolver {
 			System.out.println("Wumpus killed agent");
 			return;
 		}
-		if (n.containsGlitter()) {
+		if (n.containsGlitter()) {//the gold is in the same square as the glitter. have the agent grab the gold.
 			glitter = true;
+			System.out.println("Agent found gold");
+			agent.grab();
+			//TODO: make the agent go back to 0,0
 		}
 		if (n.hasStench()) {
 			stench = true;
@@ -55,11 +58,7 @@ public class WumpusSolver {
 		if (n.hasBreeze()) {
 			breeze = true;
 		}
-		// TODO: need to fix this one for specific wall?
-		//for (Node neighbor : n.getNeighbors()) {
-		//	if (neighbor.isWall())
-		//		bump = true;
-		//}
+		
 		if(agent.getDirection() == "East" && n.hasRightWall()) {
 			bump = true;
 			System.out.println("agent hit a wall");

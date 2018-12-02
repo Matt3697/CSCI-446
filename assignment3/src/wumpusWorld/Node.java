@@ -212,6 +212,20 @@ public class Node {
 	
 	// Method to set the agent's current guess as to what the node could be
 	public void setGuess(char val) {
+		if(val == 'W') {
+			//try shooting in a direction
+		}
+		else if(val == 'P') {
+			//
+		}
+		/*
+		for(Node neighbor : neighbors) {
+			if(neighbor.isVisited()) {
+				//safe
+			}
+			
+		}
+		*/
 		guess = val;
 	}
 	
