@@ -191,7 +191,7 @@ public class Maze {
 	public Node getNode(int x, int y){
 		return nodeMaze[x][y];
 	}
-	public int getUpperBound() {//return length for upper bound. Since all mazes are square, choice doesn't matter between lenght and height.
+	public int getUpperBound() {//return length for upper bound.
 		return upperBound;
 	}
 }

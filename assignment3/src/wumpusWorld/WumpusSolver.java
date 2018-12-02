@@ -37,11 +37,13 @@ public class WumpusSolver {
 		if (n.containsPit()) {
 			// u ded -- game ends
 			gameOver = true;
+			System.out.println("Fell in pit");
 			return;
 		}
 		if (n.containsWumpus()) {
 			// u ded -- game ends
 			gameOver = true;
+			System.out.println("Wumpus killed agent");
 			return;
 		}
 		if (n.containsGlitter()) {
@@ -58,7 +60,26 @@ public class WumpusSolver {
 		//	if (neighbor.isWall())
 		//		bump = true;
 		//}
-		
+		if(agent.getDirection() == "East" && n.hasRightWall()) {
+			bump = true;
+			System.out.println("agent hit a wall");
+			agent.setDirection("South");
+		}
+		if(agent.getDirection() == "South" && n.hasBottomWall()) {
+			bump = true;
+			System.out.println("agent hit a wall");
+			agent.setDirection("West");
+		}
+		if(agent.getDirection() == "West" && n.hasLeftWall()) {
+			bump = true;
+			System.out.println("agent hit a wall");
+			agent.setDirection("North");
+		}
+		if(agent.getDirection() == "North" && n.hasTopWall()) {
+			bump = true;
+			System.out.println("agent hit a wall");
+			agent.setDirection("East");
+		}
 		//Check all percepts together and make decisions based on propositional logic
 		System.out.println("stench =" + stench + " breeze=" + breeze + " glitter="+ glitter + " bump=" + bump + " scream="+ scream);
 		
@@ -73,10 +94,11 @@ public class WumpusSolver {
 		}
 		
 		// There is a wall next to agent
+		/*
 		else if (!stench && !breeze && !glitter && bump && !scream) {
-			
+			System.out.println("agent hit a wall");
 		}
-
+		*/
 		
 		// The wumpus is in an adjacent Node
 		else if (stench && !breeze && !glitter && !bump && !scream) {
@@ -99,7 +121,7 @@ public class WumpusSolver {
 		
 		
 		//TEMP: end game after first iteration
-		gameOver = true;
+		//gameOver = true;
 	}
 	
 }

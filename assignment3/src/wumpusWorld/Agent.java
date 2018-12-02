@@ -71,15 +71,6 @@ public class Agent {
 		else if (this.getDirection() == "West") {
 			y--;
 		}
-		
-		
-//		if((x < upperBound - 1 && y < upperBound - 1)) {
-//			x++;
-//			y++;
-//		}
-//		else {
-//			System.out.println("Can't move forward from here.");
-//		}
 	}
 	public void grab() {//lets the agent grab the gold from a square
 		gold = true;

@@ -16,7 +16,6 @@ public class Main {
 		Maze maze1 = new Maze(4,4,agent);
 		WumpusSolver wumpus = new WumpusSolver(maze1, agent);
 		wumpus.solveMaze();
-		
 		//Maze maze2 = new Maze(5,5, agent);
 		//Maze maze3 = new Maze(8,8);
 		//Maze maze4 = new Maze(10,10);
