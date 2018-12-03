@@ -10,7 +10,7 @@ public class WumpusSolver {
 	private Wumpus wumpus;
 	private Node start, currNode;
 	private boolean gameOver, agentMoved;
-	private ArrayList<Node> path;
+	private ArrayList<Node> path = new ArrayList<Node>();
 	
 	public WumpusSolver(Maze m, Agent a, Wumpus w) {
 		this.maze = m;
@@ -57,6 +57,9 @@ public class WumpusSolver {
 			glitter = true;
 			System.out.println("Agent found gold");
 			agent.grab();
+			goToStart();
+			gameOver = true;
+			return;
 			//TODO: make the agent go back to 0,0
 		}
 		if (n.hasStench()) {
@@ -126,7 +129,7 @@ public class WumpusSolver {
 			}
 			else {
 				System.out.println("Missed Wumpus");//also safe to move forward...
-				for (Node neighbor : currNode.getNeighbors()) {
+				for (Node neighbor : currNode.getNeighbors()) {//guess where wumpus could be
 					neighbor.setGuess('W'); // each neighbor could possibly be the wumpus
 				}
 			}
@@ -136,6 +139,31 @@ public class WumpusSolver {
 		else if (!stench && breeze && !glitter && !bump && !scream) {
 			System.out.println("Pit in adjacent node");
 			//TODO: finish logic
+			if(bump = true) {//can infer that there is no pit in the same direction, but there is a wall
+				
+			}
+			if(agent.getDirection() == "East") {
+				agent.editPerformanceMeasure(-1);
+				agent.setDirection("South");
+			}
+			else if(agent.getDirection() == "South") {
+				agent.editPerformanceMeasure(-1);
+				agent.setDirection("West");
+			}
+			else if(agent.getDirection() == "West") {
+				agent.editPerformanceMeasure(-1);
+				agent.setDirection("North");
+			}
+			else if(agent.getDirection() == "North") {
+				agent.editPerformanceMeasure(-1);
+				agent.setDirection("East");
+			}
+			agent.moveForward();
+			prev = currNode; 
+			currNode = maze.getNode(agent.getX(), agent.getY()); // Update current Node
+			currNode.setPrev(prev); // Set previous Node
+			currNode.setHasAgent(true); // The agent is on this Node -- used for printing the maze after each iteration
+			currNode.setVisited();
 		}
 		
 		//TODO: rest of the possible combinations...
@@ -144,5 +172,15 @@ public class WumpusSolver {
 		//TEMP: end game after first iteration
 		//gameOver = true;
 	}
-	
+	public void goToStart() {//follow path back to starting point.
+		for(int i = path.size() - 1; i > 0; i--) {
+			agent.setX(path.get(i).getX());
+			agent.setY(path.get(i).getY());
+			agent.editPerformanceMeasure(-1);
+			if(path.get(i).getX() == 0 && path.get(i).getY() == 0) {
+				System.out.println("Climbed out of cave with gold!");
+				agent.editPerformanceMeasure(1000);
+			}
+		}
+	}
 }

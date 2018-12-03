@@ -30,8 +30,8 @@ public class Agent {
 			int arrowX = x;
 			int arrowY = y;
 			if(direction == "East") {
-				while(arrowX < maze.getUpperBound()) {
-					arrowX ++;
+				while(arrowY < maze.getUpperBound()) {
+					arrowY ++;//moves the arrow through the columns
 					if(maze.getNode(arrowX, arrowY).containsWumpus()) {
 						wumpus.killWumpus();
 						return true;
@@ -39,8 +39,8 @@ public class Agent {
 				}
 			}
 			else if(direction == "South") {
-				while(arrowY < maze.getUpperBound()) {
-					arrowY ++;
+				while(arrowX < maze.getUpperBound()) {
+					arrowX ++; //move the arrow through the rows
 					if(maze.getNode(arrowX, arrowY).containsWumpus()) {
 						wumpus.killWumpus();
 						return true;
@@ -48,8 +48,8 @@ public class Agent {
 				}
 			}
 			else if(direction == "West") {
-				while(arrowX >= 0 ) {
-					arrowX --;
+				while(arrowY >= 0 ) {
+					arrowY --;
 					if(maze.getNode(arrowX, arrowY).containsWumpus()) {
 						wumpus.killWumpus();
 						return true;
@@ -57,8 +57,8 @@ public class Agent {
 				}
 			}
 			else if(direction == "North") {
-				while(arrowY >= 0) {
-					arrowY--;
+				while(arrowX >= 0) {
+					arrowX--;
 					if(maze.getNode(arrowX, arrowY).containsWumpus()) {
 						wumpus.killWumpus();
 						return true;
@@ -121,5 +121,11 @@ public class Agent {
 	
 	public String getDirection() {
 		return direction;
+	}
+	public void setX(int x) {//update agent x location
+		this.x = x;
+	}
+	public void setY(int y) {//update agent y location
+		this.y = y;
 	}
 }
