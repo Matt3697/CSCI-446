@@ -24,49 +24,50 @@ public class Agent {
 		return arrow;
 	}
 	public boolean shootArrow(Maze maze, Wumpus wumpus) {//if the agent shoots it's arrow, set hasArrow to false. If we hit the wumpus return true
-		if(arrow == true) {
-			arrow = false;
+		arrow = false;
+		arrowX = x;
+		arrowY = y;
+		if(direction == "East" && maze.getNode(arrowX,arrowY+1).getGuess() == 'W') {//if we are moving east and the wumpus could be in that dir.
 			editPerformanceMeasure(-10); //-10 for using arrow
-			arrowX = x;
-			arrowY = y;
-			if(direction == "East") {
-				while(arrowY < maze.getUpperBound() - 1) {
-					arrowY ++;//moves the arrow through the columns
-					if(maze.getNode(arrowX, arrowY).containsWumpus()) {
-						wumpus.killWumpus();
-						return true;
-					}
-				}
+			if(maze.getNode(arrowX, arrowY+1).containsWumpus()) {//if the arrow is in same square as wumpus, kill wumpus
+				wumpus.killWumpus();
+				return true;
 			}
-			else if(direction == "South") {
-				while(arrowX < maze.getUpperBound() - 1) {
-					arrowX ++; //move the arrow through the rows
-					if(maze.getNode(arrowX, arrowY).containsWumpus()) {
-						wumpus.killWumpus();
-						return true;
-					}
-				}
+			else {
+				maze.getNode(arrowX, arrowY+1).setGuess('*');//there is no wumpus in that direction.
 			}
-			else if(direction == "West") {
-				while(arrowY >= 0 ) {
-					arrowY --;
-					if(maze.getNode(arrowX, arrowY).containsWumpus()) {
-						wumpus.killWumpus();
-						return true;
-					}	
-				}
-			}
-			else if(direction == "North") {
-				while(arrowX >= 0) {
-					arrowX--;
-					if(maze.getNode(arrowX, arrowY).containsWumpus()) {
-						wumpus.killWumpus();
-						return true;
-					}
-				}
-			}
-			System.out.println("Arrow hit wall");
 		}
+		else if(direction == "South" && maze.getNode(arrowX+1,arrowY).getGuess() == 'W') {//if direction is south
+			editPerformanceMeasure(-10); //-10 for using arrow
+			if(maze.getNode(arrowX+1, arrowY).containsWumpus()) {//if the arrow is in same square as wumpus, kill wumpus
+				wumpus.killWumpus();
+				return true;
+			}
+			else {
+				maze.getNode(arrowX+1, arrowY).setGuess('*');//there is no wumpus in that direction.
+			}
+		}
+		else if(direction == "West" && maze.getNode(arrowX,arrowY-1).getGuess() == 'W') {//if direction is west
+			editPerformanceMeasure(-10); //-10 for using arrow
+			if(maze.getNode(arrowX, arrowY-1).containsWumpus()) {//if the arrow is in same square as wumpus, kill wumpus
+				wumpus.killWumpus();
+				return true;
+			}
+			else {
+				maze.getNode(arrowX, arrowY-1).setGuess('*');//there is no wumpus in that direction.
+			}
+		}
+		else if(direction == "North" && maze.getNode(arrowX-1,arrowY).getGuess()  == 'W') {//if direction is north.
+			editPerformanceMeasure(-10); //-10 for using arrow
+			if(maze.getNode(arrowX-1, arrowY).containsWumpus()) {//if the arrow is in same square as wumpus, kill wumpus
+				wumpus.killWumpus();
+				return true;
+			}
+			else {
+				maze.getNode(arrowX-1, arrowY).setGuess('*');//there is no wumpus in that direction.
+			}
+		}
+		System.out.println("Arrow hit wall");
 		return false;
 	}
 	public int getX() {//return the x position of the agent
@@ -100,19 +101,36 @@ public class Agent {
 		System.out.println("moving " + this.getDirection());
 		
 		if (this.getDirection() == "North") {
-			x--;
+			if(maze.getNodeMatrix()[x-1][y].isVisited()) {
+				nextDirection();
+			}
+			else {
+				x--;
+			}
 		}
 		else if (this.getDirection() == "East") {
-			y++;
+			if(maze.getNodeMatrix()[x][y+1].isVisited()) {
+				nextDirection();
+			}
+			else {
+				y++;
+			}
 		}
 		else if (this.getDirection() == "South") {
-			x++;
+			if(maze.getNodeMatrix()[x+1][y].isVisited()) {
+				nextDirection();
+			}
+			else {
+				x++;
+			}
 		}
 		else if (this.getDirection() == "West") {
-			y--;
-		}
-		if(maze.getNodeMatrix()[x][y].isVisited()) {
-			nextDirection();
+			if(maze.getNodeMatrix()[x][y-1].isVisited()) {
+				nextDirection();
+			}
+			else {
+				y--;
+			}
 		}
 		editPerformanceMeasure(-1); //-1 for taking action
 	}

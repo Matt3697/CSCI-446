@@ -14,7 +14,8 @@ public class Main {
 		PrintWriter writer = new PrintWriter("Output.txt", "UTF-8"); //outputs to directory Assignment3
 		Agent agent = new Agent(0,0);//the agent always starts at square [0,0]
 		Wumpus w = new Wumpus(4);
-		Maze maze1 = new Maze(4, 4, agent, w);
+		Maze maze1 = new Maze(5, 5, agent, w);
+		//Maze maze2 = new Maze(5,5, agent);
 		WumpusSolver wumpus = new WumpusSolver(maze1, agent, w);
 		wumpus.solveMaze();
 		//Maze maze2 = new Maze(5,5, agent);

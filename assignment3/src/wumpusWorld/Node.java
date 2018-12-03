@@ -36,6 +36,7 @@ public class Node {
 		//domain = new ArrayList<Path>();
 		validNeighbors = new ArrayList<Node>();
 		nearbySources = new HashSet<Node>();
+		this.guess = '?';//no guess currently
 	}
 	
 	public int getDist(){

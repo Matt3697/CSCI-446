@@ -117,12 +117,20 @@ public class WumpusSolver {
 		// The wumpus is in an adjacent Node
 		else if (stench && !breeze) {
 			System.out.println("Wumpus in adjacent node");
-			//TODO: finish logic
+			
+			for (Node neighbor : currNode.getNeighbors()) {//guess where wumpus could be
+				if(neighbor.getGuess() != '*') {
+					//wumpus can be here
+					neighbor.setGuess('W'); // each neighbor could possibly be the wumpus
+				}
+			}
 			if(agent.hasArrow() && agent.shootArrow(maze, wumpus)) {//if we kill the wumpus, it is safe to move forwards.
 				System.out.println("Killed Wumpus");
-				wumpus.didScream();
 				for(Node neighbor: currNode.getNeighbors()) {
 					neighbor.setStench(false);
+					neighbor.setGuess('*');//neighboring spots are safe, since there is no breeze perceived.
+					//updateKB(neighbor.getX(), neighbor.getY(), '*');
+					
 				}
 				agent.moveForward(maze);
 				prev = currNode; 
@@ -133,10 +141,11 @@ public class WumpusSolver {
 				currNode.setWumpus(false);
 			}
 			else {
-				System.out.println("Missed Wumpus");//also safe to move forward...
 				for (Node neighbor : currNode.getNeighbors()) {//guess where wumpus could be
 					//TODO: neighbor in direction we shot will not have the wumpus in it
-					neighbor.setGuess('W'); // each neighbor could possibly be the wumpus
+					if(neighbor.getGuess() == 'W') {//if there is likely a wumpus in the next square, change directions.
+						agent.nextDirection();
+					}
 				}
 				agent.moveForward(maze);
 				prev = currNode; 
@@ -166,6 +175,7 @@ public class WumpusSolver {
 			currNode.setHasAgent(true); // The agent is on this Node -- used for printing the maze after each iteration
 			currNode.setVisited();
 		}
+		//There is a pit and wumpus in adjacent node(s)
 		else if(stench && breeze) {
 			System.out.println("Pit and Wumpus in adjacenct node(s)");
 			agent.nextDirection();
@@ -177,11 +187,6 @@ public class WumpusSolver {
 			currNode.setVisited();
 		}
 		
-		updateKB();
-		//TODO: rest of the possible combinations...
-		
-		//TEMP: end game after first iteration
-		//gameOver = true;
 	}
 	public void goToStart() {//follow path back to starting point.
 		for(int i = path.size() - 1; i >= 0; i--) {
@@ -206,13 +211,9 @@ public class WumpusSolver {
 	 *
 	 * then we know that (0,1) must be the wumpus since the node (1,0) is marked safe (with '*') 
 	 */
-	public void updateKB() {
+	public void updateKB(int x, int y, char chr) {
 		Node[][] kb = maze.getNodeMatrix();
-		for (int i = 0; i < kb.length; i++) {
-			for (int j = 0; j < kb[0].length; j++) {
-				// TODO: update stuffs somehow
-			}
-			System.out.println();
-		}
+		kb[x][y].setValue(chr);
+		
 	}
 }
