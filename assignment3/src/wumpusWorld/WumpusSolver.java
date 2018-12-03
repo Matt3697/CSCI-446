@@ -9,25 +9,29 @@ public class WumpusSolver {
 	Agent agent;
 	private Wumpus wumpus;
 	private Node start, currNode;
-	private boolean gameOver, agentMoved;
+	private boolean gameOver, isSafe;
 	private ArrayList<Node> path = new ArrayList<Node>();
+	private Node[][] kb;
 	
 	public WumpusSolver(Maze m, Agent a, Wumpus w) {
 		this.maze = m;
 		this.start = m.getNode(0, 0);
 		this.agent = a;
 		this.wumpus = w;
+		//this.kb = m.getNodeMatrix();
 		agent.setDirection("East");
 	}
 	
 	public void solveMaze() {
 		currNode = start;
 		currNode.setHasAgent(true);
+		currNode.setGuess('*');
 		maze.printNodeMatrix();
 		
 		while (!gameOver) {
 			checkPercepts(currNode);
 			maze.printNodeMatrix();
+			maze.printKnowledgeBase();
 		}
 	}
 	
@@ -57,6 +61,8 @@ public class WumpusSolver {
 			System.out.println("Agent performance measure: " + agent.getPerformanceMeasure());
 			return;
 		}
+		currNode.setGuess('*'); // Since current node is not a pit or wumpus, it is safe to stand on
+		
 		if (n.containsGlitter()) {//the gold is in the same square as the glitter. have the agent grab the gold.
 			glitter = true;
 			System.out.println("Agent found gold");
@@ -94,6 +100,7 @@ public class WumpusSolver {
 			agent.nextDirection();
 		}
 		//Check all percepts together and make decisions based on propositional logic
+		System.out.println("Current position: "+ agent.getX() + "," + agent.getY());
 		System.out.println("stench =" + stench + " breeze=" + breeze + " glitter="+ glitter + " bump=" + bump + " scream="+ scream);
 		
 		// It is safe to move forward
@@ -120,6 +127,9 @@ public class WumpusSolver {
 			if(agent.hasArrow() && agent.shootArrow(maze, wumpus)) {//if we kill the wumpus, it is safe to move forwards.
 				System.out.println("Killed Wumpus");
 				wumpus.didScream();
+				for(Node neighbor: currNode.getNeighbors()) {
+					neighbor.setStench(false);
+				}
 				agent.moveForward(maze);
 				prev = currNode; 
 				currNode = maze.getNode(agent.getX(), agent.getY()); // Update current Node
@@ -127,13 +137,11 @@ public class WumpusSolver {
 				currNode.setHasAgent(true); // The agent is on this Node -- used for printing the maze after each iteration
 				currNode.setVisited();
 				currNode.setWumpus(false);
-				for(Node neighbor: currNode.getNeighbors()) {
-					neighbor.setStench(false);
-				}
 			}
 			else {
 				System.out.println("Missed Wumpus");//also safe to move forward...
 				for (Node neighbor : currNode.getNeighbors()) {//guess where wumpus could be
+					//TODO: neighbor in direction we shot will not have the wumpus in it
 					neighbor.setGuess('W'); // each neighbor could possibly be the wumpus
 				}
 				agent.moveForward(maze);
@@ -152,18 +160,11 @@ public class WumpusSolver {
 			if(bump = true) {//can infer that there is no pit in the same direction, but there is a wall
 				
 			}
-			if(agent.getDirection() == "East") {
-				agent.nextDirection();
+			for (Node neighbor : currNode.getNeighbors()) {//guess where pit could be
+				if (neighbor.getGuess() == '_')
+					neighbor.setGuess('P'); // each neighbor could possibly be a pit
 			}
-			else if(agent.getDirection() == "South") {
-				agent.nextDirection();
-			}
-			else if(agent.getDirection() == "West") {
-				agent.nextDirection();
-			}
-			else if(agent.getDirection() == "North") {
-				agent.nextDirection();
-			}
+			agent.nextDirection();
 			agent.moveForward(maze);
 			prev = currNode; 
 			currNode = maze.getNode(agent.getX(), agent.getY()); // Update current Node
@@ -173,18 +174,7 @@ public class WumpusSolver {
 		}
 		else if(stench && breeze) {
 			System.out.println("Pit and Wumpus in adjacenct node(s)");
-			if(agent.getDirection() == "East") {
-				agent.nextDirection();
-			}
-			else if(agent.getDirection() == "South") {
-				agent.nextDirection();
-			}
-			else if(agent.getDirection() == "West") {
-				agent.nextDirection();
-			}
-			else if(agent.getDirection() == "North") {
-				agent.nextDirection();
-			}
+			agent.nextDirection();
 			agent.moveForward(maze);
 			prev = currNode; 
 			currNode = maze.getNode(agent.getX(), agent.getY()); // Update current Node
@@ -192,8 +182,9 @@ public class WumpusSolver {
 			currNode.setHasAgent(true); // The agent is on this Node -- used for printing the maze after each iteration
 			currNode.setVisited();
 		}
-		//TODO: rest of the possible combinations...
 		
+		updateKB();
+		//TODO: rest of the possible combinations...
 		
 		//TEMP: end game after first iteration
 		//gameOver = true;
@@ -210,5 +201,24 @@ public class WumpusSolver {
 		}
 		System.out.println("Agent completed task with " + path.size() * 2 + " moves.");
 		System.out.println("Agent performance measure: " + agent.getPerformanceMeasure());
+	}
+	
+	/*
+	 * Need to update Nodes based on current percepts. For example, if we have the current kb as:
+	 * 	_*_P
+	 *  	W_P_
+	 *	____
+	 *	____
+	 *
+	 * then we know that (0,1) must be the wumpus since the node (1,0) is marked safe (with '*') 
+	 */
+	public void updateKB() {
+		Node[][] kb = maze.getNodeMatrix();
+		for (int i = 0; i < kb.length; i++) {
+			for (int j = 0; j < kb[0].length; j++) {
+				// TODO: update stuffs somehow
+			}
+			System.out.println();
+		}
 	}
 }

@@ -18,6 +18,7 @@ public class Node {
 	private int[] otherSource;
 	private int dist, cost;
 	private Node prev;
+	private String neighborType;
 	//private ArrayList<Path> domain;
 	private ArrayList<Node> validNeighbors;
 	Set<Node> nearbySources;

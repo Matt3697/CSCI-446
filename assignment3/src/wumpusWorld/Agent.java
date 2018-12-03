@@ -6,7 +6,7 @@ package wumpusWorld;
  * 
  */
 public class Agent {
-	private int x,y, performanceMeasure;
+	private int x,y, performanceMeasure, arrowX, arrowY;
 	private boolean arrow, gold;
 	private String direction;
 	private char id;
@@ -27,8 +27,8 @@ public class Agent {
 		if(arrow == true) {
 			arrow = false;
 			editPerformanceMeasure(-10); //-10 for using arrow
-			int arrowX = x;
-			int arrowY = y;
+			arrowX = x;
+			arrowY = y;
 			if(direction == "East") {
 				while(arrowY < maze.getUpperBound() - 1) {
 					arrowY ++;//moves the arrow through the columns
@@ -75,6 +75,17 @@ public class Agent {
 	public int getY() {//return the y position of the agent
 		return y;
 	}
+	
+	// Returns the x position of the arrow that was shot
+	public int getArrowX() {
+		return arrowX;
+	}
+	
+	// Returns y position of the arrow that was shot
+	public int getArrowY() {
+		return arrowY;
+	}
+	
 	public char getId() {//return character representation of Agent --> A
 		return id;
 	}

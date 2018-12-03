@@ -90,6 +90,7 @@ public class Maze {
 		for (int i = 0; i < maze.length; i++) {
 			for (int j = 0; j < maze[0].length; j++) {
 				Node n = new Node(i, j, maze[i][j]);
+				n.setGuess('_');
 				nodeMaze[i][j] = n;
 				for(Pit pit : pits) {
 					if(pit.getX() == i && pit.getY() == j) {
@@ -117,6 +118,18 @@ public class Maze {
 					System.out.print('A');
 				else 
 					System.out.print(nodeMaze[i][j].getValue());
+			}
+			System.out.println();
+		}
+		System.out.println("==================");
+	}
+	
+	public void printKnowledgeBase() {
+		System.out.println("Current Knowledge base of world:");
+		System.out.println("==================");
+		for (int i = 0; i < nodeMaze.length; i++) {
+			for (int j = 0; j < nodeMaze[0].length; j++) {
+				System.out.print(nodeMaze[i][j].getGuess());
 			}
 			System.out.println();
 		}
