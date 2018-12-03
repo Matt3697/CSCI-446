@@ -127,7 +127,13 @@ public class Node {
 	}
 	public void setStench(boolean flag) {
 		stench = flag;
-		System.out.println(x + ": " + y + " has stench.");
+		if(stench == true) {
+			System.out.println(x + ": " + y + " has stench.");
+		}
+		else if(stench == false) {
+			System.out.println(x + ": " + y + ": removing stench.");
+		}
+		
 	}
 	public void setWumpus(boolean flag) {//set a pit to have the wumpus.
 		wumpus = flag;

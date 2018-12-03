@@ -113,12 +113,6 @@ public class WumpusSolver {
 			currNode.setVisited();
 		}
 		
-		// There is a wall next to agent
-		/*
-		else if (!stench && !breeze && !glitter && bump && !scream) {
-			System.out.println("agent hit a wall");
-		}
-		*/
 		
 		// The wumpus is in an adjacent Node
 		else if (stench && !breeze) {
