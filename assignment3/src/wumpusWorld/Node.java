@@ -124,8 +124,8 @@ public class Node {
 	public boolean hasStench() {//return whether or not a node has a stench.
 		return stench;
 	}
-	public void setStench() {
-		stench = true;
+	public void setStench(boolean flag) {
+		stench = flag;
 		System.out.println(x + ": " + y + " has stench.");
 	}
 	public void setWumpus(boolean flag) {//set a pit to have the wumpus.

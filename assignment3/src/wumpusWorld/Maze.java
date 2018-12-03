@@ -158,7 +158,7 @@ public class Maze {
 				}
 				if(n.containsWumpus()) {//if a node contains the wumpus, put a stench in the adjacent squares.
 					for(Node node : n.getNeighbors()) {
-						node.setStench();
+						node.setStench(true);
 					}
 				}
 				if(i == 0 && j < nodeMaze[0].length) {//set top walls

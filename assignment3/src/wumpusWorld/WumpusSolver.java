@@ -59,6 +59,7 @@ public class WumpusSolver {
 			agent.grab();
 			goToStart();
 			gameOver = true;
+			agent.editPerformanceMeasure(1000);
 			return;
 			//TODO: make the agent go back to 0,0
 		}
@@ -126,6 +127,9 @@ public class WumpusSolver {
 				currNode.setHasAgent(true); // The agent is on this Node -- used for printing the maze after each iteration
 				currNode.setVisited();
 				currNode.setWumpus(false);
+				for(Node neighbor: currNode.getNeighbors()) {
+					neighbor.setStench(false);
+				}
 			}
 			else {
 				System.out.println("Missed Wumpus");//also safe to move forward...
@@ -182,5 +186,7 @@ public class WumpusSolver {
 				agent.editPerformanceMeasure(1000);
 			}
 		}
+		System.out.println("Agent completed task with " + path.size() + " moves.");
+		System.out.println("Agent performance measure: " + agent.getPerformanceMeasure());
 	}
 }
