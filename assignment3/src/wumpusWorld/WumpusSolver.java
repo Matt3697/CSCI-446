@@ -177,7 +177,7 @@ public class WumpusSolver {
 		//gameOver = true;
 	}
 	public void goToStart() {//follow path back to starting point.
-		for(int i = path.size() - 1; i > 0; i--) {
+		for(int i = path.size() - 1; i >= 0; i--) {
 			agent.setX(path.get(i).getX());
 			agent.setY(path.get(i).getY());
 			agent.editPerformanceMeasure(-1);
@@ -186,7 +186,7 @@ public class WumpusSolver {
 				agent.editPerformanceMeasure(1000);
 			}
 		}
-		System.out.println("Agent completed task with " + path.size() + " moves.");
+		System.out.println("Agent completed task with " + path.size() * 2 + " moves.");
 		System.out.println("Agent performance measure: " + agent.getPerformanceMeasure());
 	}
 }
