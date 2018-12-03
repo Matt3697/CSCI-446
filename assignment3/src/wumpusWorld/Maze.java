@@ -6,7 +6,10 @@ package wumpusWorld;
  * 
  */
 
+import java.util.ArrayList;
 import java.util.Random;
+
+import sun.net.www.content.audio.wav;
 
 public class Maze {
 	
@@ -53,18 +56,19 @@ public class Maze {
 		maze[gold.getX()][gold.getY()] = gold.getId();
 		maze[wumpus.getX()][wumpus.getY()] = wumpus.getId();
 		Random rnd = new Random();
-		
+		ArrayList<Pit> pits = new ArrayList<Pit>();
 		for(int i = 0; i < rows.length; i++) {//loop left to right, top to bottom, to initialize maze. pit has 20% chance at each spot to occur. 
 			for(int y = 0; y < columns.length; y++) {
 				int random = rnd.nextInt(5);
 				if(random == 2 && i != 0 && y != 0 && i != gold.getX() && y != gold.getY()) {//pit can't form at start position. 2 is arbitrary, any number from 1-5 should have 20% probability
 					//don't place pit at same location as gold.
 					Pit pit = new Pit(i,y);
+					pits.add(pit);
 					maze[i][y] = pit.getId();
 				}
 			}
 		}
-        makeNodeMatrix();
+        makeNodeMatrix(gold, wumpus, pits);
    }
 
 	public char[][] getMatrix(){//returns the maze
@@ -82,18 +86,20 @@ public class Maze {
 	}
 	
 	// Create a matrix where each item is a Node
-	public void makeNodeMatrix() {
+	public void makeNodeMatrix(Gold gold, Wumpus wumpus, ArrayList<Pit> pits) {
 		for (int i = 0; i < maze.length; i++) {
 			for (int j = 0; j < maze[0].length; j++) {
 				Node n = new Node(i, j, maze[i][j]);
 				nodeMaze[i][j] = n;
-				if(maze[i][j] == 'W') {
+				for(Pit pit : pits) {
+					if(pit.getX() == i && pit.getY() == j) {
+						n.setPit();
+					}
+				}
+				if(i == wumpus.getX() && j == wumpus.getY()) {
 					n.setWumpus(true);
 				}
-				else if(maze[i][j] == 'P') {
-					n.setPit();
-				}
-				else if(maze[i][j] == 'G') {
+				if(i == gold.getX() && j == gold.getY()) {
 					n.setGold();
 				}
 			}
