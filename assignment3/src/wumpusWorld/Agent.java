@@ -1,4 +1,7 @@
 package wumpusWorld;
+
+import java.util.ArrayList;
+
 /*
  * Authors: Carie Pointer, Hugh Jackovich, Matthew Sagen
  * Date:    11/30/18
@@ -10,6 +13,9 @@ public class Agent {
 	private boolean arrow, gold;
 	private String direction;
 	private char id;
+	private ArrayList<Node> unknown;
+	private ArrayList<Node> danger;
+	private ArrayList<Node> valid;
 	
 	
 	public Agent(int x, int y) {//x and y coordinates of agent
@@ -18,6 +24,10 @@ public class Agent {
 		this.arrow = true;
 		this.id = 'A';
 		this.gold = false;
+		unknown = new ArrayList<Node>();
+		danger = new ArrayList<Node>();
+		valid = new ArrayList<Node>();
+		
 	}
 	
 	public boolean hasArrow() {//return whether or not the agent currently has it's arrow
@@ -98,6 +108,26 @@ public class Agent {
 	}
 	public void moveForward(Maze maze) {//move the agent forward by one if the agent remains within the bounds of the maze.
 		
+		/* temp
+		 * 
+
+		boolean flag = false;
+		for(Node neighbor: maze.getNodeMatrix()[x][y].getNeighbors())
+		{
+			if(valid.contains(neighbor))
+			{
+				//make x and y maybe?
+				flag = true;
+				break;
+			}
+		}
+		
+		if(flag)
+		{
+			
+		}
+		*/
+		
 		System.out.println("moving " + this.getDirection());
 		
 		if (this.getDirection() == "North") {
@@ -174,5 +204,49 @@ public class Agent {
 			direction = "North";
 		}
 		editPerformanceMeasure(-1);
+	}
+	
+	public void addUnknown(Node n)
+	{
+		if(!unknown.contains(n))
+		{
+			unknown.add(n);
+		}
+	}
+	
+	public void addDanger(Node n)
+	{
+		if(!danger.contains(n))
+		{
+			danger.add(n);
+		}
+	}
+	
+	public void addValid(Node n)
+	{
+		if(!valid.contains(n)) {
+			valid.add(n);
+		}
+	}
+	
+	//This is sorta temporarily, would be nice to
+	//add a way to know if pit/wumpus
+	public void findDanger(Node n)
+	{
+		for(Node poss : unknown)
+		{
+			int count = 0;
+			for(Node neighbor: poss.getNeighbors())
+			{
+				if(valid.contains(neighbor))
+				{
+					count++;
+				}
+				if (count >= 2)
+				{
+					addDanger(poss);
+				}
+			}
+		}
 	}
 }

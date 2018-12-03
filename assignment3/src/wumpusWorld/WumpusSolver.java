@@ -30,6 +30,7 @@ public class WumpusSolver {
 		
 		while (!gameOver) {
 			checkPercepts(currNode);
+			//here we should make our move here to separate checkPercepts and moveForward?
 			maze.printNodeMatrix();
 			maze.printKnowledgeBase();
 		}
@@ -111,6 +112,12 @@ public class WumpusSolver {
 			currNode.setPrev(prev); // Set previous Node
 			currNode.setHasAgent(true); // The agent is on this Node -- used for printing the maze after each iteration
 			currNode.setVisited();
+			
+			for(Node neighbor: currNode.getNeighbors())
+			{
+				agent.addValid(neighbor);
+				neighbor.setGuess('*');
+			}
 		}
 		
 		
@@ -122,6 +129,7 @@ public class WumpusSolver {
 				if(neighbor.getGuess() != '*') {
 					//wumpus can be here
 					neighbor.setGuess('W'); // each neighbor could possibly be the wumpus
+					agent.addUnknown(neighbor);
 				}
 			}
 			if(agent.hasArrow() && agent.shootArrow(maze, wumpus)) {//if we kill the wumpus, it is safe to move forwards.
@@ -164,8 +172,9 @@ public class WumpusSolver {
 				
 			}
 			for (Node neighbor : currNode.getNeighbors()) {//guess where pit could be
-				if (neighbor.getGuess() == '_')
+				if (neighbor.getGuess() == '?')
 					neighbor.setGuess('P'); // each neighbor could possibly be a pit
+					agent.addUnknown(neighbor);
 			}
 			agent.nextDirection();
 			agent.moveForward(maze);
@@ -178,6 +187,13 @@ public class WumpusSolver {
 		//There is a pit and wumpus in adjacent node(s)
 		else if(stench && breeze) {
 			System.out.println("Pit and Wumpus in adjacenct node(s)");
+			for(Node neighbor: currNode.getNeighbors())
+			{
+				if (neighbor.getGuess() == '?')
+				{
+					agent.addUnknown(neighbor);
+				}
+			}
 			agent.nextDirection();
 			agent.moveForward(maze);
 			prev = currNode; 
@@ -186,6 +202,8 @@ public class WumpusSolver {
 			currNode.setHasAgent(true); // The agent is on this Node -- used for printing the maze after each iteration
 			currNode.setVisited();
 		}
+		
+		agent.findDanger(currNode);
 		
 	}
 	public void goToStart() {//follow path back to starting point.
