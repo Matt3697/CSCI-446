@@ -63,6 +63,7 @@ public class WumpusSolver {
 			return;
 		}
 		currNode.setGuess('*'); // Since current node is not a pit or wumpus, it is safe to stand on
+		agent.addSafe(currNode);
 		
 		if (n.containsGlitter()) {//the gold is in the same square as the glitter. have the agent grab the gold.
 			glitter = true;
@@ -106,7 +107,6 @@ public class WumpusSolver {
 		
 		// It is safe to move forward
 		if (!stench && !breeze) {
-			agent.addSafe(n);
 			agent.moveForward(maze);
 			prev = currNode; 
 			currNode = maze.getNode(agent.getX(), agent.getY()); // Update current Node
@@ -131,6 +131,7 @@ public class WumpusSolver {
 					//wumpus can be here
 					neighbor.setGuess('W'); // each neighbor could possibly be the wumpus
 					agent.addUnknown(neighbor);
+					System.out.println("WUMPUS???");
 				}
 			}
 			if(agent.hasArrow() && agent.shootArrow(maze, wumpus)) {//if we kill the wumpus, it is safe to move forwards.
@@ -204,7 +205,7 @@ public class WumpusSolver {
 			currNode.setVisited();
 		}
 		
-		agent.findDanger(currNode);
+//		agent.findDanger(currNode);
 		
 	}
 	public void goToStart() {//follow path back to starting point.

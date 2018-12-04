@@ -48,6 +48,7 @@ public class Agent {
 			else {
 				maze.getNode(arrowX, arrowY+1).setGuess('*');//there is no wumpus in that direction.
 			}
+			valid.add(maze.getNode(arrowX, arrowY+1));
 		}
 		else if(direction == "South" && maze.getNode(arrowX+1,arrowY).getGuess() == 'W') {//if direction is south
 			editPerformanceMeasure(-10); //-10 for using arrow
@@ -58,6 +59,7 @@ public class Agent {
 			else {
 				maze.getNode(arrowX+1, arrowY).setGuess('*');//there is no wumpus in that direction.
 			}
+			valid.add(maze.getNode(arrowX+1, arrowY));
 		}
 		else if(direction == "West" && maze.getNode(arrowX,arrowY-1).getGuess() == 'W') {//if direction is west
 			editPerformanceMeasure(-10); //-10 for using arrow
@@ -68,6 +70,7 @@ public class Agent {
 			else {
 				maze.getNode(arrowX, arrowY-1).setGuess('*');//there is no wumpus in that direction.
 			}
+			valid.add(maze.getNode(arrowX, arrowY-1));
 		}
 		else if(direction == "North" && maze.getNode(arrowX-1,arrowY).getGuess()  == 'W') {//if direction is north.
 			editPerformanceMeasure(-10); //-10 for using arrow
@@ -78,6 +81,7 @@ public class Agent {
 			else {
 				maze.getNode(arrowX-1, arrowY).setGuess('*');//there is no wumpus in that direction.
 			}
+			valid.add(maze.getNode(arrowX-1, arrowY));
 		}
 		System.out.println("Arrow hit wall");
 		return false;
@@ -199,24 +203,41 @@ public class Agent {
 			{
 				//greedy to find path? for now we can cheese it.
 				editPerformanceMeasure(-2); //-2 for 180
-				Node validMove = valid.get(valid.size()-1); //DFS like
+				Node nextMove = valid.get(valid.size()-1); //DFS like
 				
 				//Manhattan temporarily to calculate cost to move to new spot
-				x = Math.abs(x - validMove.getX());
-				y = Math.abs(y - validMove.getY());
+				x = Math.abs(x - nextMove.getX());
+				y = Math.abs(y - nextMove.getY());
 				editPerformanceMeasure(x + y);
 				
-				x = validMove.getX();
-				y = validMove.getY();
+				x = nextMove.getX();
+				y = nextMove.getY();
 				valid.remove(valid.size()-1);
 				flag = false;
 			}
 		}
 		
 		//try unknowns
-		if(flag)
+		if(flag && !unknown.isEmpty())
 		{
 			//try diagonals of danger?
+			//For now
+			Node nextMove = unknown.get(unknown.size()-1);
+			
+			//Manhattan temporarily to calculate cost to move to new spot
+			x = Math.abs(x - nextMove.getX());
+			y = Math.abs(y - nextMove.getY());
+			editPerformanceMeasure(x + y);
+			
+			x = nextMove.getX();
+			y = nextMove.getY();
+			unknown.remove(nextMove);
+			flag = false;
+			
+		}
+		if(flag)
+		{
+			System.out.println("WTF");
 		}
 	}
 	public void grab() {//lets the agent grab the gold from a square
