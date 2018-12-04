@@ -106,6 +106,7 @@ public class WumpusSolver {
 		
 		// It is safe to move forward
 		if (!stench && !breeze) {
+			agent.addSafe(n);
 			agent.moveForward(maze);
 			prev = currNode; 
 			currNode = maze.getNode(agent.getX(), agent.getY()); // Update current Node

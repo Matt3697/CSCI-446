@@ -16,6 +16,7 @@ public class Agent {
 	private ArrayList<Node> unknown;
 	private ArrayList<Node> danger;
 	private ArrayList<Node> valid;
+	private ArrayList<Node> safe;
 	
 	
 	public Agent(int x, int y) {//x and y coordinates of agent
@@ -27,6 +28,7 @@ public class Agent {
 		unknown = new ArrayList<Node>();
 		danger = new ArrayList<Node>();
 		valid = new ArrayList<Node>();
+		safe = new ArrayList<Node>();
 		
 	}
 	
@@ -108,61 +110,114 @@ public class Agent {
 	}
 	public void moveForward(Maze maze) {//move the agent forward by one if the agent remains within the bounds of the maze.
 		
-		/* temp
-		 * 
-
-		boolean flag = false;
-		for(Node neighbor: maze.getNodeMatrix()[x][y].getNeighbors())
-		{
-			if(valid.contains(neighbor))
-			{
-				//make x and y maybe?
-				flag = true;
-				break;
-			}
-		}
-		
-		if(flag)
-		{
-			
-		}
-		*/
-		
 		System.out.println("moving " + this.getDirection());
+		boolean flag = true;
 		
 		if (this.getDirection() == "North") {
-			if(maze.getNodeMatrix()[x-1][y].isVisited()) {
-				nextDirection();
-			}
-			else {
-				x--;
-			}
+			try {
+				Node poss = maze.getNode(x-1, y);
+				
+				if(valid.contains(poss))
+				{
+					valid.remove(poss);
+					x--;
+					flag = false;
+				}
+				else {nextDirection();}
+			}catch(Exception e) {}
+//			if(maze.getNodeMatrix()[x-1][y].isVisited()) {
+//				nextDirection();
+//			}
+//			else {
+//				x--;
+//			}
 		}
 		else if (this.getDirection() == "East") {
-			if(maze.getNodeMatrix()[x][y+1].isVisited()) {
-				nextDirection();
-			}
-			else {
-				y++;
-			}
+			try {
+				Node poss = maze.getNode(x, y+1);
+				
+				if(valid.contains(poss))
+				{
+					valid.remove(poss);
+					y++;
+					flag = false;
+				}
+				else {nextDirection();}
+			}catch(Exception e) {}
+//			if(maze.getNodeMatrix()[x][y+1].isVisited()) {
+//				nextDirection();
+//			}
+//			else {
+//				y++;
+//			}
 		}
 		else if (this.getDirection() == "South") {
-			if(maze.getNodeMatrix()[x+1][y].isVisited()) {
-				nextDirection();
-			}
-			else {
-				x++;
-			}
+			try {
+				Node poss = maze.getNode(x+1, y);
+				
+				if(valid.contains(poss))
+				{
+					valid.remove(poss);
+					x++;
+					flag = false;
+				}
+				else {nextDirection();}
+			}catch(Exception e) {}
+//			if(maze.getNodeMatrix()[x+1][y].isVisited()) {
+//				nextDirection();
+//			}
+//			else {
+//				x++;
+//			}
 		}
 		else if (this.getDirection() == "West") {
-			if(maze.getNodeMatrix()[x][y-1].isVisited()) {
-				nextDirection();
-			}
-			else {
-				y--;
+			try {
+				Node poss = maze.getNode(x, y-1);
+				
+				if(valid.contains(poss))
+				{
+					valid.remove(poss);
+					y--;
+					flag = false;
+				}
+				else {nextDirection();}
+			}catch(Exception e) {}
+//			if(maze.getNodeMatrix()[x][y-1].isVisited()) {
+//				nextDirection();
+//			}
+//			else {
+//				y--;
+//			}
+		}
+		if(!flag) {
+			editPerformanceMeasure(-1); //-1 for taking action
+		}
+		//try other valids
+		else
+		{
+			if(!valid.isEmpty())
+			{
+				//greedy to find path? for now we can cheese it.
+				editPerformanceMeasure(-2); //-2 for 180
+				Node validMove = valid.get(valid.size()-1); //DFS like
+				
+				//Manhattan temporarily to calculate cost to move to new spot
+				x = Math.abs(x - validMove.getX());
+				y = Math.abs(y - validMove.getY());
+				editPerformanceMeasure(x + y);
+				
+				x = validMove.getX();
+				y = validMove.getY();
+				valid.remove(valid.size()-1);
+				flag = false;
 			}
 		}
-		editPerformanceMeasure(-1); //-1 for taking action
+		
+		//try unknowns
+		if(flag)
+		{
+			//try diagonals of danger?
+		}
 	}
 	public void grab() {//lets the agent grab the gold from a square
 		gold = true;
@@ -208,9 +263,30 @@ public class Agent {
 	
 	public void addUnknown(Node n)
 	{
-		if(!unknown.contains(n))
+		if(valid.contains(n) || safe.contains(n))
+		{
+			return;
+		}
+		for(Node neighbor: n.getNeighbors())
+		{
+			if(safe.contains(neighbor))
+			{
+				valid.add(n);
+				try {
+					unknown.remove(n);
+					danger.remove(n);
+				}
+				catch(Exception e){}
+			}
+		}
+		if(!unknown.contains(n) && !danger.contains(n))
 		{
 			unknown.add(n);
+		}
+		else if(!danger.contains(n))
+		{
+			danger.add(n);
+			unknown.remove(n);
 		}
 	}
 	
@@ -219,6 +295,13 @@ public class Agent {
 		if(!danger.contains(n))
 		{
 			danger.add(n);
+		}
+	}
+	
+	public void addSafe(Node n)
+	{
+		if(!safe.contains(n)) {
+			safe.add(n);
 		}
 	}
 	
