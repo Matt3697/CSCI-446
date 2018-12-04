@@ -138,10 +138,13 @@ public class WumpusSolver {
 			if(agent.hasArrow() && agent.shootArrow(maze, wumpus)) {//if we kill the wumpus, it is safe to move forwards.
 				System.out.println("Killed Wumpus");
 				for(Node neighbor: currNode.getNeighbors()) {
+					if (neighbor.getGuess() == 'W') // Nodes that were guessed to be wumpus are now safe
+						neighbor.setGuess('*');//neighboring spots are safe, since there is no breeze perceived.
+				}
+				
+				// Since wumpus is killed, remove its stench from its neighboring nodes
+				for (Node neighbor : maze.getNode(wumpus.getX(), wumpus.getY()).getNeighbors()) {
 					neighbor.setStench(false);
-					neighbor.setGuess('*');//neighboring spots are safe, since there is no breeze perceived.
-					//updateKB(neighbor.getX(), neighbor.getY(), '*');
-					
 				}
 				agent.moveForward(maze);
 				prev = currNode; 
