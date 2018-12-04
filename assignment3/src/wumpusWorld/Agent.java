@@ -285,7 +285,6 @@ public class Agent {
 		else if (direction == "West") {
 			direction = "North";
 		}
-		editPerformanceMeasure(-1);
 	}
 	
 	public void addUnknown(Node n)
