@@ -63,7 +63,6 @@ public class WumpusSolver {
 			return;
 		}
 		currNode.setGuess('*'); // Since current node is not a pit or wumpus, it is safe to stand on
-		agent.addSafe(currNode);
 		
 		if (n.containsGlitter()) {//the gold is in the same square as the glitter. have the agent grab the gold.
 			glitter = true;
@@ -103,22 +102,18 @@ public class WumpusSolver {
 		}
 		//Check all percepts together and make decisions based on propositional logic
 		System.out.println("Current position: "+ agent.getX() + "," + agent.getY());
+		System.out.println("Current direction: "+ agent.getDirection());
 		System.out.println("stench =" + stench + " breeze=" + breeze + " glitter="+ glitter + " bump=" + bump + " scream="+ scream);
 		
 		// It is safe to move forward
 		if (!stench && !breeze) {
-			agent.moveForward(maze);
-			prev = currNode; 
-			currNode = maze.getNode(agent.getX(), agent.getY()); // Update current Node
-			currNode.setPrev(prev); // Set previous Node
-			currNode.setHasAgent(true); // The agent is on this Node -- used for printing the maze after each iteration
-			currNode.setVisited();
-			
+			agent.addSafe(currNode);
 			for(Node neighbor: currNode.getNeighbors())
 			{
 				agent.addValid(neighbor);
 				neighbor.setGuess('*');
 			}
+			makeMove();
 		}
 		
 		
@@ -137,17 +132,17 @@ public class WumpusSolver {
 			if(agent.hasArrow() && agent.shootArrow(maze, wumpus)) {//if we kill the wumpus, it is safe to move forwards.
 				System.out.println("Killed Wumpus");
 				for(Node neighbor: currNode.getNeighbors()) {
-					neighbor.setStench(false);
-					neighbor.setGuess('*');//neighboring spots are safe, since there is no breeze perceived.
-					//updateKB(neighbor.getX(), neighbor.getY(), '*');
-					
+					if (neighbor.getGuess() == 'W') {// Nodes that were guessed to be wumpus are now safe
+						neighbor.setGuess('*');//neighboring spots are safe, since there is no breeze perceived.
+						agent.addValid(neighbor);
+					}	
 				}
-				agent.moveForward(maze);
-				prev = currNode; 
-				currNode = maze.getNode(agent.getX(), agent.getY()); // Update current Node
-				currNode.setPrev(prev); // Set previous Node
-				currNode.setHasAgent(true); // The agent is on this Node -- used for printing the maze after each iteration
-				currNode.setVisited();
+				
+				// Since wumpus is killed, remove its stench from its neighboring nodes
+				for (Node neighbor : maze.getNode(wumpus.getX(), wumpus.getY()).getNeighbors()) {
+					neighbor.setStench(false);
+				}
+				makeMove();
 				currNode.setWumpus(false);
 			}
 			else {
@@ -163,7 +158,7 @@ public class WumpusSolver {
 						break;
 					}
 				}
-				
+				makeMove();
 			}
 		}
 		
@@ -175,40 +170,41 @@ public class WumpusSolver {
 				
 			}
 			for (Node neighbor : currNode.getNeighbors()) {//guess where pit could be
-				if (neighbor.getGuess() == '?')
+				if (neighbor.getGuess() == '_')
 					neighbor.setGuess('P'); // each neighbor could possibly be a pit
 					agent.addUnknown(neighbor);
 			}
-			agent.nextDirection();
-			agent.moveForward(maze);
-			prev = currNode; 
-			currNode = maze.getNode(agent.getX(), agent.getY()); // Update current Node
-			currNode.setPrev(prev); // Set previous Node
-			currNode.setHasAgent(true); // The agent is on this Node -- used for printing the maze after each iteration
-			currNode.setVisited();
+			makeMove();
 		}
 		//There is a pit and wumpus in adjacent node(s)
 		else if(stench && breeze) {
 			System.out.println("Pit and Wumpus in adjacenct node(s)");
 			for(Node neighbor: currNode.getNeighbors())
 			{
-				if (neighbor.getGuess() == '?')
+				if (neighbor.getGuess() == '_')
 				{
+					neighbor.setGuess('?'); //Don't know for sure if it is a pit, wumpus, or both in adjacent node
 					agent.addUnknown(neighbor);
 				}
 			}
-			agent.nextDirection();
-			agent.moveForward(maze);
-			prev = currNode; 
-			currNode = maze.getNode(agent.getX(), agent.getY()); // Update current Node
-			currNode.setPrev(prev); // Set previous Node
-			currNode.setHasAgent(true); // The agent is on this Node -- used for printing the maze after each iteration
-			currNode.setVisited();
+			makeMove();
 		}
 		
 //		agent.findDanger(currNode);
 		
 	}
+	
+	// Method for agent to move forward
+	public void makeMove() {
+		Node prev;
+		agent.moveForward(maze);
+		prev = currNode; 
+		currNode = maze.getNode(agent.getX(), agent.getY()); // Update current Node
+		currNode.setPrev(prev); // Set previous Node
+		currNode.setHasAgent(true); // The agent is on this Node -- used for printing the maze after each iteration
+		currNode.setVisited();
+	}
+	
 	public void goToStart() {//follow path back to starting point.
 		for(int i = path.size() - 1; i >= 0; i--) {
 			agent.setX(path.get(i).getX());
