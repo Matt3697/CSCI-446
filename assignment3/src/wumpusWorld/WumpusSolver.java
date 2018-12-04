@@ -143,16 +143,17 @@ public class WumpusSolver {
 			else {
 				for (Node neighbor : currNode.getNeighbors()) {//guess where wumpus could be
 					//TODO: neighbor in direction we shot will not have the wumpus in it
-					if(neighbor.getGuess() == 'W') {//if there is likely a wumpus in the next square, change directions.
-						agent.nextDirection();
+					if(neighbor.getGuess() != 'W') {//if there is likely a wumpus in the next square, change directions.
+						agent.moveForward(maze);
+						prev = currNode; 
+						currNode = maze.getNode(agent.getX(), agent.getY()); // Update current Node
+						currNode.setPrev(prev); // Set previous Node
+						currNode.setHasAgent(true); // The agent is on this Node -- used for printing the maze after each iteration
+						currNode.setVisited();
+						break;
 					}
 				}
-				agent.moveForward(maze);
-				prev = currNode; 
-				currNode = maze.getNode(agent.getX(), agent.getY()); // Update current Node
-				currNode.setPrev(prev); // Set previous Node
-				currNode.setHasAgent(true); // The agent is on this Node -- used for printing the maze after each iteration
-				currNode.setVisited();
+				
 			}
 		}
 		
