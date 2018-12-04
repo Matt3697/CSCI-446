@@ -102,6 +102,7 @@ public class WumpusSolver {
 		}
 		//Check all percepts together and make decisions based on propositional logic
 		System.out.println("Current position: "+ agent.getX() + "," + agent.getY());
+		System.out.println("Current direction: "+ agent.getDirection());
 		System.out.println("stench =" + stench + " breeze=" + breeze + " glitter="+ glitter + " bump=" + bump + " scream="+ scream);
 		
 		// It is safe to move forward
@@ -138,8 +139,10 @@ public class WumpusSolver {
 			if(agent.hasArrow() && agent.shootArrow(maze, wumpus)) {//if we kill the wumpus, it is safe to move forwards.
 				System.out.println("Killed Wumpus");
 				for(Node neighbor: currNode.getNeighbors()) {
-					if (neighbor.getGuess() == 'W') // Nodes that were guessed to be wumpus are now safe
+					if (neighbor.getGuess() == 'W') {// Nodes that were guessed to be wumpus are now safe
 						neighbor.setGuess('*');//neighboring spots are safe, since there is no breeze perceived.
+						agent.addValid(neighbor);
+					}	
 				}
 				
 				// Since wumpus is killed, remove its stench from its neighboring nodes
