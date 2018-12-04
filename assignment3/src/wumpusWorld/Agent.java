@@ -1,4 +1,7 @@
 package wumpusWorld;
+
+import java.util.ArrayList;
+
 /*
  * Authors: Carie Pointer, Hugh Jackovich, Matthew Sagen
  * Date:    11/30/18
@@ -10,6 +13,10 @@ public class Agent {
 	private boolean arrow, gold;
 	private String direction;
 	private char id;
+	private ArrayList<Node> unknown;
+	private ArrayList<Node> danger;
+	private ArrayList<Node> valid;
+	private ArrayList<Node> safe;
 	
 	
 	public Agent(int x, int y) {//x and y coordinates of agent
@@ -18,6 +25,11 @@ public class Agent {
 		this.arrow = true;
 		this.id = 'A';
 		this.gold = false;
+		unknown = new ArrayList<Node>();
+		danger = new ArrayList<Node>();
+		valid = new ArrayList<Node>();
+		safe = new ArrayList<Node>();
+		
 	}
 	
 	public boolean hasArrow() {//return whether or not the agent currently has it's arrow
@@ -99,40 +111,113 @@ public class Agent {
 	public void moveForward(Maze maze) {//move the agent forward by one if the agent remains within the bounds of the maze.
 		
 		System.out.println("moving " + this.getDirection());
+		boolean flag = true;
 		
 		if (this.getDirection() == "North") {
-			if(maze.getNodeMatrix()[x-1][y].isVisited()) {
-				nextDirection();
-			}
-			else {
-				x--;
-			}
+			try {
+				Node poss = maze.getNode(x-1, y);
+				
+				if(valid.contains(poss))
+				{
+					valid.remove(poss);
+					x--;
+					flag = false;
+				}
+				else {nextDirection();}
+			}catch(Exception e) {}
+//			if(maze.getNodeMatrix()[x-1][y].isVisited()) {
+//				nextDirection();
+//			}
+//			else {
+//				x--;
+//			}
 		}
 		else if (this.getDirection() == "East") {
-			if(maze.getNodeMatrix()[x][y+1].isVisited()) {
-				nextDirection();
-			}
-			else {
-				y++;
-			}
+			try {
+				Node poss = maze.getNode(x, y+1);
+				
+				if(valid.contains(poss))
+				{
+					valid.remove(poss);
+					y++;
+					flag = false;
+				}
+				else {nextDirection();}
+			}catch(Exception e) {}
+//			if(maze.getNodeMatrix()[x][y+1].isVisited()) {
+//				nextDirection();
+//			}
+//			else {
+//				y++;
+//			}
 		}
 		else if (this.getDirection() == "South") {
-			if(maze.getNodeMatrix()[x+1][y].isVisited()) {
-				nextDirection();
-			}
-			else {
-				x++;
-			}
+			try {
+				Node poss = maze.getNode(x+1, y);
+				
+				if(valid.contains(poss))
+				{
+					valid.remove(poss);
+					x++;
+					flag = false;
+				}
+				else {nextDirection();}
+			}catch(Exception e) {}
+//			if(maze.getNodeMatrix()[x+1][y].isVisited()) {
+//				nextDirection();
+//			}
+//			else {
+//				x++;
+//			}
 		}
 		else if (this.getDirection() == "West") {
-			if(maze.getNodeMatrix()[x][y-1].isVisited()) {
-				nextDirection();
-			}
-			else {
-				y--;
+			try {
+				Node poss = maze.getNode(x, y-1);
+				
+				if(valid.contains(poss))
+				{
+					valid.remove(poss);
+					y--;
+					flag = false;
+				}
+				else {nextDirection();}
+			}catch(Exception e) {}
+//			if(maze.getNodeMatrix()[x][y-1].isVisited()) {
+//				nextDirection();
+//			}
+//			else {
+//				y--;
+//			}
+		}
+		if(!flag) {
+			editPerformanceMeasure(-1); //-1 for taking action
+		}
+		//try other valids
+		else
+		{
+			if(!valid.isEmpty())
+			{
+				//greedy to find path? for now we can cheese it.
+				editPerformanceMeasure(-2); //-2 for 180
+				Node validMove = valid.get(valid.size()-1); //DFS like
+				
+				//Manhattan temporarily to calculate cost to move to new spot
+				x = Math.abs(x - validMove.getX());
+				y = Math.abs(y - validMove.getY());
+				editPerformanceMeasure(x + y);
+				
+				x = validMove.getX();
+				y = validMove.getY();
+				valid.remove(valid.size()-1);
+				flag = false;
 			}
 		}
-		editPerformanceMeasure(-1); //-1 for taking action
+		
+		//try unknowns
+		if(flag)
+		{
+			//try diagonals of danger?
+		}
 	}
 	public void grab() {//lets the agent grab the gold from a square
 		gold = true;
@@ -174,5 +259,77 @@ public class Agent {
 			direction = "North";
 		}
 		editPerformanceMeasure(-1);
+	}
+	
+	public void addUnknown(Node n)
+	{
+		if(valid.contains(n) || safe.contains(n))
+		{
+			return;
+		}
+		for(Node neighbor: n.getNeighbors())
+		{
+			if(safe.contains(neighbor))
+			{
+				valid.add(n);
+				try {
+					unknown.remove(n);
+					danger.remove(n);
+				}
+				catch(Exception e){}
+			}
+		}
+		if(!unknown.contains(n) && !danger.contains(n))
+		{
+			unknown.add(n);
+		}
+		else if(!danger.contains(n))
+		{
+			danger.add(n);
+			unknown.remove(n);
+		}
+	}
+	
+	public void addDanger(Node n)
+	{
+		if(!danger.contains(n))
+		{
+			danger.add(n);
+		}
+	}
+	
+	public void addSafe(Node n)
+	{
+		if(!safe.contains(n)) {
+			safe.add(n);
+		}
+	}
+	
+	public void addValid(Node n)
+	{
+		if(!valid.contains(n)) {
+			valid.add(n);
+		}
+	}
+	
+	//This is sorta temporarily, would be nice to
+	//add a way to know if pit/wumpus
+	public void findDanger(Node n)
+	{
+		for(Node poss : unknown)
+		{
+			int count = 0;
+			for(Node neighbor: poss.getNeighbors())
+			{
+				if(valid.contains(neighbor))
+				{
+					count++;
+				}
+				if (count >= 2)
+				{
+					addDanger(poss);
+				}
+			}
+		}
 	}
 }
