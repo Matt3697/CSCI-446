@@ -117,12 +117,15 @@ public class Agent {
 		System.out.println("moving " + this.getDirection());
 		boolean flag = true;
 		
+		System.out.println("TEST :" + valid.size() + " || " + unknown.size() + " || " + safe.size());
+		
 		if (this.getDirection() == "North") {
 			try {
 				Node poss = maze.getNode(x-1, y);
 				
 				if(valid.contains(poss))
 				{
+					System.out.println("APPARENTLY VALID?");
 					valid.remove(poss);
 					x--;
 					flag = false;
@@ -142,6 +145,7 @@ public class Agent {
 				
 				if(valid.contains(poss))
 				{
+					System.out.println("APPARENTLY VALID?");
 					valid.remove(poss);
 					y++;
 					flag = false;
@@ -161,6 +165,7 @@ public class Agent {
 				
 				if(valid.contains(poss))
 				{
+					System.out.println("APPARENTLY VALID?");
 					valid.remove(poss);
 					x++;
 					flag = false;
@@ -180,6 +185,7 @@ public class Agent {
 				
 				if(valid.contains(poss))
 				{
+					System.out.println("APPARENTLY VALID?");
 					valid.remove(poss);
 					y--;
 					flag = false;
@@ -292,6 +298,7 @@ public class Agent {
 		{
 			if(safe.contains(neighbor))
 			{
+				System.out.println("WHY THIS SO TRUE");
 				valid.add(n);
 				try {
 					unknown.remove(n);
@@ -302,6 +309,12 @@ public class Agent {
 		}
 		if(!unknown.contains(n) && !danger.contains(n))
 		{
+//			System.out.println("ADDED TO UNKNOWN");
+//			if(valid.contains(n))
+//			{
+//				//to remove them frm somehow being added to valid
+//				valid.remove(n);
+//			}
 			unknown.add(n);
 		}
 		else if(!danger.contains(n))
@@ -324,11 +337,15 @@ public class Agent {
 		if(!safe.contains(n)) {
 			safe.add(n);
 		}
+		if(valid.contains(n))
+		{
+			valid.remove(n);
+		}
 	}
 	
 	public void addValid(Node n)
 	{
-		if(!valid.contains(n)) {
+		if(!valid.contains(n) && !safe.contains(n)) {
 			valid.add(n);
 		}
 	}
