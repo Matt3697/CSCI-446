@@ -127,7 +127,6 @@ public class WumpusSolver {
 				if(neighbor.getGuess() != '*') {
 					neighbor.setGuess('W'); // Each neighbor could possibly be the wumpus
 					agent.addUnknown(neighbor);
-					System.out.println("WUMPUS???");
 				}
 			}
 			if(agent.hasArrow() && agent.shootArrow(maze, wumpus)) {	// If we kill the wumpus, it is safe to move forwards.
@@ -149,6 +148,7 @@ public class WumpusSolver {
 			}
 			else {
 				for (Node neighbor : currNode.getNeighbors()) { // Guess where wumpus could be
+					agent.addWarningNode(currNode);
 					if(neighbor.getGuess() == 'W') { // If there is likely a wumpus in the next square, change directions.
 						agent.nextDirection();
 					}
@@ -161,6 +161,7 @@ public class WumpusSolver {
 		else if (!stench && breeze) {
 			System.out.println("Pit in adjacent node");
 
+			agent.addWarningNode(currNode);
 			for (Node neighbor : currNode.getNeighbors()) { // Guess where pit could be
 				if (neighbor.getGuess() == '_' )
 					neighbor.setGuess('P'); // Each neighbor could possibly be a pit
@@ -172,6 +173,8 @@ public class WumpusSolver {
 		// There is a pit and wumpus in adjacent node(s)
 		else if(stench && breeze) {
 			System.out.println("Pit and Wumpus in adjacenct node(s)");
+			
+			agent.addWarningNode(currNode);
 			for(Node neighbor: currNode.getNeighbors())
 			{
 				if (neighbor.getGuess() == '_')
@@ -183,7 +186,9 @@ public class WumpusSolver {
 			canMove = true;
 		}
 		
+		agent.findDanger(currNode);
 		return canMove;
+		//May need to add this to fix certain situations
 		//agent.findDanger(currNode);
 	}
 	
@@ -210,6 +215,7 @@ public class WumpusSolver {
 			if(path.get(i).getX() == 0 && path.get(i).getY() == 0) {
 				System.out.println("Climbed out of cave with gold!");
 				agent.editPerformanceMeasure(1000);
+				break;
 			}
 		}
 		System.out.println("Agent completed task with " + path.size() * 2 + " moves.");

@@ -17,6 +17,7 @@ public class Agent {
 	private ArrayList<Node> danger;
 	private ArrayList<Node> valid;
 	private ArrayList<Node> safe;
+	private ArrayList<Node> warning;
 	
 	
 	public Agent(int x, int y) {//x and y coordinates of agent
@@ -29,6 +30,7 @@ public class Agent {
 		danger = new ArrayList<Node>();
 		valid = new ArrayList<Node>();
 		safe = new ArrayList<Node>();
+		warning = new ArrayList<Node>();
 		
 	}
 	
@@ -125,7 +127,6 @@ public class Agent {
 				
 				if(valid.contains(poss))
 				{
-					System.out.println("APPARENTLY VALID?");
 					valid.remove(poss);
 					x--;
 					flag = false;
@@ -145,7 +146,6 @@ public class Agent {
 				
 				if(valid.contains(poss))
 				{
-					System.out.println("APPARENTLY VALID?");
 					valid.remove(poss);
 					y++;
 					flag = false;
@@ -165,7 +165,6 @@ public class Agent {
 				
 				if(valid.contains(poss))
 				{
-					System.out.println("APPARENTLY VALID?");
 					valid.remove(poss);
 					x++;
 					flag = false;
@@ -185,7 +184,6 @@ public class Agent {
 				
 				if(valid.contains(poss))
 				{
-					System.out.println("APPARENTLY VALID?");
 					valid.remove(poss);
 					y--;
 					flag = false;
@@ -241,10 +239,6 @@ public class Agent {
 			flag = false;
 			
 		}
-		if(flag)
-		{
-			System.out.println("WTF");
-		}
 	}
 	public void grab() {//lets the agent grab the gold from a square
 		gold = true;
@@ -297,23 +291,21 @@ public class Agent {
 		{
 			if(safe.contains(neighbor))
 			{
-				System.out.println("WHY THIS SO TRUE");
-				valid.add(n);
+				if(!warning.contains(n))
+				{
+					valid.add(n);
+				}
+//				valid.add(n);
 				try {
 					unknown.remove(n);
 					danger.remove(n);
 				}
 				catch(Exception e){}
+				return;
 			}
 		}
 		if(!unknown.contains(n) && !danger.contains(n))
 		{
-//			System.out.println("ADDED TO UNKNOWN");
-//			if(valid.contains(n))
-//			{
-//				//to remove them frm somehow being added to valid
-//				valid.remove(n);
-//			}
 			unknown.add(n);
 		}
 		else if(!danger.contains(n))
@@ -353,20 +345,33 @@ public class Agent {
 	//add a way to know if pit/wumpus
 	public void findDanger(Node n)
 	{
+		ArrayList<Integer> removal = new ArrayList<Integer>();
 		for(Node poss : unknown)
 		{
 			int count = 0;
+			
 			for(Node neighbor: poss.getNeighbors())
 			{
-				if(valid.contains(neighbor))
+				if(warning.contains(neighbor))
 				{
 					count++;
 				}
-				if (count >= 2)
+				if (count >= poss.getNeighbors().size() - 1)
 				{
 					addDanger(poss);
+					removal.add(unknown.indexOf(poss));
+					break;
 				}
 			}
 		}
+		for(Integer index : removal)
+		{
+			unknown.remove(index);
+		}
+	}
+	
+	public void addWarningNode(Node n)
+	{
+		warning.add(n);
 	}
 }
