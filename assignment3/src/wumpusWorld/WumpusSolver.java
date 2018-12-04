@@ -113,14 +113,7 @@ public class WumpusSolver {
 				agent.addValid(neighbor);
 				neighbor.setGuess('*');
 			}
-			
-			agent.moveForward(maze);
-			prev = currNode; 
-			currNode = maze.getNode(agent.getX(), agent.getY()); // Update current Node
-			currNode.setPrev(prev); // Set previous Node
-			currNode.setHasAgent(true); // The agent is on this Node -- used for printing the maze after each iteration
-			currNode.setVisited();
-			
+			makeMove();
 		}
 		
 		
@@ -149,12 +142,7 @@ public class WumpusSolver {
 				for (Node neighbor : maze.getNode(wumpus.getX(), wumpus.getY()).getNeighbors()) {
 					neighbor.setStench(false);
 				}
-				agent.moveForward(maze);
-				prev = currNode; 
-				currNode = maze.getNode(agent.getX(), agent.getY()); // Update current Node
-				currNode.setPrev(prev); // Set previous Node
-				currNode.setHasAgent(true); // The agent is on this Node -- used for printing the maze after each iteration
-				currNode.setVisited();
+				makeMove();
 				currNode.setWumpus(false);
 			}
 			else {
@@ -164,12 +152,7 @@ public class WumpusSolver {
 						agent.nextDirection();
 					}
 				}
-				agent.moveForward(maze);
-				prev = currNode; 
-				currNode = maze.getNode(agent.getX(), agent.getY()); // Update current Node
-				currNode.setPrev(prev); // Set previous Node
-				currNode.setHasAgent(true); // The agent is on this Node -- used for printing the maze after each iteration
-				currNode.setVisited();
+				makeMove();
 			}
 		}
 		
@@ -185,13 +168,7 @@ public class WumpusSolver {
 					neighbor.setGuess('P'); // each neighbor could possibly be a pit
 					agent.addUnknown(neighbor);
 			}
-//			agent.nextDirection();
-			agent.moveForward(maze);
-			prev = currNode; 
-			currNode = maze.getNode(agent.getX(), agent.getY()); // Update current Node
-			currNode.setPrev(prev); // Set previous Node
-			currNode.setHasAgent(true); // The agent is on this Node -- used for printing the maze after each iteration
-			currNode.setVisited();
+			makeMove();
 		}
 		//There is a pit and wumpus in adjacent node(s)
 		else if(stench && breeze) {
@@ -203,18 +180,24 @@ public class WumpusSolver {
 					agent.addUnknown(neighbor);
 				}
 			}
-//			agent.nextDirection();
-			agent.moveForward(maze);
-			prev = currNode; 
-			currNode = maze.getNode(agent.getX(), agent.getY()); // Update current Node
-			currNode.setPrev(prev); // Set previous Node
-			currNode.setHasAgent(true); // The agent is on this Node -- used for printing the maze after each iteration
-			currNode.setVisited();
+			makeMove();
 		}
 		
 //		agent.findDanger(currNode);
 		
 	}
+	
+	// Method for agent to move forward
+	public void makeMove() {
+		Node prev;
+		agent.moveForward(maze);
+		prev = currNode; 
+		currNode = maze.getNode(agent.getX(), agent.getY()); // Update current Node
+		currNode.setPrev(prev); // Set previous Node
+		currNode.setHasAgent(true); // The agent is on this Node -- used for printing the maze after each iteration
+		currNode.setVisited();
+	}
+	
 	public void goToStart() {//follow path back to starting point.
 		for(int i = path.size() - 1; i >= 0; i--) {
 			agent.setX(path.get(i).getX());
