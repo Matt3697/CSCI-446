@@ -164,7 +164,7 @@ public class WumpusSolver {
 				
 			}
 			for (Node neighbor : currNode.getNeighbors()) {//guess where pit could be
-				if (neighbor.getGuess() == '?')
+				if (neighbor.getGuess() == '_')
 					neighbor.setGuess('P'); // each neighbor could possibly be a pit
 					agent.addUnknown(neighbor);
 			}
@@ -175,8 +175,9 @@ public class WumpusSolver {
 			System.out.println("Pit and Wumpus in adjacenct node(s)");
 			for(Node neighbor: currNode.getNeighbors())
 			{
-				if (neighbor.getGuess() == '?')
+				if (neighbor.getGuess() == '_')
 				{
+					neighbor.setGuess('?'); //Don't know for sure if it is a pit, wumpus, or both in adjacent node
 					agent.addUnknown(neighbor);
 				}
 			}
