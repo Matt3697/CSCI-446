@@ -9,14 +9,12 @@ package wumpusWorld;
 import java.util.ArrayList;
 import java.util.Random;
 
-import sun.net.www.content.audio.wav;
-
 public class Maze {
 	
 	public char[][] maze = null;
 	public char[][] DFSmaze = null;
 	private Node[][] nodeMaze;
-	private int length, height, size, upperBound;
+	private int length, height, upperBound;
 	
 	public Maze(int length, int height, Agent agent, Wumpus wumpus) { //constructor for Maze
 		this.length = length;
@@ -31,8 +29,7 @@ public class Maze {
 		nodeMaze = new Node[height][length];
 		char[] rows = new char[height];
 		char[] columns = new char[length];
-		size = length * height;
-		
+
 		//create gold,wumpus,pits,agent
 		Gold gold = new Gold(height);
 		//Agent agent = new Agent(0,0);//the agent always starts at square {1,1}
