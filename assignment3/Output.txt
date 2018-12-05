@@ -1,74 +1,130 @@
-5x5 world:
-==================
-A_G__
-_____
-WP___
-_____
-_____
-==================
-Current position: 0,0
-Current direction: East
-stench =false breeze=false glitter=false bump=false scream=false
-5x5 world:
-==================
-AAG__
-_____
-WP___
-_____
-_____
-==================
-Current Knowledge base of world:
-==================
-**___
-*____
-_____
-_____
-_____
-==================
-Current position: 0,1
-Current direction: East
-stench =false breeze=false glitter=false bump=false scream=false
-5x5 world:
-==================
-AAA__
-_____
-WP___
-_____
-_____
-==================
-Current Knowledge base of world:
-==================
-***__
-**___
-_____
-_____
-_____
-==================
+======= INITIAL MAZE =======
+4x4 world:
+AG__
+____
+__WP
+____
 Agent found gold
 Climbed out of cave with gold!
-Agent completed task with 6 moves.
-Agent performance measure: 994
+Agent completed task with 4 moves.
+Agent performance measure: 996
+======= FINAL MAZE =======
+4x4 world:
+AA__
+____
+__WP
+____
+
+Knowledge base of world:
+**__
+*___
+____
+____
+============================
+
+======= INITIAL MAZE =======
 5x5 world:
-==================
-AAA__
+AW___
+____G
+_P___
 _____
-WP___
-_____
-_____
-==================
-Current Knowledge base of world:
-==================
-***__
-**___
-_____
-_____
-_____
-==================
+___P_
+Killed Wumpus
+Agent found gold
+Climbed out of cave with gold!
+Agent completed task with 12 moves.
+Agent performance measure: 978
+======= FINAL MAZE =======
 5x5 world:
-==================
-AAA__
+AAAAA
+____A
+_P___
 _____
-WP___
+___P_
+
+Knowledge base of world:
+*****
+*****
 _____
 _____
-==================
+_____
+============================
+
+======= INITIAL MAZE =======
+8x8 world:
+A_______
+__G_____
+___PP__P
+WP__P__P
+________
+________
+______P_
+___P____
+Agent found gold
+Climbed out of cave with gold!
+Agent completed task with 28 moves.
+Agent performance measure: 972
+======= FINAL MAZE =======
+8x8 world:
+AAAAAAAA
+__AAAAAA
+___PP__P
+WP__P__P
+________
+________
+______P_
+___P____
+
+Knowledge base of world:
+********
+********
+___PP**P
+________
+________
+________
+________
+________
+============================
+
+======= INITIAL MAZE =======
+10x10 world:
+A_________
+______G___
+____P_____
+___P_P__PP
+__________
+___P______
+____PP____
+_____P____
+__W_P__P__
+_P__P____P
+Agent found gold
+Climbed out of cave with gold!
+Agent completed task with 30 moves.
+Agent performance measure: 971
+======= FINAL MAZE =======
+10x10 world:
+AAAAAAAAAA
+______AAAA
+____P____A
+___P_P__PP
+__________
+___P______
+____PP____
+_____P____
+__W_P__P__
+_P__P____P
+
+Knowledge base of world:
+**********
+**********
+_______***
+_________P
+__________
+__________
+__________
+__________
+__________
+__________
+============================
+

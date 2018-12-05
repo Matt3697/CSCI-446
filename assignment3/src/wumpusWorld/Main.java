@@ -30,20 +30,19 @@ public class Main {
 		
 		WumpusSolver wumpus = new WumpusSolver(maze, agent, w, writer);
 		wumpus.solveMaze();
+		writer.println();
 
 		WumpusSolver wumpus1 = new WumpusSolver(maze1, agent1, w1, writer);
 		wumpus1.solveMaze();
+		writer.println();
 
 		WumpusSolver wumpus2 = new WumpusSolver(maze2, agent2, w2, writer);
 		wumpus2.solveMaze();
+		writer.println();
 
 		WumpusSolver wumpus3 = new WumpusSolver(maze3, agent3, w3, writer);
 		wumpus3.solveMaze();
-		
-		maze.printNodeMatrix(writer);
-		maze1.printNodeMatrix(writer);
-		maze2.printNodeMatrix(writer);
-		maze3.printNodeMatrix(writer);
+		writer.println();
 		
 		writer.close();
 		

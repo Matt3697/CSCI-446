@@ -111,7 +111,7 @@ public class Maze {
 		System.out.println(length + "x" + height + " world:");
 		writer.println(length + "x" + height + " world:");
 		System.out.println("==================");
-		writer.println("==================");
+		//writer.println("==================");
 		for (int i = 0; i < nodeMaze.length; i++) {
 			for (int j = 0; j < nodeMaze[0].length; j++) {
 				if (nodeMaze[i][j].hasAgent()) {
@@ -127,14 +127,14 @@ public class Maze {
 			writer.println();
 		}
 		System.out.println("==================");
-		writer.println("==================");
+		//writer.println("==================");
 	}
 	
 	public void printKnowledgeBase(PrintWriter writer) {
-		System.out.println("Current Knowledge base of world:");
-		writer.println("Current Knowledge base of world:");
+		System.out.println("Knowledge base of world:");
+		writer.println("\nKnowledge base of world:");
 		System.out.println("==================");
-		writer.println("==================");
+		//writer.println("==================");
 		for (int i = 0; i < nodeMaze.length; i++) {
 			for (int j = 0; j < nodeMaze[0].length; j++) {
 				System.out.print(nodeMaze[i][j].getGuess());
@@ -144,7 +144,7 @@ public class Maze {
 			writer.println();
 		}
 		System.out.println("==================");
-		writer.println("==================");
+		writer.println("============================");
 	}
 	
 	// Set all neighbors of all nodes

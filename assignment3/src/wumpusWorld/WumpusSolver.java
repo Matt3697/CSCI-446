@@ -27,14 +27,16 @@ public class WumpusSolver {
 		currNode = start;
 		currNode.setHasAgent(true);
 		currNode.setGuess('*');
+		writer.println("======= INITIAL MAZE =======");
 		maze.printNodeMatrix(writer);
 		
 		while (!gameOver) {
 			if (checkPercepts(currNode)) // If it is safe enough to move forward, do so
 				makeMove();
-			maze.printNodeMatrix(writer);
-			maze.printKnowledgeBase(writer);
 		}
+		writer.println("======= FINAL MAZE =======");
+		maze.printNodeMatrix(writer);
+		maze.printKnowledgeBase(writer);
 	}
 	
     /* 
@@ -84,7 +86,6 @@ public class WumpusSolver {
 			goToStart();
 			gameOver = true;
 			return false;
-			//TODO: make the agent go back to 0,0
 		}
 		if (n.hasStench()) {
 			stench = true;
@@ -96,34 +97,27 @@ public class WumpusSolver {
 		if(agent.getDirection() == "East" && n.hasRightWall()) {
 			bump = true;
 			System.out.println("agent hit a wall");
-			writer.println("agent hit a wall");
 			agent.nextDirection();
 		}
 		if(agent.getDirection() == "South" && n.hasBottomWall()) {
 			bump = true;
 			System.out.println("agent hit a wall");
-			writer.println("agent hit a wall");
 			agent.nextDirection();
 		}
 		if(agent.getDirection() == "West" && n.hasLeftWall()) {
 			bump = true;
 			System.out.println("agent hit a wall");
-			writer.println("agent hit a wall");
 			agent.nextDirection();
 		}
 		if(agent.getDirection() == "North" && n.hasTopWall()) {
 			bump = true;
 			System.out.println("agent hit a wall");
-			writer.println("agent hit a wall");
 			agent.nextDirection();
 		}
 		//Check all percepts together and make decisions based on propositional logic
 		System.out.println("Current position: "+ agent.getX() + "," + agent.getY());
 		System.out.println("Current direction: "+ agent.getDirection());
 		System.out.println("stench =" + stench + " breeze=" + breeze + " glitter="+ glitter + " bump=" + bump + " scream="+ scream);
-		writer.println("Current position: "+ agent.getX() + "," + agent.getY());
-		writer.println("Current direction: "+ agent.getDirection());
-		writer.println("stench =" + stench + " breeze=" + breeze + " glitter="+ glitter + " bump=" + bump + " scream="+ scream);
 		// It is safe to move forward
 		if (!stench && !breeze) {
 			agent.addSafe(currNode);
@@ -138,7 +132,6 @@ public class WumpusSolver {
 		// The wumpus is in an adjacent Node
 		else if (stench && !breeze) {
 			System.out.println("Wumpus in adjacent node");
-			writer.println("Wumpus in adjacent node");
 			for (Node neighbor : currNode.getNeighbors()) { // Guess where wumpus could be
 				if(neighbor.getGuess() != '*') {
 					neighbor.setGuess('W'); // Each neighbor could possibly be the wumpus
@@ -177,7 +170,6 @@ public class WumpusSolver {
 		// There is a pit in an adjacent Node
 		else if (!stench && breeze) {
 			System.out.println("Pit in adjacent node");
-			writer.println("Pit in adjacent node");
 			agent.addWarningNode(currNode);
 			for (Node neighbor : currNode.getNeighbors()) { // Guess where pit could be
 				if (neighbor.getGuess() == '_' )
@@ -190,7 +182,6 @@ public class WumpusSolver {
 		// There is a pit and wumpus in adjacent node(s)
 		else if(stench && breeze) {
 			System.out.println("Pit and Wumpus in adjacenct node(s)");
-			writer.println("Pit and Wumpus in adjacenct node(s)");
 			agent.addWarningNode(currNode);
 			for(Node neighbor: currNode.getNeighbors())
 			{
