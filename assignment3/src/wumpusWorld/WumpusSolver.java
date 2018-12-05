@@ -188,8 +188,6 @@ public class WumpusSolver {
 		
 		agent.findDanger(currNode);
 		return canMove;
-		//May need to add this to fix certain situations
-		//agent.findDanger(currNode);
 	}
 	
 	// Method for agent to move forward

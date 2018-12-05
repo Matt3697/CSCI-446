@@ -26,6 +26,7 @@ public class Agent {
 		this.arrow = true;
 		this.id = 'A';
 		this.gold = false;
+		//knowledge base variables
 		unknown = new ArrayList<Node>();
 		danger = new ArrayList<Node>();
 		valid = new ArrayList<Node>();
@@ -119,8 +120,7 @@ public class Agent {
 		System.out.println("moving " + this.getDirection());
 		boolean flag = true;
 		
-		System.out.println("TEST :" + valid.size() + " || " + unknown.size() + " || " + safe.size());
-		
+		//Tries to move into neighbors first if valid
 		if (this.getDirection() == "North") {
 			try {
 				Node poss = maze.getNode(x-1, y);
@@ -133,12 +133,6 @@ public class Agent {
 				}
 				else {nextDirection();}
 			}catch(Exception e) {}
-//			if(maze.getNodeMatrix()[x-1][y].isVisited()) {
-//				nextDirection();
-//			}
-//			else {
-//				x--;
-//			}
 		}
 		else if (this.getDirection() == "East") {
 			try {
@@ -152,12 +146,6 @@ public class Agent {
 				}
 				else {nextDirection();}
 			}catch(Exception e) {}
-//			if(maze.getNodeMatrix()[x][y+1].isVisited()) {
-//				nextDirection();
-//			}
-//			else {
-//				y++;
-//			}
 		}
 		else if (this.getDirection() == "South") {
 			try {
@@ -171,12 +159,6 @@ public class Agent {
 				}
 				else {nextDirection();}
 			}catch(Exception e) {}
-//			if(maze.getNodeMatrix()[x+1][y].isVisited()) {
-//				nextDirection();
-//			}
-//			else {
-//				x++;
-//			}
 		}
 		else if (this.getDirection() == "West") {
 			try {
@@ -190,17 +172,11 @@ public class Agent {
 				}
 				else {nextDirection();}
 			}catch(Exception e) {}
-//			if(maze.getNodeMatrix()[x][y-1].isVisited()) {
-//				nextDirection();
-//			}
-//			else {
-//				y--;
-//			}
 		}
 		if(!flag) {
 			editPerformanceMeasure(-1); //-1 for taking action
 		}
-		//try other valids
+		//try all other valids in the knowledge base 
 		else
 		{
 			if(!valid.isEmpty())
@@ -221,7 +197,7 @@ public class Agent {
 			}
 		}
 		
-		//try unknowns
+		//Try unknowns, only makes it here if the agent is taking a risky move
 		if(flag && !unknown.isEmpty())
 		{
 			//try diagonals of danger?
@@ -281,12 +257,15 @@ public class Agent {
 		}
 	}
 	
+	//Figures out if neighbor node is unknown, valid, or danger.
 	public void addUnknown(Node n)
 	{
+		//If neighbor is within valid or safe, no need to add to unknown
 		if(valid.contains(n) || safe.contains(n))
 		{
 			return;
 		}
+		//If a neighbor of the neighbor is safe and no other neighbors have warning, add to valid
 		for(Node neighbor: n.getNeighbors())
 		{
 			if(safe.contains(neighbor))
@@ -295,7 +274,7 @@ public class Agent {
 				{
 					valid.add(n);
 				}
-//				valid.add(n);
+				//try is here incase the node is not in unknown/danger
 				try {
 					unknown.remove(n);
 					danger.remove(n);
@@ -304,17 +283,34 @@ public class Agent {
 				return;
 			}
 		}
+		//If we don't know enough, add it to unknown
 		if(!unknown.contains(n) && !danger.contains(n))
 		{
 			unknown.add(n);
 		}
+		//Add to danger if multiple warnings nearby
 		else if(!danger.contains(n))
 		{
-			danger.add(n);
-			unknown.remove(n);
+			int count = 0;
+			
+			for(Node neighbor: n.getNeighbors())
+			{
+				if(warning.contains(neighbor))
+				{
+					count++;
+				}
+				//Ensures node is dangerous by having 2/3 or 3/4 neighbors as warnings to add
+				if (count >= n.getNeighbors().size() - 1)
+				{
+					addDanger(n);
+					unknown.remove(n);
+					break;
+				}
+			}
 		}
 	}
 	
+	//adds danger node
 	public void addDanger(Node n)
 	{
 		if(!danger.contains(n))
@@ -323,6 +319,7 @@ public class Agent {
 		}
 	}
 	
+	//adds safe node
 	public void addSafe(Node n)
 	{
 		if(!safe.contains(n)) {
@@ -334,6 +331,7 @@ public class Agent {
 		}
 	}
 	
+	//adds valid node
 	public void addValid(Node n)
 	{
 		if(!valid.contains(n) && !safe.contains(n)) {
@@ -341,8 +339,7 @@ public class Agent {
 		}
 	}
 	
-	//This is sorta temporarily, would be nice to
-	//add a way to know if pit/wumpus
+	//finds danger nodes that may not be nearby using knowledge base
 	public void findDanger(Node n)
 	{
 		ArrayList<Integer> removal = new ArrayList<Integer>();
@@ -364,12 +361,14 @@ public class Agent {
 				}
 			}
 		}
+		//removes any nodes changed to danger from unknown
 		for(Integer index : removal)
 		{
 			unknown.remove(index);
 		}
 	}
 	
+	//adds warning node
 	public void addWarningNode(Node n)
 	{
 		warning.add(n);
