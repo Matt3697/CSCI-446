@@ -6,6 +6,7 @@ import java.io.UnsupportedEncodingException;
  * Authors: Carie Pointer, Hugh Jackovich, Matthew Sagen
  * Date: 11/30/18
  * Programming Assignment 3: Wumpus World
+ * Output file located in: assignment3/output.txt
  */
 
 
