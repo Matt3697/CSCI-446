@@ -1,0 +1,74 @@
+5x5 world:
+==================
+A_G__
+_____
+WP___
+_____
+_____
+==================
+Current position: 0,0
+Current direction: East
+stench =false breeze=false glitter=false bump=false scream=false
+5x5 world:
+==================
+AAG__
+_____
+WP___
+_____
+_____
+==================
+Current Knowledge base of world:
+==================
+**___
+*____
+_____
+_____
+_____
+==================
+Current position: 0,1
+Current direction: East
+stench =false breeze=false glitter=false bump=false scream=false
+5x5 world:
+==================
+AAA__
+_____
+WP___
+_____
+_____
+==================
+Current Knowledge base of world:
+==================
+***__
+**___
+_____
+_____
+_____
+==================
+Agent found gold
+Climbed out of cave with gold!
+Agent completed task with 6 moves.
+Agent performance measure: 994
+5x5 world:
+==================
+AAA__
+_____
+WP___
+_____
+_____
+==================
+Current Knowledge base of world:
+==================
+***__
+**___
+_____
+_____
+_____
+==================
+5x5 world:
+==================
+AAA__
+_____
+WP___
+_____
+_____
+==================

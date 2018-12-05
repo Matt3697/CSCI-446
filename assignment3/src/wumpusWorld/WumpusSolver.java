@@ -1,5 +1,6 @@
 package wumpusWorld;
 
+import java.io.PrintWriter;
 import java.util.ArrayList;
 
 public class WumpusSolver {
@@ -10,12 +11,14 @@ public class WumpusSolver {
 	private Node start, currNode;
 	private boolean gameOver, wumpusKilled;
 	private ArrayList<Node> path = new ArrayList<Node>();
+	private PrintWriter writer;
 	
-	public WumpusSolver(Maze m, Agent a, Wumpus w) {
+	public WumpusSolver(Maze m, Agent a, Wumpus w, PrintWriter writer) {
 		this.maze = m;
 		this.start = m.getNode(0, 0);
 		this.agent = a;
 		this.wumpus = w;
+		this.writer = writer;
 		agent.setDirection("East");
 	}
 	
@@ -24,13 +27,13 @@ public class WumpusSolver {
 		currNode = start;
 		currNode.setHasAgent(true);
 		currNode.setGuess('*');
-		maze.printNodeMatrix();
+		maze.printNodeMatrix(writer);
 		
 		while (!gameOver) {
 			if (checkPercepts(currNode)) // If it is safe enough to move forward, do so
 				makeMove();
-			maze.printNodeMatrix();
-			maze.printKnowledgeBase();
+			maze.printNodeMatrix(writer);
+			maze.printKnowledgeBase(writer);
 		}
 	}
 	
@@ -55,6 +58,9 @@ public class WumpusSolver {
 			System.out.println("Fell in pit");
 			System.out.println("Agent did not complete the task with " + path.size() + " moves.");
 			System.out.println("Agent performance measure: " + agent.getPerformanceMeasure());
+			writer.println("Fell in pit");
+			writer.println("Agent did not complete the task with " + path.size() + " moves.");
+			writer.println("Agent performance measure: " + agent.getPerformanceMeasure());
 			return false;
 		}
 		if (n.containsWumpus()) { // Attacked by wumpus - game ends
@@ -63,6 +69,9 @@ public class WumpusSolver {
 			System.out.println("Wumpus killed agent");
 			System.out.println("Agent did not complete the task with " + path.size() + " moves.");
 			System.out.println("Agent performance measure: " + agent.getPerformanceMeasure());
+			writer.println("Wumpus killed agent");
+			writer.println("Agent did not complete the task with " + path.size() + " moves.");
+			writer.println("Agent performance measure: " + agent.getPerformanceMeasure());
 			return false;
 		}
 		currNode.setGuess('*'); // Since current node is not a pit or wumpus, it is safe to stand on
@@ -70,6 +79,7 @@ public class WumpusSolver {
 		if (n.containsGlitter()) { // The gold is in the same square as the glitter. have the agent grab the gold.
 			glitter = true;
 			System.out.println("Agent found gold");
+			writer.println("Agent found gold");
 			agent.grab();
 			goToStart();
 			gameOver = true;
@@ -86,28 +96,34 @@ public class WumpusSolver {
 		if(agent.getDirection() == "East" && n.hasRightWall()) {
 			bump = true;
 			System.out.println("agent hit a wall");
+			writer.println("agent hit a wall");
 			agent.nextDirection();
 		}
 		if(agent.getDirection() == "South" && n.hasBottomWall()) {
 			bump = true;
 			System.out.println("agent hit a wall");
+			writer.println("agent hit a wall");
 			agent.nextDirection();
 		}
 		if(agent.getDirection() == "West" && n.hasLeftWall()) {
 			bump = true;
 			System.out.println("agent hit a wall");
+			writer.println("agent hit a wall");
 			agent.nextDirection();
 		}
 		if(agent.getDirection() == "North" && n.hasTopWall()) {
 			bump = true;
 			System.out.println("agent hit a wall");
+			writer.println("agent hit a wall");
 			agent.nextDirection();
 		}
 		//Check all percepts together and make decisions based on propositional logic
 		System.out.println("Current position: "+ agent.getX() + "," + agent.getY());
 		System.out.println("Current direction: "+ agent.getDirection());
 		System.out.println("stench =" + stench + " breeze=" + breeze + " glitter="+ glitter + " bump=" + bump + " scream="+ scream);
-		
+		writer.println("Current position: "+ agent.getX() + "," + agent.getY());
+		writer.println("Current direction: "+ agent.getDirection());
+		writer.println("stench =" + stench + " breeze=" + breeze + " glitter="+ glitter + " bump=" + bump + " scream="+ scream);
 		// It is safe to move forward
 		if (!stench && !breeze) {
 			agent.addSafe(currNode);
@@ -122,7 +138,7 @@ public class WumpusSolver {
 		// The wumpus is in an adjacent Node
 		else if (stench && !breeze) {
 			System.out.println("Wumpus in adjacent node");
-			
+			writer.println("Wumpus in adjacent node");
 			for (Node neighbor : currNode.getNeighbors()) { // Guess where wumpus could be
 				if(neighbor.getGuess() != '*') {
 					neighbor.setGuess('W'); // Each neighbor could possibly be the wumpus
@@ -131,6 +147,7 @@ public class WumpusSolver {
 			}
 			if(agent.hasArrow() && agent.shootArrow(maze, wumpus)) {	// If we kill the wumpus, it is safe to move forwards.
 				System.out.println("Killed Wumpus");
+				writer.println("Killed Wumpus");
 				for(Node neighbor: currNode.getNeighbors()) {
 					if (neighbor.getGuess() == 'W') { // Nodes that were guessed to be wumpus are now safe
 						neighbor.setGuess('*'); // Neighboring spots are safe, since there is no breeze perceived.
@@ -160,7 +177,7 @@ public class WumpusSolver {
 		// There is a pit in an adjacent Node
 		else if (!stench && breeze) {
 			System.out.println("Pit in adjacent node");
-
+			writer.println("Pit in adjacent node");
 			agent.addWarningNode(currNode);
 			for (Node neighbor : currNode.getNeighbors()) { // Guess where pit could be
 				if (neighbor.getGuess() == '_' )
@@ -173,7 +190,7 @@ public class WumpusSolver {
 		// There is a pit and wumpus in adjacent node(s)
 		else if(stench && breeze) {
 			System.out.println("Pit and Wumpus in adjacenct node(s)");
-			
+			writer.println("Pit and Wumpus in adjacenct node(s)");
 			agent.addWarningNode(currNode);
 			for(Node neighbor: currNode.getNeighbors())
 			{
@@ -212,12 +229,15 @@ public class WumpusSolver {
 			agent.editPerformanceMeasure(-1);
 			if(path.get(i).getX() == 0 && path.get(i).getY() == 0) {
 				System.out.println("Climbed out of cave with gold!");
+				writer.println("Climbed out of cave with gold!");
 				agent.editPerformanceMeasure(1000);
 				break;
 			}
 		}
 		System.out.println("Agent completed task with " + path.size() * 2 + " moves.");
 		System.out.println("Agent performance measure: " + agent.getPerformanceMeasure());
+		writer.println("Agent completed task with " + path.size() * 2 + " moves.");
+		writer.println("Agent performance measure: " + agent.getPerformanceMeasure());
 	}
 	
 }

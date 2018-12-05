@@ -16,12 +16,12 @@ public class Main {
 		Wumpus w = new Wumpus(4);
 		Maze maze1 = new Maze(5, 5, agent, w);
 		//Maze maze2 = new Maze(5,5, agent);
-		WumpusSolver wumpus = new WumpusSolver(maze1, agent, w);
+		WumpusSolver wumpus = new WumpusSolver(maze1, agent, w, writer);
 		wumpus.solveMaze();
 		//Maze maze2 = new Maze(5,5, agent);
 		//Maze maze3 = new Maze(8,8);
 		//Maze maze4 = new Maze(10,10);
-		maze1.printNodeMatrix();
+		maze1.printNodeMatrix(writer);
 		//maze1.printNodeMatrix();
 		//maze2.printNodeMatrix();
 		//maze3.printNodeMatrix();
